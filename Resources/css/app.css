@@ -1,0 +1,72 @@
+body {
+    background-color: transparent;
+    color: #000;
+    font-family: Helvetica, Verdana, sans-serif;
+    margin: 0;
+    padding: 15px;
+}
+
+
+div#container {
+    background-color: #fff;
+    border: 1px solid #666;
+    margin: -1px; /*for the border*/
+
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+div#toolbar {
+    padding: 10px;
+}
+
+div#content {
+    padding: 0 10px;
+    height: 90%;
+    overflow-y: auto;
+}
+
+.shop .actions, li .actions {
+    float: right;
+}
+
+.shop-themes {
+    border-bottom: 3px solid #555;
+}
+
+.shop .name {
+    padding: 10px 5px;
+    font-size: 20px;
+}
+
+ul.themes {
+    padding: 1px 10px 0;
+    list-style: none;
+}
+
+ul.themes li {
+    padding: 10px;
+}
+
+ul.themes li:nth-child(odd)  {
+    background-color: #eee;
+}
+
+ul.themes li:nth-child(even)  {
+    background-color: #ccc;
+}
+
+.themes li .name {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.themes li .role,
+.themes li .path {
+    font-size: 13px;
+}
+/*div {
+    border: 1px solid blue;
+}
+*/

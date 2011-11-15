@@ -1,0 +1,54 @@
+<html>
+<head>
+<script type="text/javascript">
+var Ti = Titanium;
+Titanium.UI.getCurrentWindow().showInspector(true);
+</script>
+<script src="js/yui-min.js"></script>
+<script type="text/javascript" charset="utf-8">
+var Themer = YUI.namespace('Themer'); //Our global object
+</script>
+
+<script src="js/shop.js"></script>
+<script src="js/view.js"></script>
+<script src="js/app.js"></script>
+
+
+<link rel="stylesheet" href="css/forms.css" type="text/css">
+<link rel="stylesheet" href="css/app.css" type="text/css">
+</head>
+<body>
+<div id='container'>
+    
+    <div id='toolbar'>
+        <button class='btn' id='add-shop'>Add Shop</button>
+    </div>
+    
+    <div id='content'> 
+               
+    </div> <!-- end #content -->
+</div> <!-- end #container -->
+
+<script type="text/x-template" id="shop-template">
+    <div id='{store}' class='shop-themes'>
+        <div class='shop'>
+            <div class='actions'><button class='btn'>Add Theme</button><button class='btn'>Remove Shop</button></div>
+            <h1 class='name'>{store}</h1>
+        </div>
+        <ul class='themes'>
+        </ul>
+    </div>
+</script>
+<script type="text/x-template" id="theme-li-template">
+    <li>
+        <div class='actions'>{viewButton} <button class='btn'>Remove Theme</button></div>
+        <div class='info'><span class='name'>{name}</span> <span class='role'>[{role}]</span></div>
+        <div class='path'>{path}</div>
+    </li>
+</script>
+
+
+</body>
+<script>
+</script>
+</html>
