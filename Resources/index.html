@@ -2,7 +2,7 @@
 <head>
 <script type="text/javascript">
 var Ti = Titanium;
-Titanium.UI.getCurrentWindow().showInspector(true);
+// Titanium.UI.getCurrentWindow().showInspector(true);
 </script>
 <script src="js/yui-min.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -17,15 +17,34 @@ var Themer = YUI.namespace('Themer'); //Our global object
 <link rel="stylesheet" href="css/forms.css" type="text/css">
 <link rel="stylesheet" href="css/app.css" type="text/css">
 </head>
-<body>
+<body class="yui3-skin-sam">
 <div id='container'>
     
     <div id='toolbar'>
         <button class='btn' id='add-shop'>Add Shop</button>
     </div>
-    
+
+    <div id='onboard' class='util-hide'>
+        Instructions for getting started.
+    </div>
+
+    <div id='add-shop-panel' class='util-hide'>
+        <div class='yui3-widget-bd'>
+            <form>
+                <fieldset>
+                    <label for='id'>Shop</label>
+                    <input type="text" name="id" value="">
+                    <label for='api_key'>API KEY</label>
+                    <input type="text" name="api_key" value="">
+                    <label for='password'>Password</label>
+                    <input type="text" name="password" value="">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
     <div id='content'> 
-               
+        
     </div> <!-- end #content -->
 </div> <!-- end #container -->
 
