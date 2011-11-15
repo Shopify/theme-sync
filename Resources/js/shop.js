@@ -22,7 +22,7 @@ Themer.shopModel = Y.Base.create('shopModel', Y.Model, [], {
 });
 
 
-Y.ShopList = Y.Base.create('shopList', Y.ModelList, [], {
+Themer.ShopList = Y.Base.create('shopList', Y.ModelList, [], {
     model: Themer.shopModel
 });
 ///end
