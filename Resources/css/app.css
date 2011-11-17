@@ -66,6 +66,34 @@ ul.themes li:nth-child(even)  {
 .themes li .path {
     font-size: 13px;
 }
+
+/*Theme Panel Picker*/
+ul.theme-picker {
+    cursor: pointer;
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.theme-picker li {
+    margin: 5px 0;
+    padding: 5px 3px;
+}
+
+.theme-picker li:hover {
+    border: 1px solid green;
+    font-weight: bold;
+}
+
+.theme-picker li:nth-child(odd)  {
+    background-color: #eee;
+}
+
+.theme-picker li:nth-child(even)  {
+    background-color: #ccc;
+}
+
+
 /*div {
     border: 1px solid blue;
 }

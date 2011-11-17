@@ -1,6 +1,8 @@
 YUI().use('view','panel', 'event-custom','event-focus', function(Y) { 
 ///start
 
+var IO = YUI.namespace('Themer.IO');
+
 Themer.appView = Y.Base.create('appView', Y.View, [], {
    
     container: Y.one('#container'),
@@ -162,9 +164,65 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         console.log('ShopView:remove');
         this.constructor.superclass.remove.call(this);
         this.model.destroy({'delete': true});
+    },
+    
+    addTheme: function() {
+        console.log('ShopView:addTheme');
+        
+        //Open Panel
+        var panel = createThemePicker();
+        //Fetch Themes
+        IO.fetchThemesList(this.model, {
+
+            success: function(resp) {
+                console.log('Success!');
+                console.log(resp);
+                
+                var result = JSON.parse(resp.responseText),
+                    themeList = Y.Node.create('<ul class="theme-picker"></ul>');
+
+                result.themes.forEach(function(item) {
+                    var li = Y.Lang.sub('<li id="theme-{id}">{name} [{role}]</li>', item);
+                    themeList.append(li);
+                });
+                
+                themeList.delegate('click', function(e) {
+                    console.log(this.get('id'));
+                }, 'li');
+                
+                panel.set('bodyContent', themeList);
+                
+            },
+            
+            failure: function(resp) {
+                console.log('Failure!');
+                console.log(resp);
+                var result = JSON.parse(resp.responseText);
+                panel.set('bodyContent', result.errors || "Unknown Error");
+            }
+        });
+        //On selection of theme, prompt with folder. 
+        
     }
 });
 
+var createThemePicker = function(shopModel) {
+
+    var panel = new Y.Panel({
+        width: 400, 
+        centered: true,
+        visible: true,
+        modal: true,
+        headerContent: 'Choose a theme',
+        zIndex: 10,
+        bodyContent: 'Loading themes for this Shop... Just a moment please'
+    });
+    
+    panel.render();
+    
+    return panel;
+    
+};
 
 ///end
 });
