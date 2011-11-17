@@ -46,8 +46,11 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         var fragment = Y.one(Y.config.doc.createDocumentFragment());
 
         Y.Array.each(e.models, function (model) {
-            console.log(model);
-            var view = new ShopView({model: model});
+            console.log(model.get('id'));
+            var view = new Themer.ShopView({
+                model: model,
+                container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: model.get('id')})
+            });
             fragment.append(view.render().container);
         });
 
@@ -124,6 +127,41 @@ var createAddShopPanel = function() {
 };
 
 
+Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
+
+    //Will pass in a custom container at instantiation
+    //    <div id='{store}' class='shop-themes'></div>
+    // container: Y.one('#shop-template').getContent(), 
+    template: Y.one('#shop-template').getContent(),
+    
+    events: {
+        'button.add-theme': { click: 'addTheme'},
+        'button.remove-shop': { click: 'remove'}
+    },
+    
+    initializer: function() {
+        var model = this.model;
+        
+        model.after('destroy', this.destroy, this);
+    },
+    
+    render: function() {
+        var container = this.container, 
+            model = this.model;
+            
+        container.setContent(Y.Lang.sub(this.template, {
+            store: model.get('id')
+        }));
+        
+        return this;
+    },
+    
+    remove: function(e) {
+        console.log('ShopView:remove');
+        this.constructor.superclass.remove.call(this);
+        this.model.destroy({'delete': true});
+    }
+});
 
 
 ///end

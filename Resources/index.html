@@ -51,14 +51,12 @@ var Themer = YUI.namespace('Themer'); //Our global object
 </div> <!-- end #container -->
 
 <script type="text/x-template" id="shop-template">
-    <div id='{store}' class='shop-themes'>
-        <div class='shop'>
-            <div class='actions'><button class='btn'>Add Theme</button><button class='btn'>Remove Shop</button></div>
-            <h1 class='name'>{store}</h1>
-        </div>
-        <ul class='themes'>
-        </ul>
+    <div class='shop'>
+        <div class='actions'><button class='btn add-theme'>Add Theme</button><button class='btn remove-shop'>Remove Shop</button></div>
+        <h1 class='name'>{store}</h1>
     </div>
+    <ul class='themes'>
+    </ul>
 </script>
 <script type="text/x-template" id="theme-li-template">
     <li>
