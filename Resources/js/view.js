@@ -168,11 +168,13 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     
     addTheme: function() {
         console.log('ShopView:addTheme');
-        
+
+        var ThisShopModel = this.model;
+
         //Open Panel
         var panel = createThemePicker();
         //Fetch Themes
-        IO.fetchThemesList(this.model, {
+        IO.fetchThemesList(ThisShopModel, {
 
             success: function(resp) {
                 console.log('Success!');
@@ -196,6 +198,24 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                     console.log(selectedTheme);
                     panel.hide();
                     panel.destroy();
+                    
+                    //Show folder picker
+                    Titanium.UI.currentWindow.openFolderChooserDialog(function(dir) {
+                        console.log(dir);
+                        if(dir.length == 0) {
+                            return false;
+                        }
+                        
+                        selectedTheme.path = dir[0];
+                        //Save the theme selection to the shop
+                        //throw up dialog that we are downloading the theme
+                        return true;
+                    },
+                    {
+                        title: 'Choose Download Location',
+                        multiple:false,
+                        directories:true,
+                        files:false});
                     
                 }, 'li');
                 
