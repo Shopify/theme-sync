@@ -1,4 +1,4 @@
-YUI().use('view','panel', 'event-custom','event-focus', function(Y) { 
+YUI().use('view','panel', 'event-custom','event-focus','array-extras', function(Y) { 
 ///start
 
 var IO = YUI.namespace('Themer.IO');
@@ -180,14 +180,23 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                 
                 var result = JSON.parse(resp.responseText),
                     themeList = Y.Node.create('<ul class="theme-picker"></ul>');
-
+                
                 result.themes.forEach(function(item) {
                     var li = Y.Lang.sub('<li id="theme-{id}">{name} [{role}]</li>', item);
                     themeList.append(li);
                 });
                 
                 themeList.delegate('click', function(e) {
-                    console.log(this.get('id'));
+                    // console.log(e);
+                    var selectedId = e.currentTarget.get('id').replace('theme-', '');
+                    
+                    var selectedTheme = Y.Array.find(result.themes, function(item) {
+                        return (item.id == selectedId);
+                    });
+                    console.log(selectedTheme);
+                    panel.hide();
+                    panel.destroy();
+                    
                 }, 'li');
                 
                 panel.set('bodyContent', themeList);
