@@ -46,7 +46,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         var fragment = Y.one(Y.config.doc.createDocumentFragment());
 
         Y.Array.each(e.models, function (model) {
-            console.log(model.get('id'));
+            console.log('render shop id:' + model.get('id'));
             var view = new Themer.ShopView({
                 model: model,
                 container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: model.get('id')})
