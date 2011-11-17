@@ -10,7 +10,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     },
    
     initializer: function() {
-        console.log('Initializer appView');
+        console.log('appView: Initializer');
 
         //Setup the Add Shop form overlay
         this.addShopForm = createAddShopPanel();
@@ -24,16 +24,16 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         shops.load();
 
-        //Custom event that passes in the data
+        //Custom event that gets the new shop data from form, and creates the model.
         Y.on('addShopOk', function(shopData) {
-            console.log('Add Shop OK!');
+            console.log('appView: addShopOk');
             this.shops.create(shopData);
         }, this);
 
     },
 
     render: function(e) {
-        console.log('RENDER: appView');
+        console.log('appView: render');
 
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
@@ -59,19 +59,24 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         return this;
     },
    
-    //Click handler for the add shop button
+    // Click handler for the add shop button
     addShop: function(e) {
-        console.log('addd');
         this.addShopForm.show();
     }, 
 
-    //Called when something added to the list.
+    //Called when shop added to the shops list
     add: function(e) {
-        console.log('New Shop Added');
+        console.log('appView: New Shop Added');
+        var view = new Themer.ShopView({
+            model: e.model,
+            container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: e.model.get('id')})
+        });
+        
+        this.container.one('#content').append(view.render().container);
     },
 
     remove: function(e) {
-        console.log('Shop Removed');
+        console.log('appView: Shop Removed');
     }
 
 });
@@ -92,9 +97,6 @@ var createAddShopPanel = function() {
         id: 'addShopOk',
         value: 'Add Shop',
         action: function(e) {
-            console.log('Add a new shop submit!');
-            // console.log(e);
-
             e.preventDefault(); 
 
             var data = {
