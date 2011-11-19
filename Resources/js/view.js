@@ -172,7 +172,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             var view = new Themer.ThemeView({
                 model: item
             });
-            container.one('ul.themes').append(view.render(model).container);
+            container.one('ul.themes').append(view.render().container);
             // fragment.append(view.render().container);
         });
 
@@ -192,7 +192,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         var view = new Themer.ThemeView({
             model: e.model
         });
-        this.container.one('ul.themes').append(view.render(this.model).container);
+        this.container.one('ul.themes').append(view.render().container);
 
 
         // var view = new Themer.ThemeView({

@@ -19,22 +19,21 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         console.log('ThemeView: initializer');
     },
     
-    render: function(shopModel) {
+    render: function() {
         var container = this.container, 
             model = this.model;
         
-        var viewButton = function(t) {
-            var args = {text: 'Preview', src: 'http://'+shopModel.get('id')+'.myshopify.com/?preview_theme_id='+t.id };
-            if('main' == t.role) {
-                 args = {text: 'View Shop', src: 'http://'+shopModel.get('id')+'.myshopify.com'};
+        var viewButton = function(themeModel) {
+            var args = {text: 'Preview', src: 'http://'+themeModel.get('parent_id')+'.myshopify.com/?preview_theme_id='+themeModel.get('id') };
+            if('main' == themeModel.get('role')) {
+                 args = {text: 'View Shop', src: 'http://'+themeModel.get('parent_id')+'.myshopify.com'};
             }
 
             return Y.Lang.sub("<a href='{src}' class='btn external'>{text}</a>", args);
         };
 
         var data = model.toJSON();
-        data.viewButton = viewButton(data);
-        
+        data.viewButton = viewButton(model);
         container.setContent(Y.Lang.sub(this.template, data));
         
         return this;
