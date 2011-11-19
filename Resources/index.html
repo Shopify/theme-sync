@@ -12,6 +12,7 @@ var Themer = YUI.namespace('Themer'); //Our global object
 <script src="js/io.js"></script>
 <script src="js/models.js"></script>
 <script src="js/view.js"></script>
+<script src="js/views/theme.js"></script>
 <script src="js/app.js"></script>
 
 
@@ -60,11 +61,9 @@ var Themer = YUI.namespace('Themer'); //Our global object
     </ul>
 </script>
 <script type="text/x-template" id="theme-li-template">
-    <li>
-        <div class='actions'>{viewButton} <button class='btn'>Remove Theme</button></div>
-        <div class='info'><span class='name'>{name}</span> <span class='role'>[{role}]</span></div>
-        <div class='path'>{path}</div>
-    </li>
+    <div class='actions'>{viewButton} <button class='btn'>Remove Theme</button></div>
+    <div class='info'><span class='name'>{name}</span> <span class='role'>[{role}]</span></div>
+    <div class='path'>{path}</div>
 </script>
 
 

@@ -139,7 +139,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     template: Y.one('#shop-template').getContent(),
     
     events: {
-        'button.add-theme': { click: 'addTheme'},
+        'button.add-theme': { click: 'chooseTheme'},
         'button.remove-shop': { click: 'remove'}
     },
     
@@ -168,6 +168,11 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
 
         this.themes.each(function(item) {
             console.log(item.toJSON());
+            var view = new Themer.ThemeView({
+                model: item
+            });
+            container.one('ul.themes').append(view.render().container);
+            // fragment.append(view.render().container);
         });
 
         return this;
@@ -178,9 +183,22 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         this.constructor.superclass.remove.call(this);
         this.model.destroy({'delete': true});
     },
+
+    //Called when theme added to the shop themes list
+    addTheme: function(e) {
+        // console.log('shopView: New Theme Added');
+        // console.log(e.model.toJSON());
+        // var view = new Themer.ThemeView({
+        //     model: e.model,
+        //     container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: e.model.get('id')})
+        // });
+        // 
+        // this.container.one('#content').append(view.render().container);
+    },
+
     
-    addTheme: function() {
-        console.log('ShopView:addTheme');
+    chooseTheme: function() {
+        console.log('ShopView:chooseTheme');
 
         var ThisShopModel = this.model,
             shopWorkingThemes = this.themes;
