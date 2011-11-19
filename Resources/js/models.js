@@ -19,7 +19,10 @@ Themer.shopList = Y.Base.create('shopList', Y.ModelList, [], {
 
 // Theme models
 Themer.themeModel = Y.Base.create('themeModel', Y.Model, [], {
-    sync: PropertiesStorageSync('theme')
+    sync: function(action, options, callback) {
+        var sync = Y.bind(PropertiesStorageSync('themes'+this.get('parent_id')), this);
+        sync(action, options, callback);
+    }
 }, {
     ATTRS: {
         id: { value: '' },
@@ -27,13 +30,17 @@ Themer.themeModel = Y.Base.create('themeModel', Y.Model, [], {
         role: { value: '' },
         created_at: { value: '' },
         updated_at: { value: '' },
-        path: { value: '' }
+        path: { value: '' },
+        parent_id: { value: '' } //The ID of the parent shop. needed for saving in proper buckets.
     }
 });
 
 Themer.themeList = Y.Base.create('themeList', Y.ModelList, [], {
     model: Themer.themeModel,
-    sync: PropertiesStorageSync('theme')
+    sync: function(action, options, callback) {
+        var sync = Y.bind(PropertiesStorageSync('themes'+this.parent_id), this);
+        sync(action, options, callback);
+    }
 });
 
 
@@ -73,10 +80,6 @@ function PropertiesStorageSync(key) {
     function set(model) {
         var hash        = model.toJSON(),
             idAttribute = model.idAttribute;
-
-        // if (!Y.Lang.isValue(hash[idAttribute])) {
-        //     hash[idAttribute] = generateId();
-        // }
 
         data[hash[idAttribute]] = hash;
         save();

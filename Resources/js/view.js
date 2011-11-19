@@ -148,7 +148,8 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         var model = this.model;
         // model.after('destroy', this.destroy, this);
         
-        var themes = this.themes = new Themer.themeList({ sync: Themer.sync('themes' + this.model.get('id'))});
+        var themes = this.themes = new Themer.themeList();
+        themes.parent_id = model.get('id');
         themes.after('add', this.add, this);
         // themes.after('remove', this.remove, this);        
 
@@ -167,7 +168,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         }));
 
         this.themes.each(function(item) {
-            console.log(item.toJSON());
+            // console.log(item.toJSON());
             var view = new Themer.ThemeView({
                 model: item
             });
@@ -209,8 +210,8 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         IO.fetchThemesList(ThisShopModel, {
 
             success: function(resp) {
-                console.log('Success!');
-                console.log(resp);
+                // console.log('Success!');
+                // console.log(resp);
                 
                 var result = JSON.parse(resp.responseText),
                     themeList = Y.Node.create('<ul class="theme-picker"></ul>');
@@ -227,13 +228,14 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                     var selectedTheme = Y.Array.find(result.themes, function(item) {
                         return (item.id == selectedId);
                     });
-                    console.log(selectedTheme);
+                    selectedTheme.parent_id = ThisShopModel.get('id');
+
                     panel.hide();
                     panel.destroy();
                     
                     //Show folder picker
                     Titanium.UI.currentWindow.openFolderChooserDialog(function(dir) {
-                        console.log(dir);
+
                         if(dir.length == 0) {
                             return false;
                         }
