@@ -1,4 +1,4 @@
-YUI().use(function(Y) { 
+YUI().use('queue', function(Y) { 
 /////
 
 var IO = YUI.namespace('Themer.IO'),
@@ -28,11 +28,20 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
     IO.get(assetsListTarget, {
         success: function(e) {
             var result = JSON.parse(e.responseText);
+            
+            var assetQ = new Y.Queue();
+            assetQ.add.apply(assetQ, result.assets);
+            
+            var successGetAsset = function(e) {
+                if(assetQ.size() > 0) {
+                    IO.getAsset(themeModel, assetQ.next(), {success: successGetAsset});
+                } else {
+                    console.log('Done Q!');
+                }
+            };
 
-            result.assets.forEach(function(item) {
+            IO.getAsset(themeModel, assetQ.next(), { success: successGetAsset });
 
-            });
-            console.log(result);
         }, 
         failure: function(e) {
             console.log('Error: assetsList fetch');
@@ -42,7 +51,10 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
     
 };
 
-
+IO.getAsset = function(themeModel, asset, handlers) {
+    console.log(asset);
+    handlers.success();
+};
 
 //Utility: get + post
 IO.get = function(target, handlers) {
