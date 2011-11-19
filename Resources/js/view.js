@@ -144,9 +144,18 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     },
     
     initializer: function() {
+        console.log('ShopView: initializer');
         var model = this.model;
+        // model.after('destroy', this.destroy, this);
         
-        model.after('destroy', this.destroy, this);
+        var themes = this.themes = new Themer.themeList({ sync: Themer.sync('themes' + this.model.get('id'))});
+        themes.after('add', this.add, this);
+        // themes.after('remove', this.remove, this);        
+
+        //Reset also fires on initial model list load. 
+        // themes.after('reset', this.render, this);
+        themes.load();
+        
     },
     
     render: function() {
@@ -156,7 +165,11 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         container.setContent(Y.Lang.sub(this.template, {
             store: model.get('id')
         }));
-        
+
+        this.themes.each(function(item) {
+            console.log(item.toJSON());
+        });
+
         return this;
     },
     
@@ -169,7 +182,8 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     addTheme: function() {
         console.log('ShopView:addTheme');
 
-        var ThisShopModel = this.model;
+        var ThisShopModel = this.model,
+            shopWorkingThemes = this.themes;
 
         //Open Panel
         var panel = createThemePicker();
@@ -209,6 +223,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                         selectedTheme.path = dir[0];
                         //Save the theme selection to the shop
                         //throw up dialog that we are downloading the theme
+                        shopWorkingThemes.create(selectedTheme);
                         return true;
                     },
                     {
