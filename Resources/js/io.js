@@ -24,6 +24,7 @@ IO.fetchThemesList = function(shopModel, handlers) {
 
 IO.downloadTheme = function(shopModel, themeModel, handlers) {
     var assetsListTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
+    console.log(themeModel.get('path'));
     //Fetch the assets list
     IO.get(assetsListTarget, {
         success: function(e) {
@@ -33,14 +34,28 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
             assetQ.add.apply(assetQ, result.assets);
             
             var successGetAsset = function(e) {
-                if(assetQ.size() > 0) {
-                    IO.getAsset(themeModel, assetQ.next(), {success: successGetAsset});
+                
+                var assetRes = JSON.parse(e.responseText),
+                    fileHandle = Titanium.Filesystem.getFile(themeModel.get('path'), assetRes.asset.key);
+                
+                //@todo need to create subdirectories if they dont exist. :/
+                //@todo filter out .css if .css.liquid exists
+                
+                if(assetRes.asset.value) {
+                    fileHandle.write(assetRes.asset.value);
                 } else {
-                    console.log('Done Q!');
+                    //Assume attachment
+                }
+                console.log(assetRes);
+
+                if(assetQ.size() > 0) {
+                    IO.getAsset(shopModel, themeModel, assetQ.next(), {success: successGetAsset});
+                } else {
+                    console.log('Done Q! - fire event to close panel');
                 }
             };
 
-            IO.getAsset(themeModel, assetQ.next(), { success: successGetAsset });
+            IO.getAsset(shopModel, themeModel, assetQ.next(), { success: successGetAsset });
 
         }, 
         failure: function(e) {
@@ -51,9 +66,12 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
     
 };
 
-IO.getAsset = function(themeModel, asset, handlers) {
-    console.log(asset);
-    handlers.success();
+IO.getAsset = function(shopModel, themeModel, asset, handlers) {
+    
+    var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
+    assetTarget = assetTarget.concat('?', 'asset[key]=', asset.key);
+
+    IO.get(assetTarget, handlers);
 };
 
 //Utility: get + post
