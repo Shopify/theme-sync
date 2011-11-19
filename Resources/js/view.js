@@ -150,7 +150,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         
         var themes = this.themes = new Themer.themeList();
         themes.parent_id = model.get('id');
-        themes.after('add', this.add, this);
+        themes.after('add', this.addTheme, this);
         // themes.after('remove', this.remove, this);        
 
         //Reset also fires on initial model list load. 
@@ -187,8 +187,14 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
 
     //Called when theme added to the shop themes list
     addTheme: function(e) {
-        // console.log('shopView: New Theme Added');
+        console.log('shopView: New Theme Added');
         // console.log(e.model.toJSON());
+        var view = new Themer.ThemeView({
+            model: e.model
+        });
+        this.container.one('ul.themes').append(view.render(this.model).container);
+
+
         // var view = new Themer.ThemeView({
         //     model: e.model,
         //     container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: e.model.get('id')})

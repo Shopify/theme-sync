@@ -10,7 +10,9 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         'a.external': { click: function(e) {
             e.halt(true);
             Titanium.Platform.openURL(e.currentTarget.get('href'));
-        }}
+        }},
+        'button.remove-theme': { click: 'remove'}
+        
     },
     
     initializer: function() {
@@ -36,6 +38,12 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         container.setContent(Y.Lang.sub(this.template, data));
         
         return this;
+    },
+    
+    remove: function(e) {
+        console.log('ThemeView:remove');
+        this.constructor.superclass.remove.call(this);
+        this.model.destroy({'delete': true});
     }
 });
 
