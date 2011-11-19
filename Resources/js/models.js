@@ -1,30 +1,46 @@
 YUI().use('model', 'model-list', function(Y) { 
 ///start
 
-
-//Shop Model
+//Shop Models
 Themer.shopModel = Y.Base.create('shopModel', Y.Model, [], {
-    sync: PropertiesStorageSync('shop')
+    sync: PropertiesStorageSync('shop')    
 }, {
     ATTRS: {
         id: { value: '' },
         api_key: { value: '' },
-        password: { value: '' },
-        themes: { value: [] } //Themes for this shop being worked on
+        password: { value: '' }
     }
 });
 
-//List of Shop Models
 Themer.shopList = Y.Base.create('shopList', Y.ModelList, [], {
     model: Themer.shopModel,
     sync: PropertiesStorageSync('shop')
+});
+
+// Theme models
+Themer.themeModel = Y.Base.create('themeModel', Y.Model, [], {
+    sync: PropertiesStorageSync('theme')
+}, {
+    ATTRS: {
+        id: { value: '' },
+        name: { value: '' },
+        role: { value: '' },
+        created_at: { value: '' },
+        updated_at: { value: '' },
+        path: { value: '' }
+    }
+});
+
+Themer.themeList = Y.Base.create('themeList', Y.ModelList, [], {
+    model: Themer.themeModel,
+    sync: PropertiesStorageSync('theme')
 });
 
 
 //Storage Layer used for models
 //Uses Titanium Properties
 //Based off LocalStorageSync from YUI example
-function PropertiesStorageSync (key) {
+function PropertiesStorageSync(key) {
     
     var data = JSON.parse(Titanium.App.Properties.getString(key, '{}'));
     
@@ -91,9 +107,8 @@ function PropertiesStorageSync (key) {
         }
     };
 
-}
-
-
+};
+Themer.sync = PropertiesStorageSync;
 
 ///end
 });
