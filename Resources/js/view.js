@@ -146,10 +146,12 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     initializer: function() {
         console.log('ShopView: initializer');
         var model = this.model;
+        //@todo clean up themes when shop destroyed
         // model.after('destroy', this.destroy, this);
         
         var themes = this.themes = new Themer.themeList();
         themes.parent_id = model.get('id');
+
         themes.after('add', this.addTheme, this);
         // themes.after('remove', this.remove, this);        
 
@@ -187,20 +189,28 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
 
     //Called when theme added to the shop themes list
     addTheme: function(e) {
+        
+        var shop = this.model,
+            theme = e.model;
+        
         console.log('shopView: New Theme Added');
         // console.log(e.model.toJSON());
         var view = new Themer.ThemeView({
-            model: e.model
+            model: theme
         });
         this.container.one('ul.themes').append(view.render().container);
+        
+        //Throw up activity indicator.
+        var panel = downloadThemeActivity(theme);
 
-
-        // var view = new Themer.ThemeView({
-        //     model: e.model,
-        //     container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: e.model.get('id')})
-        // });
-        // 
-        // this.container.one('#content').append(view.render().container);
+        //Create folder, if it doesn't exist
+        var destinationDir = Titanium.Filesystem.getFile(theme.get('path'));
+        if( (destinationDir.exists() == false) && (destinationDir.createDirectory() == false)) {
+            alert('We could not create the download directory.');
+            return;
+        }
+        //Begin download.
+        IO.downloadTheme(shop, theme);
     },
 
     
@@ -246,9 +256,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                             return false;
                         }
                         
-                        selectedTheme.path = dir[0];
-                        //Save the theme selection to the shop
-                        //throw up dialog that we are downloading the theme
+                        selectedTheme.path = dir[0].concat(Ti.Filesystem.getSeparator(), selectedTheme.parent_id, '-', selectedTheme.id);
                         shopWorkingThemes.create(selectedTheme);
                         return true;
                     },
@@ -286,6 +294,26 @@ var createThemePicker = function(shopModel) {
         headerContent: 'Choose a theme',
         zIndex: 10,
         bodyContent: 'Loading themes for this Shop... Just a moment please'
+    });
+    
+    panel.render();
+    
+    return panel;
+    
+};
+
+
+var downloadThemeActivity = function(themeModel) {
+
+    var panel = new Y.Panel({
+        width: 400, 
+        centered: true,
+        visible: true,
+        modal: true,
+        buttons: [], //no close button
+        headerContent: 'Download theme: '+ themeModel.get('name'),
+        zIndex: 10,
+        bodyContent: 'Downloading files to PATH... This may take a minute.'
     });
     
     panel.render();

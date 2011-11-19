@@ -19,10 +19,32 @@ IO.fetchThemesList = function(shopModel, handlers) {
     console.log('io: fetchThemesList');
     var target = IO.url(shopModel, 'themes');
     IO.get(target, handlers);
+};
 
+
+IO.downloadTheme = function(shopModel, themeModel, handlers) {
+    var assetsListTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
+    //Fetch the assets list
+    IO.get(assetsListTarget, {
+        success: function(e) {
+            var result = JSON.parse(e.responseText);
+
+            result.assets.forEach(function(item) {
+
+            });
+            console.log(result);
+        }, 
+        failure: function(e) {
+            console.log('Error: assetsList fetch');
+            console.log(e);
+        }
+    });
     
 };
 
+
+
+//Utility: get + post
 IO.get = function(target, handlers) {
 
     var xhr = Titanium.Network.createHTTPClient();
