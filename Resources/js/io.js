@@ -38,8 +38,15 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
                 var assetRes = JSON.parse(e.responseText),
                     fileHandle = Titanium.Filesystem.getFile(themeModel.get('path'), assetRes.asset.key);
                 
-                //@todo need to create subdirectories if they dont exist. :/
                 //@todo filter out .css if .css.liquid exists
+                
+                var destPath = fileHandle.nativePath().split(Titanium.Filesystem.getSeparator());
+                destPath.pop();
+                var destinationDir = Titanium.Filesystem.getFile(destPath.join(Titanium.Filesystem.getSeparator()));
+                if( (destinationDir.exists() == false) && (destinationDir.createDirectory() == false)) {
+                    alert('We could not create the directory: ' + destPath.nativePath());
+                    return;
+                }
                 
                 if(assetRes.asset.value) {
                     fileHandle.write(assetRes.asset.value);
