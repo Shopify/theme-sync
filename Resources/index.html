@@ -2,7 +2,7 @@
 <head>
 <script type="text/javascript">
 var Ti = Titanium;
-Titanium.UI.getCurrentWindow().showInspector(true);
+// Titanium.UI.getCurrentWindow().showInspector(true);
 </script>
 <script src="js/yui-min.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -17,9 +17,10 @@ var Themer = YUI.namespace('Themer'); //Our global object
 
 
 <link rel="stylesheet" href="css/forms.css" type="text/css">
+<link rel="stylesheet" href="css/panel-skin.css" type="text/css">
 <link rel="stylesheet" href="css/app.css" type="text/css">
 </head>
-<body class="yui3-skin-sam">
+<body class="yui3-skin-shopify">
 <div id='container'>
     
     <div id='toolbar'>
@@ -32,16 +33,20 @@ var Themer = YUI.namespace('Themer'); //Our global object
 
     <div id='add-shop-panel' class='util-hide'>
         <div class='yui3-widget-bd'>
-            <form>
+            <form class="lform">
                 <fieldset>
-                    <label for='id'>Shop</label>
-                    <input type="text" name="id" value="">.myshopify.com
-                    <br>
-                    <label for='api_key'>API KEY</label>
-                    <input type="text" name="api_key" value="">
-                    <br>
-                    <label for='password'>Password</label>
-                    <input type="text" name="password" value="">
+                    <div>
+                        <label for='id'>Shop</label>
+                        <input type="text" name="id" value="">
+                    </div>
+                    <div>
+                        <label for='api_key'>API KEY</label>
+                        <input type="text" name="api_key" value="">
+                    </div>
+                    <div>
+                        <label for='password'>Password</label>
+                        <input type="text" name="password" value="">
+                    </div>
                 </fieldset>
             </form>
         </div>

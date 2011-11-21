@@ -111,7 +111,7 @@ label.inline { font-weight: normal; font-size: 100%; }
 
 ul.radios li { padding: 5px; margin: 5px; }
 
-fieldset { border: 1px solid #ccc; padding: 5px; padding-left: 10px; padding-top: 0; margin: 15px 5px; }
+fieldset { border: 0px solid #ccc; padding: 5px; padding-left: 10px; padding-top: 0; margin: 15px 5px; }
 legend { font-size: 90%; font-weight: bold; padding: 0 5px; margin-left: 10px; }
 fieldset p { margin: 5px; }
 caption { text-align: left; font-weight: bold; }

@@ -39,7 +39,8 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
-            Y.one('#onboard').removeClass('util-hide');
+            // Y.one('#onboard').removeClass('util-hide');
+            this.addShop();
             return this;
         }
 
@@ -87,7 +88,7 @@ var createAddShopPanel = function() {
 
     var panel = new Y.Panel({
         srcNode: '#add-shop-panel',
-        width: 400, 
+        width: 500, 
         centered: true,
         visible: false,
         modal: true,
@@ -112,6 +113,7 @@ var createAddShopPanel = function() {
             Y.fire('addShopOk', data);
             panel.hide();
         },
+        classNames: 'btn',
         section: Y.WidgetStdMod.FOOTER
     });
 
@@ -121,6 +123,7 @@ var createAddShopPanel = function() {
             e.preventDefault(); 
             panel.hide();
         },
+        classNames: 'btn',
         section: Y.WidgetStdMod.FOOTER
     });
 
@@ -216,7 +219,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     
     chooseTheme: function() {
         console.log('ShopView:chooseTheme');
-
+        
         var ThisShopModel = this.model,
             shopWorkingThemes = this.themes;
 

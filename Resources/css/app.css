@@ -98,7 +98,42 @@ ul.theme-picker {
     border: 1px solid blue;
 }
 */
+/* forms */
+.lform fieldset> div {
+    height: 45px;
+}
 
+.lform label {
+    float:left; 
+    display:block; 
+    color:#999; 
+    font-size:14px; 
+    width:75px; 
+    text-align:right;
+    margin:0 20px 0 0; 
+    font-weight:bold; 
+    padding:0; 
+    height:32px; 
+    line-height:32px;
+}
+
+.lform input[type="text"], 
+.lform input[type="password"], 
+.lform input[type="email"]  {
+    float: left;
+    border: 1px solid #E8E8E8;
+    font-size: 18px;
+    color: #666;
+    margin: 0;
+    padding: 6px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    width: 350px;
+}
+
+
+/*Utility*/
 .util-hide {
     display: none;
 }
