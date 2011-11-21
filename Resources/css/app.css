@@ -67,6 +67,10 @@ ul.themes li:nth-child(even)  {
     font-size: 13px;
 }
 
+.themes li .path {
+    cursor: pointer;
+}
+
 /*Theme Panel Picker*/
 ul.theme-picker {
     cursor: pointer;
