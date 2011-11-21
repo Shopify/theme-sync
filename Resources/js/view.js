@@ -1,4 +1,4 @@
-YUI().use('view','panel', 'event-custom','event-focus','array-extras', function(Y) { 
+YUI().use('view','panel', 'event-custom','event-focus','node-event-simulate','array-extras', function(Y) { 
 ///start
 
 var IO = YUI.namespace('Themer.IO');
@@ -14,7 +14,28 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             Titanium.Platform.openURL(e.currentTarget.get('href'));
         }},
         
-        '#add-shop' : { click: 'addShop'}
+        '#add-shop' : { click: 'addShop'},
+        'ul.themes li': { contextmenu: function(e) {
+            
+            var li = e.currentTarget,
+                currentMenu = Ti.UI.createMenu();
+
+            var openFolder = Ti.UI.createMenuItem('Open In Finder', function() {
+                li.one('div.path').simulate('click');
+            });
+            
+            var forceDeploy = Ti.UI.createMenuItem('Force Deploy', function() {
+                console.log('Force Deploy');
+                alert('Force Deploy');
+                //Get parent ID
+                //Throw up activity Panel
+                //IO.deploy(shopModel, themeModel)
+            });
+
+            currentMenu.appendItem(openFolder);
+            currentMenu.appendItem(forceDeploy);
+            Ti.UI.setContextMenu(currentMenu);
+        }}
     },
    
     initializer: function() {
@@ -34,7 +55,6 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             console.log('appView: addShopOk');
             this.shops.create(shopData);
         }, this);
-
     },
 
     render: function(e) {
