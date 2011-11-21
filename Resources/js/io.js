@@ -1,4 +1,4 @@
-YUI().use('queue', function(Y) { 
+YUI().use(function(Y) { 
 /////
 
 var IO = YUI.namespace('Themer.IO'),
