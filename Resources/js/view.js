@@ -8,6 +8,12 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     container: Y.one('#container'),
 
     events: {
+        //General External Link handler. Open in browser window.
+        'a.external': { click: function(e) {
+            e.halt(true);
+            Titanium.Platform.openURL(e.currentTarget.get('href'));
+        }},
+        
         '#add-shop' : { click: 'addShop'}
     },
    

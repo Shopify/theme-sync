@@ -7,10 +7,6 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     template: Y.one('#theme-li-template').getContent(),
     
     events: {
-        'a.external': { click: function(e) {
-            e.halt(true);
-            Titanium.Platform.openURL(e.currentTarget.get('href'));
-        }},
         'div.path': { click: function(e) {
             Titanium.Platform.openURL('file://'+e.currentTarget.getContent());
         }},
