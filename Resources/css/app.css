@@ -93,11 +93,6 @@ ul.theme-picker {
     background-color: #ccc;
 }
 
-
-/*div {
-    border: 1px solid blue;
-}
-*/
 /* forms */
 .lform fieldset> div {
     height: 45px;
@@ -137,3 +132,8 @@ ul.theme-picker {
 .util-hide {
     display: none;
 }
+
+/*div {
+    border: 1px solid blue;
+}
+*/

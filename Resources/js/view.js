@@ -14,9 +14,6 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     initializer: function() {
         console.log('appView: Initializer');
 
-        //Setup the Add Shop form overlay
-        this.addShopForm = createAddShopPanel();
-
         var shops = this.shops = new Themer.shopList();
         shops.after('add', this.add, this);
         shops.after('remove', this.remove, this);        
@@ -39,8 +36,8 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
-            // Y.one('#onboard').removeClass('util-hide');
-            this.addShop();
+            Y.one('#onboard').removeClass('util-hide');
+            // this.addShop();
             return this;
         }
 
@@ -64,12 +61,16 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
    
     // Click handler for the add shop button
     addShop: function(e) {
+        //Setup the Add Shop form overlay
+        this.addShopForm = this.addShopForm || createAddShopPanel();        
         this.addShopForm.show();
     }, 
 
     //Called when shop added to the shops list
     add: function(e) {
         console.log('appView: New Shop Added');
+        Y.one('#onboard').hide();
+        //If its showing, hide it...
         var view = new Themer.ShopView({
             model: e.model,
             container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: e.model.get('id')})
