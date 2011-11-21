@@ -8,7 +8,6 @@
 
 .yui3-skin-shopify .yui3-panel-content {
     -webkit-box-shadow: 0 0 5px #333;
-    -moz-box-shadow: 0 0 5px #333;
     box-shadow: 0 0 5px #333;
     border: 1px solid black;
     background: white;
@@ -22,12 +21,6 @@
     font-weight: bold;
     
     background-color: #3961c5;
-    background: -moz-linear-gradient(
-        0% 100% 90deg,
-        #2647a0 7%,
-        #3d67ce 50%,
-        #426fd9 100%
-    );
     background: -webkit-gradient(
         linear,
         left bottom,
@@ -55,4 +48,10 @@
 
 .yui3-skin-shopify .yui3-panel-content .yui3-widget-ft .yui3-button {
     margin: 0px 3px;
+}
+
+/*Close buttons*/
+.yui3-skin-shopify .yui3-widget-buttons .yui3-button-icon {
+    background-color: #fff;
+    background-image: url(sprite_icons.gif);
 }
