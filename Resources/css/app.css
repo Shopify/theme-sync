@@ -18,6 +18,7 @@ div#container {
 }
 
 div#toolbar {
+    background-color: #EAEEE2;
     padding: 10px;
 }
 
@@ -135,6 +136,14 @@ ul.theme-picker {
 /*Utility*/
 .util-hide {
     display: none;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }
 
 /*div {
