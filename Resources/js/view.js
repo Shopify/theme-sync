@@ -277,9 +277,9 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                         files:false});
                     
                 }, 'li');
-                
+
                 panel.set('bodyContent', themeList);
-                
+                panel.set('centered', true); //to re-center
             },
             
             failure: function(resp) {
