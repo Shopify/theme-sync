@@ -37,7 +37,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
             Y.one('#onboard').removeClass('util-hide');
-            // this.addShop();
+            this.addShop();
             return this;
         }
 
