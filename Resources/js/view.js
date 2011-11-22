@@ -336,25 +336,21 @@ var createThemePicker = function(shopModel) {
 var downloadThemeActivity = function(themeModel) {
 
     var panel = new Y.Panel({
-        width: 400, 
+        width: 500, 
         centered: true,
         visible: true,
         modal: true,
         buttons: [], //no close button
         headerContent: 'Download theme: '+ themeModel.get('name'),
         zIndex: 10,
-        bodyContent: 'Downloading files to PATH... This may take a minute.'
+        bodyContent: 'Downloading files to:<br>'+ themeModel.get('path')+'<div id=downstatus></div>(^v^)/'
     });
-    
+
     panel.render();
-    
-    Y.Global.on('download:done', function(e) {
-        panel.hide();
-        // console.log('Download DONE!!!!!');
-    });
-    
+
+    Y.Global.on('download:done', function(e) { panel.hide(); });
     Y.Global.on('download:asset', function(e) {
-        panel.set('bodyContent', 'Downloading '+e.asset);
+        Y.one('#downstatus').setContent(e.asset + '...');
     });
 
     return panel;
