@@ -1,4 +1,4 @@
-YUI().use(function(Y) { 
+YUI().use('event-custom', function(Y) { 
 /////
 
 var IO = YUI.namespace('Themer.IO'),
@@ -58,10 +58,10 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
                 if(assetQ.size() > 0) {
                     IO.getAsset(shopModel, themeModel, assetQ.next(), {success: successGetAsset});
                 } else {
-                    console.log('Done Q! - fire event to close panel');
+                    Y.Global.fire('download:done');
                 }
             };
-
+            //Start the download queue...
             IO.getAsset(shopModel, themeModel, assetQ.next(), { success: successGetAsset });
 
         }, 

@@ -348,6 +348,11 @@ var downloadThemeActivity = function(themeModel) {
     
     panel.render();
     
+    Y.Global.on('download:done', function(e) {
+        panel.hide();
+        // console.log('Download DONE!!!!!');
+    });
+    
     return panel;
     
 };
