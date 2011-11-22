@@ -353,6 +353,10 @@ var downloadThemeActivity = function(themeModel) {
         // console.log('Download DONE!!!!!');
     });
     
+    Y.Global.on('download:asset', function(e) {
+        panel.set('bodyContent', 'Downloading '+e.asset);
+    });
+
     return panel;
     
 };
