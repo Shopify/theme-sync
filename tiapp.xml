@@ -6,7 +6,7 @@
 <version>1.0</version>
 <publisher>mitch</publisher>
 <url>http://mitchell.amihod.com</url>
-<icon>/img/shopify.png</icon>
+<icon>shopify.png</icon>
 <copyright>2011 by mitch</copyright>
 <!-- Window Definition - these values can be edited -->
 <window>

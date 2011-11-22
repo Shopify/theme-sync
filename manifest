@@ -1,7 +1,7 @@
 #appname:Shopify Theme2
 #appid:com.meeech.shopify_theme2
 #publisher:mitch
-#image:default_app_logo.png
+#image:shopify.png
 #url:http://mitchell.amihod.com
 #guid:983e89a3-fdfd-4906-8764-767ad37a1cec
 #desc:Tool to work with shopify themes
@@ -11,6 +11,7 @@ tiapp:1.1.0
 tifilesystem:1.1.0
 tiplatform:1.1.0
 tiui:1.1.0
+php:1.1.0
 ticodec:1.1.0
 tidatabase:1.1.0
 timedia:1.1.0

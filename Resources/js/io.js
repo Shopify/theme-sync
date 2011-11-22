@@ -51,9 +51,9 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
                 if(assetRes.asset.value) {
                     fileHandle.write(assetRes.asset.value);
                 } else {
-                    //Assume attachment
+                    //defined in lib/util.php - workaround for http://developer.appcelerator.com/question/128541/how-to-ticodecdecodebase64-an-image-to-write-to-disk
+                    writeBase64Asset(fileHandle.nativePath(), assetRes.asset.attachment);
                 }
-                console.log(assetRes);
 
                 if(assetQ.size() > 0) {
                     IO.getAsset(shopModel, themeModel, assetQ.next(), {success: successGetAsset});
