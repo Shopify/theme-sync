@@ -4,16 +4,14 @@ YUI().use('view','event-custom','event-focus','array-extras', function(Y) {
 Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     
     template: Y.one('#theme-li-template').getContent(),
-    
-    events: {
-        'div.path': { click: function(e) {
-            Titanium.Platform.openURL('file://'+e.currentTarget.getContent());
-        }},
-        'button.remove-theme': { click: 'remove'}
-    },
-    
+
     initializer: function(e) {
         this.container = Y.Node.create('<li id="theme-' + e.model.get('id') + '"></li>');
+        //Attach here instead, because container isn't available during create
+        this.container.delegate('click', function(e) {
+            Titanium.Platform.openURL('file://'+e.currentTarget.getContent());
+        }, '.path');
+        this.container.delegate('click', this.remove, 'button.remove-theme', this);
     },
     
     render: function() {

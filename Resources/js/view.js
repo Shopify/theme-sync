@@ -16,12 +16,12 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         
         '#add-shop' : { click: 'addShop'},
         'ul.themes li': { contextmenu: function(e) {
-            
+            console.log(e);
             var li = e.currentTarget,
                 currentMenu = Ti.UI.createMenu();
 
             var openFolder = Ti.UI.createMenuItem('Open In Finder', function() {
-                li.one('div.path').simulate('click');
+                li.one('.path').simulate('click');
             });
             
             var forceDeploy = Ti.UI.createMenuItem('Force Deploy', function() {
