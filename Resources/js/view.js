@@ -199,10 +199,10 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             store: model.get('id')
         }));
 
-        this.themes.each(function(item) {
+        this.themes.each(function(theme) {
             // console.log(item.toJSON());
             var view = new Themer.ThemeView({
-                model: item
+                model: theme
             });
             container.one('ul.themes').append(view.render().container);
             // fragment.append(view.render().container);
@@ -229,7 +229,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             model: theme
         });
         this.container.one('ul.themes').append(view.render().container);
-        
+
         //Throw up activity indicator.
         var panel = downloadThemeActivity(theme);
 
@@ -281,11 +281,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                     
                     //Show folder picker
                     Titanium.UI.currentWindow.openFolderChooserDialog(function(dir) {
-
-                        if(dir.length == 0) {
-                            return false;
-                        }
-                        
+                        if(dir.length == 0) { return false; }
                         selectedTheme.path = dir[0].concat(Ti.Filesystem.getSeparator(), selectedTheme.parent_id, '-', selectedTheme.id);
                         shopWorkingThemes.create(selectedTheme);
                         return true;

@@ -2,7 +2,6 @@ YUI().use('view','event-custom','event-focus','array-extras', function(Y) {
 ///start
 
 Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
-    container: '<li></li>', 
     
     template: Y.one('#theme-li-template').getContent(),
     
@@ -13,8 +12,8 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         'button.remove-theme': { click: 'remove'}
     },
     
-    initializer: function() {
-        console.log('ThemeView: initializer');
+    initializer: function(e) {
+        this.container = Y.Node.create('<li id="theme-' + e.model.get('id') + '"></li>');
     },
     
     render: function() {
