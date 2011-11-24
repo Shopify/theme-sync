@@ -3,7 +3,7 @@ YUI().use(function(Y) {
 var Watcher = YUI.namespace('Themer.Watcher');
 
 Watcher.processes = [];
-Watcher.sockets = [];
+// Watcher.sockets = [];
 
 //Initialize all watchers on startup
 Watcher.init = function(app) {
@@ -80,7 +80,7 @@ Watcher.connect = function(shop, theme, port, attempt) {
         console.log('ReadComplete');
     });
     socket.connect();
-    Watcher.sockets.push(socket);
+    // Watcher.sockets.push(socket);
     console.log('Socket is closed? '+ socket.isClosed());
 };
 
