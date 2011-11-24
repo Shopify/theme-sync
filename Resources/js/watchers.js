@@ -14,27 +14,48 @@ Watcher.init = function(app) {
         themes.load();
 
         themes.each(function(theme) {
-            Watcher.watch(shop, theme);
+            Watcher.start(shop, theme);
         });
 
     });
 };
 
-//Will find an open port to spin up the server on
+//Will find an open port to spin up server on
 //Looks between 40000 - 50000 range
 //If you know a better way to do this, please, let me know!
-Watcher.getPort = function() {
+Watcher.start = function(shop, theme) {
+    var port = random(40000, 50000);
+    
+    var portProc = Titanium.Process.createProcess({
+        args: ["lsof", "-i", ":"+port],
+        env: {'PATH': '/usr/sbin:/usr/bin:/bin'}
+    });
+
+    portProc.setOnExit(function(e) {
+        //code 0 == port not avail
+        // code 1 == port available
+        // console.log("Exit Code:" + e.getTarget().getExitCode());
+        if(e.getTarget().getExitCode() == 1) {
+            //Port avail, start
+            console.log('Port Available. Starting Watcher...');
+            Watcher.watch(shop, theme, port);
+        } 
+        else {
+            console.log("Exit Code:" + e.getTarget().getExitCode());
+            Watcher.start(shop, theme);
+        }
+    });
+    
+    portProc.launch();
     
 };
 
-Watcher.watch = function(shop, theme) {
+Watcher.watch = function(shop, theme, port) {
+    console.log('Watch Theme: '+theme.get('id') + ' on port: '+port);
 
     //Need to send in port as a string, else 'd' appended to it: ie: 40000 becomes 40000d
-    console.log('Watch '+theme.get('id'));
-    var port = '40003';
-
     var process = Titanium.Process.createProcess({
-        args: ["/Users/mitch/src/shopify-theme2/Resources/lib/watch_server.rb",port],
+        args: ["/Users/mitch/src/shopify-theme2/Resources/lib/watch_server.rb",port.toString()],
         env: {'PATH': '/usr/bin:/bin'}
     });
 
