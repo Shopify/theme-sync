@@ -55,7 +55,7 @@ Watcher.watch = function(shop, theme, port) {
 
     //Need to send in port as a string, else 'd' appended to it: ie: 40000 becomes 40000d
     var process = Titanium.Process.createProcess({
-        args: ["/Users/mitch/src/shopify-theme2/Resources/lib/watch_server.rb",port.toString()],
+        args: ["/Users/mitch/src/shopify-theme2/Resources/lib/watch_server.rb",theme.get('path'), port.toString()],
         env: {'PATH': '/usr/bin:/bin'}
     });
 

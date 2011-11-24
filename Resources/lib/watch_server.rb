@@ -1,11 +1,11 @@
 #!/usr/bin/ruby
-
+# @todo ERROR Handling! What happens when things crap out?
 require 'socket'
 require 'rubygems'
-# Gem.use_paths("/Users/mitch/.gem/ruby/1.8", "/Library/Ruby/Gems/1.8", "/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/gems/1.8")
 
 require 'fssm'
 
+path = ARGV.shift
 port = ARGV.shift || 0 # default is to use the next available port
 host = ARGV.shift # default is to bind everything
 
@@ -25,8 +25,6 @@ addr = s.peeraddr[3]
 puts "*** recieving from #{name}:#{port}"
 
 # s.puts 'Connected...'
-
-path = '/Users/mitch/Sites/klocko-shopify-theme'
 
 FSSM.monitor path do |m|
     m.update do |base, relative|
