@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-# run as bg process: ./watch_server.rb 40000 > /dev/null &
 
 require 'socket'
 require 'rubygems'
@@ -15,7 +14,7 @@ server = host ? TCPServer.open(host, port) : TCPServer.open(port)
 port = server.addr[1]
 addrs = server.addr[2..-1].uniq
 
-puts "*** listening on #{addrs.collect{|a|"#{a}:#{port}"}.join(' ')}"
+# puts "*** listening on #{addrs.collect{|a|"#{a}:#{port}"}.join(' ')}"
 
 s = server.accept
 
@@ -25,7 +24,7 @@ addr = s.peeraddr[3]
 
 puts "*** recieving from #{name}:#{port}"
 
-# s.puts 'Server Running'
+# s.puts 'Connected...'
 
 path = '/Users/mitch/Sites/klocko-shopify-theme'
 
