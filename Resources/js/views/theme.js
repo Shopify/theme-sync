@@ -8,8 +8,8 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     initializer: function(e) {
         this.container = Y.Node.create('<li id="theme-' + e.model.get('id') + '"></li>');
         //Attach here instead, because container isn't available during create
-        this.container.delegate('click', function(e) {
-            Titanium.Platform.openURL('file://'+e.currentTarget.getContent());
+        this.container.delegate('click', function() {
+            Titanium.Platform.openURL('file://'+e.model.get('path'));
         }, '.path');
         this.container.delegate('click', this.remove, 'button.remove-theme', this);
     },
