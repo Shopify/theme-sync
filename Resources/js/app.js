@@ -1,5 +1,5 @@
 YUI().use('event', 'event-focus', function(Y) {Y.on("domready", function() { 
-    new Themer.appView();
+    var theApp = new Themer.appView();
 
     //Stop right click outside of the LIs
     //LI contextmenu listener setup in view.js
@@ -9,5 +9,8 @@ YUI().use('event', 'event-focus', function(Y) {Y.on("domready", function() {
         // var emptyMenu = Ti.UI.createMenu();
         // Ti.UI.setContextMenu(emptyMenu);
     });
+    
+    //Spin up watchers...
+    Themer.Watcher.init(theApp);
 });});
 
