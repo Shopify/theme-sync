@@ -50,6 +50,14 @@ ul.themes li {
     padding: 10px;
 }
 
+.themes li.nowatch  {
+    background: url(../img/bullet_red.png) no-repeat top left;
+}
+
+.themes li.watch  {
+    background: url(../img/bullet_green.png) no-repeat top left;
+}
+
 ul.themes li:nth-child(odd)  {
     background-color: #eee;
 }
