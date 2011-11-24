@@ -16,7 +16,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         
         '#add-shop' : { click: 'addShop'},
         'ul.themes li': { contextmenu: function(e) {
-            console.log(e);
+            e.stopPropagation();
             var li = e.currentTarget,
                 currentMenu = Ti.UI.createMenu();
 
