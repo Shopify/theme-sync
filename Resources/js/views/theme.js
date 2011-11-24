@@ -1,6 +1,17 @@
 YUI().use('view','event-custom','event-focus','array-extras', function(Y) { 
 ///start
 
+//Global handler for when a theme is being watched/unwatched.
+Y.Global.on('watch:start', function(e) {
+    var el = Y.one('.themes li#theme-'+e.themeId+'.nowatch');
+    el.replaceClass('nowatch', 'watch');
+});
+
+Y.Global.on('watch:stop', function(e) {
+    var el = Y.one('.themes li#theme-'+e.themeId+'.watch');
+    el.replaceClass('watch', 'nowatch');
+});
+
 Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     
     template: Y.one('#theme-li-template').getContent(),
