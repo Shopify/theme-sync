@@ -221,14 +221,23 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     addTheme: function(e) {
         
         var shop = this.model,
-            theme = e.model;
+            theme = e.model,
+            ul = this.container.one('ul.themes');
         
         console.log('shopView: New Theme Added');
         // console.log(e.model.toJSON());
         var view = new Themer.ThemeView({
             model: theme
         });
-        this.container.one('ul.themes').append(view.render().container);
+        
+        var existing = ul.one('#theme-'+theme.get('id')),
+            newNode = view.render().container;
+
+        if(existing) {
+            ul.replaceChild(newNode, existing);
+        } else {
+            ul.append(newNode);
+        }
 
         //Throw up activity indicator.
         var panel = downloadThemeActivity(theme);
