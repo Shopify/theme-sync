@@ -5,3 +5,7 @@
 function writeBase64Asset($path, $data) {
     return file_put_contents($path, base64_decode($data));
 }
+
+function random($min, $max) {
+    return rand($min, $max);
+}
