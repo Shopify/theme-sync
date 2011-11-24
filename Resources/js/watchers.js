@@ -1,6 +1,13 @@
-YUI().use(function(Y) {
+YUI().use('event-custom', function(Y) {
 //BEGIN Y closure
+//@note potential issue: Right now, works fine for spinning up a minimal amount of watchers. 
+//      Will have to see what the limits are, and maybe refactor how we initialize them
+
 var Watcher = YUI.namespace('Themer.Watcher');
+
+//Keep track of all initialized watchers
+// { process: , socket: , theme: , shop:  }
+Watcher.watchers = {};
 
 Watcher.processes = [];
 // Watcher.sockets = [];
@@ -93,14 +100,19 @@ Watcher.connect = function(shop, theme, port, attempt) {
         console.log('Timeout with socket');
         // console.log(e);
     });
+    
+    //@todo send a CONNECTED message, so we can fire the watch:start event here.
     socket.onRead(function(e) {
         console.log('Read');
         console.log(e.toString());
     });
-    socket.onReadComplete(function(e) {
-        console.log('ReadComplete');
-    });
+    // socket.onReadComplete(function(e) {
+    //     console.log('ReadComplete');
+    // });
     socket.connect();
+    Y.Global.fire('watch:start', {
+        themeId: theme.get('id')
+    });
     // Watcher.sockets.push(socket);
     console.log('Socket is closed? '+ socket.isClosed());
 };
