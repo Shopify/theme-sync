@@ -4,7 +4,9 @@ YUI().use('view','event-custom','event-focus','array-extras', function(Y) {
 //Global handler for when a theme is being watched/unwatched.
 Y.Global.on('watch:start', function(e) {
     var el = Y.one('.themes li#theme-'+e.themeId+'.nowatch');
-    el.replaceClass('nowatch', 'watch');
+    if(el) {
+        el.replaceClass('nowatch', 'watch');
+    }
 });
 
 Y.Global.on('watch:stop', function(e) {
