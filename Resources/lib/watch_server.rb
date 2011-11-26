@@ -3,6 +3,7 @@
 require 'socket'
 require 'rubygems'
 
+require 'json'
 require 'fssm'
 
 path = ARGV.shift
@@ -18,24 +19,30 @@ addrs = server.addr[2..-1].uniq
 
 s = server.accept
 
-port = s.peeraddr[1]
+peerport = s.peeraddr[1]
 name = s.peeraddr[2]
 addr = s.peeraddr[3]
 
-puts "*** recieving from #{name}:#{port}"
-
-# s.puts 'Connected...'
+# puts "*** recieving from #{name}:#{peerport}"
+# startEvent = { :event => 'connected'}
+# s.puts = "connected"
 
 FSSM.monitor path do |m|
     m.update do |base, relative|
-      puts "update #{relative}"
-      s.puts "update #{relative}"
-      # send_asset(relative, options['quiet']) if local_assets_list.include?(relative)
+      payload = {
+        :event => "update",
+        :base => base,
+        :relative => relative
+      }
+      s.puts payload.to_json
     end
     m.create do |base, relative|
-      puts "create #{relative}"
-      s.puts "create #{relative}"
-      # send_asset(relative, options['quiet']) if local_assets_list.include?(relative)
+      payload = {
+        :event => "update",
+        :base => base,
+        :relative => relative
+      }
+      s.puts payload.to_json
     end
     # if !options['keep_files']
     #   m.delete do |base, relative|
