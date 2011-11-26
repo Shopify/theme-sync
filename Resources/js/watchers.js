@@ -81,19 +81,24 @@ Watcher.watch = function(shop, theme, port) {
 
 Watcher.connect = function(shop, theme, port, attempt) {
     console.log('Connecting socket theme: '+theme.get('id') +  ' on port '+ port);
-    attempt = attempt || 0;
+        
+    var maxAttempts = 3;
+
+    attempt = attempt || 1;
+
     //port needs to be an int
     var socket = Titanium.Network.createTCPSocket('127.0.0.1', parseInt(port, 10));
 
     socket.onError(function(e) {
         console.log('Error with socket');
         console.log(e);
-        if(attempt < 3) {
+        if(attempt <= maxAttempts) {
+            console.log('Next try: '+ (1 * attempt)+'s');
             setTimeout(function() {
                 Watcher.connect(shop, theme, port, (attempt+1));
-            }, 1000);
+            }, 1000 * attempt);
         } else {
-            console.log('too many attempts');
+            console.log('Too many attempts');
         }
     });
     socket.onTimeout(function(e) {
