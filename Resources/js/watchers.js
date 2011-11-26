@@ -106,20 +106,25 @@ Watcher.connect = function(shop, theme, port, attempt) {
         // console.log(e);
     });
     
-    //@todo send a CONNECTED message, so we can fire the watch:start event here.
     socket.onRead(function(e) {
         console.log('Read');
-        console.log(e.toString());
+        var resp = e.toString();
+        //Bad data comes down socket for some reason
+        if(resp.length == 1) { return; }
+
+        resp = JSON.parse(resp);
+        console.log(resp);
+        
     });
-    // socket.onReadComplete(function(e) {
-    //     console.log('ReadComplete');
-    // });
+
     socket.connect();
-    Y.Global.fire('watch:start', {
-        themeId: theme.get('id')
-    });
-    // Watcher.sockets.push(socket);
-    console.log('Socket is closed? '+ socket.isClosed());
+
+    if(!socket.isClosed()) {        
+        Y.Global.fire('watch:start', {
+            themeId: theme.get('id')
+        });
+    }
+
 };
 
 //Clean up watchers on exit.
