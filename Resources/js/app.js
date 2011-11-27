@@ -1,4 +1,4 @@
-YUI().use('event', 'event-focus', function(Y) {Y.on("domready", function() { 
+YUI().use('event', 'event-focus','event-custom', function(Y) {Y.on("domready", function() { 
     var theApp = new Themer.appView();
 
     //Stop right click outside of the LIs
@@ -12,5 +12,14 @@ YUI().use('event', 'event-focus', function(Y) {Y.on("domready", function() {
     
     //Spin up watchers...
     Themer.Watcher.init(theApp);
+
+    Y.Global.on('asset:send', function(e) {
+        console.log('asset:send listener');
+        //@todo allowed list?
+        var key = e.relative,
+            path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative);
+
+        Themer.IO.sendAsset(e.shop, e.theme, key, path);
+    });    
 });});
 
