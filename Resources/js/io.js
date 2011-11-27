@@ -85,7 +85,53 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
     IO.get(assetTarget, handlers);
 };
 
-//Utility: get + post
+IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
+    console.log('IO:sendAsset');
+    console.log(assetKey);
+    var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
+    
+    var readfile = Titanium.Filesystem.getFileStream(filePath);
+    readfile.open();
+    var contents = readfile.read();
+
+    var payload = {
+        "asset": {
+            "value": contents.toString(),
+            "key": assetKey
+          }
+    };
+    IO.put(assetTarget, payload);
+};
+
+
+IO.put = function(target, data, handlers) {
+
+    handlers = handlers || {};
+    handlers.failure = handlers.failure || function(e) {console.log('fail:PUT');console.log(e.responseText);};
+    handlers.success = handlers.success || function(e) {console.log('success:PUT');console.log(e.responseText);};
+
+    var xhr = Titanium.Network.createHTTPClient();
+    xhr.setTimeout(TIMEOUT);
+    xhr.setRequestHeader('Content-Type','application/json');
+    
+    xhr.onerror = handlers.failure;
+
+    xhr.onload = function(event) {
+        var status = this.status;
+        if((400 > status)) {        
+            // var response = JSON.parse(this.responseText);
+            handlers.success.call({}, event);
+        }
+        else {
+            handlers.failure.call({}, event);
+        }
+    };
+
+    xhr.open("PUT",target);
+    xhr.send(JSON.stringify(data));
+   
+};
+
 IO.get = function(target, handlers) {
 
     var xhr = Titanium.Network.createHTTPClient();
