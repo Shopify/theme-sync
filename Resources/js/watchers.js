@@ -5,12 +5,7 @@ YUI().use('event-custom', function(Y) {
 
 var Watcher = YUI.namespace('Themer.Watcher');
 
-//Keep track of all initialized watchers
-// { process: , socket: , theme: , shop:  }
-Watcher.watchers = {};
-
 Watcher.processes = [];
-// Watcher.sockets = [];
 
 //Initialize all watchers on startup
 Watcher.init = function(app) {
@@ -138,11 +133,8 @@ Watcher.connect = function(shop, theme, port, attempt) {
 Ti.API.addEventListener(Titanium.APP_EXIT, function() {
     Titanium.API.warn('Exiting...');
     Watcher.processes.forEach(function(p) {
-
         Titanium.API.warn('Killing '+ p.getPID());
-        if(p.isRunning()) {
-            p.kill();
-        }
+        if(p.isRunning()) { p.kill(); }
     });
 });
 
