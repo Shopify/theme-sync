@@ -51,13 +51,7 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         console.log('ThemeView:remove');
         this.constructor.superclass.remove.call(this);
         this.model.destroy({'delete': true});
-    },
-    
-    //Set up the folder watch on the theme. 
-    watch: function(e) {
-        
-    }
-    
+    }    
 });
 
 
