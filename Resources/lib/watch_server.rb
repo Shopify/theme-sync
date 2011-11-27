@@ -38,7 +38,7 @@ FSSM.monitor path do |m|
     end
     m.create do |base, relative|
       payload = {
-        :event => "update",
+        :event => "create",
         :base => base,
         :relative => relative
       }
