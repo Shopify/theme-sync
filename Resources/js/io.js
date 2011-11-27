@@ -78,7 +78,7 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
     assetTarget = assetTarget.concat('?', 'asset[key]=', asset.key);
 
-    Y.Global.fire('download:asset', {
+    Y.Global.fire('asset:download', {
         asset: asset.key
     });
 
