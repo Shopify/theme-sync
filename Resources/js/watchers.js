@@ -113,7 +113,13 @@ Watcher.connect = function(shop, theme, port, attempt) {
         if(resp.length == 1) { return; }
 
         resp = JSON.parse(resp);
-        console.log(resp);
+        //Right now, only 2 events - update + create, both should have the same result.
+        if(resp.event) {
+            resp.theme = theme;
+            resp.shop = shop;
+            Y.Global.fire('asset:send', resp);
+        }
+
         
     });
 
