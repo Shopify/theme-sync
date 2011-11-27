@@ -246,6 +246,11 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         }
         //Begin download.
         IO.downloadTheme(shop, theme);
+        
+        Y.Global.on('download:done', function(e) { 
+            //Spin up a watcher
+            Themer.Watcher.start(shop, theme);
+        });
     },
 
     
