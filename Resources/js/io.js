@@ -86,8 +86,8 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
 };
 
 IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
-    console.log('IO:sendAsset');
-    console.log(assetKey);
+    console.log('IO:sendAsset'+assetKey);
+
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
     
     var readfile = Titanium.Filesystem.getFileStream(filePath);
@@ -96,10 +96,16 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
 
     var payload = {
         "asset": {
-            "value": contents.toString(),
             "key": assetKey
           }
     };
+    
+    if(is_binary(filePath)) {
+        payload.asset.attachment = Titanium.Codec.encodeBase64(contents);
+    } else {
+        payload.asset.value = contents.toString();
+    }
+
     IO.put(assetTarget, payload);
 };
 
