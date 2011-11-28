@@ -103,6 +103,8 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         });
         
         this.container.one('#content').append(view.render().container);
+        view.chooseTheme();
+        
     },
 
     remove: function(e) {
@@ -256,7 +258,6 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     
     chooseTheme: function() {
         console.log('ShopView:chooseTheme');
-        
         var ThisShopModel = this.model,
             shopWorkingThemes = this.themes;
 
