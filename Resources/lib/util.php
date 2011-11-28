@@ -9,3 +9,9 @@ function writeBase64Asset($path, $data) {
 function random($min, $max) {
     return rand($min, $max);
 }
+
+function is_binary($filepath) {
+    $finfo = finfo_open(FILEINFO_MIME);
+    $info = explode('charset=', finfo_file($finfo, $filepath));
+    return ('binary' == end($info));
+}
