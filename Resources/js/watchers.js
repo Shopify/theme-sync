@@ -22,6 +22,15 @@ Watcher.init = function(app) {
     });
 };
 
+Watcher.kill = function(themeId) {
+    Watcher.processes.forEach(function(o) {
+        if(o.themeId == themeId) {
+            Titanium.API.warn('Killing '+ o.process.getPID());
+            o.process.kill();
+        }
+    });
+};
+
 //Will find an open port to spin up server on
 //Looks between 40000 - 50000 range
 //If you know a better way to do this, please, let me know!
