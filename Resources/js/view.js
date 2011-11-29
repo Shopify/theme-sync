@@ -246,6 +246,11 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             alert('We could not create the download directory.');
             return;
         }
+        
+        //Before download, kill off any watchers on that theme 
+        //otherwise we will have a right mess
+        Themer.Watcher.kill(theme.get('id'));
+
         //Begin download.
         IO.downloadTheme(shop, theme);
         
