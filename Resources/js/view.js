@@ -25,8 +25,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             });
             
             var forceDeploy = Ti.UI.createMenuItem('Force Deploy', function() {
-                console.log('Force Deploy');
-                alert('Force Deploy');
+                alert('Force Deploy TK');
                 //Get parent ID
                 //Throw up activity Panel
                 //IO.deploy(shopModel, themeModel)
