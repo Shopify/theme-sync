@@ -3,6 +3,11 @@
 require 'socket'
 require 'rubygems'
 
+# To use bundled gem
+root = File.dirname(__FILE__)
+gem_path = File.join(root, '../', 'vendor', 'bundle','ruby','1.8')
+Gem.use_paths(gem_path)
+
 require 'json'
 require 'fssm'
 
