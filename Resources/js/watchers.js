@@ -63,7 +63,10 @@ Watcher.watch = function(shop, theme, port) {
     });
 
     process.launch();
-    Watcher.processes.push(process);
+    Watcher.processes.push({
+        'themeId': theme.get('id'),
+        'process':process
+    });
     
     //@todo check if we get a race condition where process isn't running, but we try to establish socket
     console.log('Watch process launched: '+ process.getPID());
@@ -132,9 +135,9 @@ Watcher.connect = function(shop, theme, port, attempt) {
 //Clean up watchers on exit.
 Ti.API.addEventListener(Titanium.APP_EXIT, function() {
     Titanium.API.warn('Exiting...');
-    Watcher.processes.forEach(function(p) {
-        Titanium.API.warn('Killing '+ p.getPID());
-        if(p.isRunning()) { p.kill(); }
+    Watcher.processes.forEach(function(o) {
+        Titanium.API.warn('Killing '+ o.process.getPID());
+        if(o.process.isRunning()) { o.process.kill(); }
     });
 });
 
