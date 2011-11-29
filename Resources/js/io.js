@@ -21,6 +21,28 @@ IO.fetchThemesList = function(shopModel, handlers) {
     IO.get(target, handlers);
 };
 
+//Filter out .css files when a .css.liquid is available.
+var filterAssetList = function(assets) {
+    var newList = [],
+        toCheck = [],
+        rx = /(\.css|\.js)$/;
+
+    assets.forEach(function(item) {
+        if(true == rx.test(item.key)) {
+            toCheck.push(item.key);
+        } else {
+            newList.push(item.key);
+        }
+    });
+    
+    toCheck.forEach(function(item) {
+        if(newList.indexOf(item.concat('.liquid')) == -1) { 
+            newList.push(item);
+        }
+    });
+    
+    return newList;
+}; 
 
 IO.downloadTheme = function(shopModel, themeModel, handlers) {
     var assetsListTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
@@ -29,17 +51,15 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
     IO.get(assetsListTarget, {
         success: function(e) {
             var result = JSON.parse(e.responseText);
-            
+
             var assetQ = new Y.Queue();
-            assetQ.add.apply(assetQ, result.assets);
-            
+            assetQ.add.apply(assetQ, filterAssetList(result.assets));
+
             var successGetAsset = function(e) {
                 
                 var assetRes = JSON.parse(e.responseText),
                     fileHandle = Titanium.Filesystem.getFile(themeModel.get('path'), assetRes.asset.key);
-                
-                //@todo filter out .css if .css.liquid exists
-                
+
                 var destPath = fileHandle.nativePath().split(Titanium.Filesystem.getSeparator());
                 destPath.pop();
                 var destinationDir = Titanium.Filesystem.getFile(destPath.join(Titanium.Filesystem.getSeparator()));
@@ -61,6 +81,7 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
                     Y.Global.fire('download:done');
                 }
             };
+            
             //Start the download queue...
             IO.getAsset(shopModel, themeModel, assetQ.next(), { success: successGetAsset });
 
@@ -76,17 +97,17 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
 IO.getAsset = function(shopModel, themeModel, asset, handlers) {
     
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
-    assetTarget = assetTarget.concat('?', 'asset[key]=', asset.key);
+    assetTarget = assetTarget.concat('?', 'asset[key]=', asset);
 
     Y.Global.fire('asset:download', {
-        asset: asset.key
+        asset: asset
     });
 
     IO.get(assetTarget, handlers);
 };
 
 IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
-    console.log('IO:sendAsset'+assetKey);
+    console.log('IO:sendAsset: '+assetKey);
 
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
     
