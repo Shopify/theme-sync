@@ -2,16 +2,16 @@
 <ti:app xmlns:ti='http://ti.appcelerator.org'>
 <!-- These values are edited/maintained by Titanium Developer -->
 <id>com.meeech.shopify_theme2</id>
-<name>Shopify Theme2</name>
+<name>Shopify Theme</name>
 <version>1.0</version>
-<publisher>mitch</publisher>
+<publisher>meeech</publisher>
 <url>http://mitchell.amihod.com</url>
 <icon>shopify.png</icon>
-<copyright>2011 by mitch</copyright>
+<copyright>2011 by meeech</copyright>
 <!-- Window Definition - these values can be edited -->
 <window>
 <id>main</id>
-<title>Shopify Theme2</title>
+<title>Shopify Theme</title>
 <url>app://index.html</url>
 <width>700</width>
 <max-width>3000</max-width>

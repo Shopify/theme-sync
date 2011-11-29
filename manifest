@@ -1,10 +1,10 @@
-#appname:Shopify Theme2
+#appname:Shopify Theme
 #appid:com.meeech.shopify_theme2
-#publisher:mitch
+#publisher:meeech
 #image:shopify.png
 #url:http://mitchell.amihod.com
 #guid:983e89a3-fdfd-4906-8764-767ad37a1cec
-#desc:Tool to work with shopify themes
+#desc:Tool to work with Shopify themes
 #type:desktop
 runtime:1.1.0
 tiapp:1.1.0
