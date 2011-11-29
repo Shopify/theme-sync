@@ -108,19 +108,28 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
 
 IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
     console.log('IO:sendAsset: '+assetKey);
-
+    
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
-    
-    var readfile = Titanium.Filesystem.getFileStream(filePath);
-    readfile.open();
-    var contents = readfile.read();
 
-    var payload = {
-        "asset": {
-            "key": assetKey
-          }
-    };
-    
+    //Ti throws exception when trying to read empty file,
+    //but no advice given how to catch said exception. try/catch doesn't work - app still crashes,
+    //To work around, we create File obj first, and check size()
+    var assetFile = Titanium.Filesystem.getFile(filePath),
+
+        contents = '',
+
+        payload = {
+            "asset": {
+                "key": assetKey
+              }
+        };
+
+    if(0 < assetFile.size()) {
+        var readfile = Titanium.Filesystem.getFileStream(assetFile);
+        readfile.open();
+        contents = readfile.read();
+    }
+
     if(is_binary(filePath)) {
         payload.asset.attachment = Titanium.Codec.encodeBase64(contents);
     } else {
