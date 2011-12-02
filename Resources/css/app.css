@@ -82,7 +82,7 @@ ul.themes li:nth-child(even)  {
 }
 
 .themes li .path:hover {
-    background-color: #DDD929;
+    background-color: #C8EEC8;
 }
 /*Theme Panel Picker*/
 ul.theme-picker {
