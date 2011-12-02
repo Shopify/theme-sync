@@ -107,6 +107,10 @@ Watcher.connect = function(shop, theme, port, attempt) {
             }, (1000 * attempt));
         } else {
             console.log('Too many attempts');
+            Y.Global.fire('watch:stop', {
+                themeId: theme.get('id')
+            });
+            
         }
     });
     socket.onTimeout(function(e) {
