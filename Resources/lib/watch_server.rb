@@ -32,22 +32,41 @@ addr = s.peeraddr[3]
 # startEvent = { :event => 'connected'}
 # s.puts = "connected"
 
+# used to check asssets against ignore list.
+def ignore? key
+   ['.git', '.svn'].each { |e|
+    if(key.include?(e) == true)
+      return true;
+    end
+  }
+  return false
+end
+
 FSSM.monitor path do |m|
     m.update do |base, relative|
-      payload = {
-        :event => "update",
-        :base => base,
-        :relative => relative
-      }
-      s.puts payload.to_json
+
+      unless ignore? relative
+        payload = {
+          :event => "update",
+          :base => base,
+          :relative => relative
+        }
+        s.puts payload.to_json
+      end
+
     end
+
     m.create do |base, relative|
-      payload = {
-        :event => "create",
-        :base => base,
-        :relative => relative
-      }
-      s.puts payload.to_json
+
+      unless ignore? relative
+        payload = {
+          :event => "create",
+          :base => base,
+          :relative => relative
+        }
+        s.puts payload.to_json
+      end
+      
     end
     # if !options['keep_files']
     #   m.delete do |base, relative|
