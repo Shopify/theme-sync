@@ -77,9 +77,13 @@ ul.themes li:nth-child(even)  {
 }
 
 .themes li .path {
+    display: inline-block;
     cursor: pointer;
 }
 
+.themes li .path:hover {
+    background-color: #DDD929;
+}
 /*Theme Panel Picker*/
 ul.theme-picker {
     cursor: pointer;
