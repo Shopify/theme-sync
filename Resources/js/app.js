@@ -1,10 +1,28 @@
-YUI().use('event', 'event-focus','event-custom', function(Y) {Y.on("domready", function() { 
+YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y) {Y.on("domready", function() { 
+//@todo need to spin down watchers when going for remote auth
+
+    if(window.location.search != '') {
+        var shoplist = new Themer.shopList();
+        shoplist.load();
+
+        var qs = Y.QueryString.parse(window.location.search.replace('?', ''));
+        console.log(qs);
+
+        shoplist.create({
+            id:qs.shop.replace('.myshopify.com', '', 'i'),
+            api_key: APP_API_KEY,
+            password: Titanium.Codec.digestToHex(Titanium.Codec.MD5, SHARED_SECRET+qs.t)         
+        });
+    }
+    
+    
+    
     var theApp = new Themer.appView();
 
     //Stop right click outside of the LIs
     //LI contextmenu listener setup in view.js
     Y.one('body').on('contextmenu', function(e) {
-        e.preventDefault();
+        // e.preventDefault();
         //Remove contextual right click options
         // var emptyMenu = Ti.UI.createMenu();
         // Ti.UI.setContextMenu(emptyMenu);

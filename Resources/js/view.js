@@ -49,10 +49,13 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         shops.load();
 
-        //Custom event that gets the new shop data from form, and creates the model.
+        //Custom event that gets the new shop data from form
+        //Creates the redirect URL to get the perms, and sends user there
         Y.on('addShopOk', function(shopData) {
             console.log('appView: addShopOk');
-            this.shops.create(shopData);
+            // Ti.API.warn(shopData);
+            window.location = IO.authUrl(shopData.id);
+            // this.shops.create(shopData);
         }, this);
     },
 
@@ -131,15 +134,15 @@ var createAddShopPanel = function() {
             e.preventDefault(); 
 
             var data = {
-                id: Y.one('input[name=id]').get('value').replace('.myshopify.com', '', 'i'),
-                api_key: Y.one('input[name=api_key]').get('value'),
-                password: Y.one('input[name=password]').get('value')
+                id: Y.one('input[name=id]').get('value').replace('.myshopify.com', '', 'i')
+                // api_key: Y.one('input[name=api_key]').get('value'),
+                // password: Y.one('input[name=password]').get('value')
             };
             
             //@todo validate data
             //Assuming its ok...
             Y.fire('addShopOk', data);
-            panel.hide();
+            // panel.hide();
         },
         classNames: 'btn',
         section: Y.WidgetStdMod.FOOTER
