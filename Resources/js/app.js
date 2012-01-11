@@ -1,6 +1,8 @@
 YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y) {Y.on("domready", function() { 
+//@todo / bookmark : fix it so when you add first shop, that we don't see
+//                  the You have no shops so add one overlay. Basically a timing issue I suspect
+//                  of when we check
 //@todo need to spin down watchers when going for remote auth
-
     if(window.location.search != '') {
         var shoplist = new Themer.shopList();
         shoplist.load();
@@ -15,14 +17,12 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y
         });
     }
     
-    
-    
     var theApp = new Themer.appView();
 
     //Stop right click outside of the LIs
     //LI contextmenu listener setup in view.js
     Y.one('body').on('contextmenu', function(e) {
-        // e.preventDefault();
+        e.preventDefault();
         //Remove contextual right click options
         // var emptyMenu = Ti.UI.createMenu();
         // Ti.UI.setContextMenu(emptyMenu);
