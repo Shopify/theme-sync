@@ -2,15 +2,23 @@ YUI().use('event-custom', function(Y) {
 /////
 
 var IO = YUI.namespace('Themer.IO'),
-    TIMEOUT = 30000;
+    TIMEOUT = 30000,
+    APP_API_KEY = '92e8b52399eaa95f14210fdb7abc8ec8';
+
+IO.authUrl = function(shopId) {
+    return Y.Lang.sub('http://{store}.myshopify.com/admin/api/auth?api_key={app_api_key}', {
+        store: shopId,
+        app_api_key: APP_API_KEY
+    });
+};
 
 //@param shop ShopModel
 //@param endpoint our target, like themes
-IO.url = function(shop, endpoint) {
+IO.url = function(shopModel, endpoint) {
     return Y.Lang.sub('http://{api_key}:{password}@{store}.myshopify.com/admin/{endpoint}.json', {
-        store: shop.get('id'), 
-        api_key: shop.get('api_key'),
-        password: shop.get('password'),
+        store: shopModel.get('id'), 
+        api_key: shopModel.get('api_key'),
+        password: shopModel.get('password'),
         'endpoint': endpoint
     });
 };
