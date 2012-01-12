@@ -1,6 +1,5 @@
 YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y) {Y.on("domready", function() { 
-//@todo need to spin down watchers when going for remote auth
-    
+
     var theApp = new Themer.appView();
     
     //Spin up watchers...
