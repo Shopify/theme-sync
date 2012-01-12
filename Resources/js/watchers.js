@@ -145,15 +145,17 @@ Watcher.connect = function(shop, theme, port, attempt) {
 
 };
 
-//Clean up watchers on exit.
-Ti.API.addEventListener(Titanium.APP_EXIT, function() {
-    Titanium.API.warn('Exiting...');
+var killAllWatchers = function() {
+    Titanium.API.warn('Killing Watchers...');
     Watcher.processes.forEach(function(o) {
         Titanium.API.warn('Killing '+ o.process.getPID());
         if(o.process.isRunning()) { o.process.kill(); }
     });
-});
+};
 
+//Clean up watchers on exit.
+Y.Global.on('watch:killall', killAllWatchers);
+Ti.API.addEventListener(Titanium.APP_EXIT, killAllWatchers);
 
 //end closure
 });
