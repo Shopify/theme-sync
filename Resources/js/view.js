@@ -54,6 +54,9 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         Y.on('addShopOk', function(shopData) {
             console.log('appView: addShopOk');
             // Ti.API.warn(shopData);
+            connectingPanel().show();
+            //Spin down any watchers
+            Y.Global.fire('watch:killall');
             window.location = IO.authUrl(shopData.id);
             // this.shops.create(shopData);
         }, this);
@@ -346,7 +349,6 @@ var createThemePicker = function(shopModel) {
     
 };
 
-
 var downloadThemeActivity = function(themeModel) {
 
     var panel = new Y.Panel({
@@ -370,6 +372,25 @@ var downloadThemeActivity = function(themeModel) {
     return panel;
     
 };
+
+var connectingPanel = function() {
+
+    var panel = new Y.Panel({
+        width: 300, 
+        centered: true,
+        visible: true,
+        modal: true,
+        buttons: [], //no close button
+        zIndex: 12,
+        bodyContent: 'Connecting to Shopify...'
+    });
+
+    panel.render();
+
+    return panel;
+
+};
+
 
 ///end
 });
