@@ -30,7 +30,8 @@ IO.fetchThemesList = function(shopModel, handlers) {
     IO.get(target, handlers);
 };
 
-//Filter out .css files when a .css.liquid is available.
+//Filter out .css & .js files when a .css.liquid is available.
+//returns array of assets to upload
 var filterAssetList = function(assets) {
     var newList = [],
         toCheck = [],
@@ -115,6 +116,36 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
     IO.get(assetTarget, handlers);
 };
 
+//Deploy full theme
+IO.deployTheme = function(shopModel, themeModel) {
+    Ti.API.warn('IO.deplyTheme');
+
+    // var files = []
+    // , foldersOfInterest = 
+    //     [ 'assets'
+    //     , 'config'
+    //     , 'layout'
+    //     , 'snippets'
+    //     , 'templates'
+    // ];
+    // 
+    //Build the list of files
+
+    // Ti.API.warn(themeModel);
+    // foldersOfInterest.forEach(function(item) {
+    //     Ti.API.warn(item);
+    // });
+
+    //build the Q to upload
+    // var assetQ = new Y.Queue();
+    // assetQ.add.apply(assetQ, filterAssetList(result.assets));
+            
+};
+
+//@param shopModel
+//@param themeModel
+//@param assetKey
+//@param filePath
 IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
     console.log('IO:sendAsset: '+assetKey);
     
