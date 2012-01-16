@@ -17,18 +17,35 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         '#add-shop' : { click: 'addShop'},
         'ul.themes li': { contextmenu: function(e) {
             e.stopPropagation();
+
             var li = e.currentTarget,
-                currentMenu = Ti.UI.createMenu();
+                currentMenu = Ti.UI.createMenu(),
+                shops = this.shops;
 
             var openFolder = Ti.UI.createMenuItem('Open In Finder', function() {
                 li.one('.path').simulate('click');
             });
             
             var forceDeploy = Ti.UI.createMenuItem('Force Deploy', function() {
-                alert('Force Deploy TK');
+                Ti.API.warn('Force Deploy TK');
+                var themeId = li.get('id').replace('theme-', '');
+
+                shops.some(function(shopModel) {
+                    var themeModel = shopModel.themes.getById(themeId);
+                    if(themeModel) {
+                        IO.deployTheme(shopModel, themeModel);
+                        return true;
+                    }
+                    return false;
+                });
+
+
+
+                // Ti.API.warn(Themer.appView.themes == undefined);
                 //Get parent ID
                 //Throw up activity Panel
-                //IO.deploy(shopModel, themeModel)
+                // Ti.API.warn(IO.deployTheme);
+                // IO.deployTheme(shopModel, themeModel);
             });
 
             currentMenu.appendItem(openFolder);
@@ -186,7 +203,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         //@todo clean up themes when shop destroyed
         // model.after('destroy', this.destroy, this);
         
-        var themes = this.themes = new Themer.themeList();
+        var themes = model.themes = new Themer.themeList();
         themes.parent_id = model.get('id');
 
         themes.after('add', this.addTheme, this);
@@ -204,7 +221,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             store: model.get('id')
         }));
 
-        this.themes.each(function(theme) {
+        model.themes.each(function(theme) {
             // console.log(item.toJSON());
             var view = new Themer.ThemeView({
                 model: theme
@@ -269,7 +286,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     chooseTheme: function() {
         console.log('ShopView:chooseTheme');
         var ThisShopModel = this.model,
-            shopWorkingThemes = this.themes;
+            shopWorkingThemes = ThisShopModel.themes;
 
         //Open Panel
         var panel = createThemePicker();
