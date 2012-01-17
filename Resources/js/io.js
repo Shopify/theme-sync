@@ -118,35 +118,51 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
 
 //Deploy full theme
 IO.deployTheme = function(shopModel, themeModel) {
-    Ti.API.warn('IO.deplyTheme');
+    Ti.API.warn('IO.deployTheme');
 
-    // var files = []
-    // , foldersOfInterest = 
-    //     [ 'assets'
-    //     , 'config'
-    //     , 'layout'
-    //     , 'snippets'
-    //     , 'templates'
-    // ];
-    // 
+    var files = []
+        , path = themeModel.get('path')
+        , foldersOfInterest = 
+            [ 'assets'
+            , 'config'
+            , 'layout'
+            , 'snippets'
+            , 'templates'
+        ]
+        , uploadQ = new Y.Queue();
+
     //Build the list of files
+    foldersOfInterest.forEach(function(folder) {
+        var dir = Ti.Filesystem.getFile(path,folder)
+            , f = dir.getDirectoryListing();
+        uploadQ.add.apply(uploadQ, f);
+    });
 
-    // Ti.API.warn(themeModel);
-    // foldersOfInterest.forEach(function(item) {
-    //     Ti.API.warn(item);
-    // });
+    //And, now chew through the q, much like we do for download theme.
+    var firstUp = uploadQ.next().toString(),
+        successSendAsset = function(e) {
+            if(uploadQ.size() > 0) {
+                var next =  uploadQ.next().toString();
+                IO.sendAsset(shopModel, themeModel, next.replace(path+Ti.Filesystem.getSeparator(), ''), next, {success: successSendAsset});
+            } else {
+                Y.Global.fire('deploy:done');
+            }
+        };
 
-    //build the Q to upload
-    // var assetQ = new Y.Queue();
-    // assetQ.add.apply(assetQ, filterAssetList(result.assets));
-            
+    IO.sendAsset( 
+        shopModel, 
+        themeModel, 
+        firstUp.replace(path+Ti.Filesystem.getSeparator(), '') , 
+        firstUp, 
+        { success: successSendAsset }
+    );
 };
 
 //@param shopModel
 //@param themeModel
 //@param assetKey
 //@param filePath
-IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
+IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
     console.log('IO:sendAsset: '+assetKey);
     
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
@@ -176,7 +192,11 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath) {
         payload.asset.value = contents.toString();
     }
 
-    IO.put(assetTarget, payload);
+    Y.Global.fire('asset:upload', {
+        asset: assetKey
+    });
+
+    IO.put(assetTarget, payload, handlers);
 };
 
 

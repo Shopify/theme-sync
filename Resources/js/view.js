@@ -30,22 +30,16 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
                 Ti.API.warn('Force Deploy TK');
                 var themeId = li.get('id').replace('theme-', '');
 
+                //go through the shops, look for the theme model of interest
                 shops.some(function(shopModel) {
                     var themeModel = shopModel.themes.getById(themeId);
                     if(themeModel) {
+                        uploadThemeActivity(themeModel);
                         IO.deployTheme(shopModel, themeModel);
                         return true;
                     }
                     return false;
                 });
-
-
-
-                // Ti.API.warn(Themer.appView.themes == undefined);
-                //Get parent ID
-                //Throw up activity Panel
-                // Ti.API.warn(IO.deployTheme);
-                // IO.deployTheme(shopModel, themeModel);
             });
 
             currentMenu.appendItem(openFolder);
@@ -376,7 +370,7 @@ var downloadThemeActivity = function(themeModel) {
         buttons: [], //no close button
         headerContent: 'Download theme: '+ themeModel.get('name'),
         zIndex: 10,
-        bodyContent: 'Downloading files to:<br>'+ themeModel.get('path')+'<div id=downstatus></div>(^v^)/'
+        bodyContent: 'Downloading files to:<br>'+ themeModel.get('path')+'<div id="downstatus"></div>(^v^)/'
     });
 
     panel.render();
@@ -384,6 +378,30 @@ var downloadThemeActivity = function(themeModel) {
     Y.Global.on('download:done', function(e) { panel.hide(); });
     Y.Global.on('asset:download', function(e) {
         Y.one('#downstatus').setContent(e.asset + '...');
+    });
+
+    return panel;
+    
+};
+
+var uploadThemeActivity = function(themeModel) {
+
+    var panel = new Y.Panel({
+        width: 500, 
+        centered: true,
+        visible: true,
+        modal: true,
+        buttons: [], //no close button
+        headerContent: 'Uploading theme: '+ themeModel.get('name'),
+        zIndex: 10,
+        bodyContent: 'Now uploading:<div id="upstatus"></div>(^v^)/'
+    });
+
+    panel.render();
+
+    Y.Global.on('deploy:done', function(e) { panel.hide(); });
+    Y.Global.on('asset:upload', function(e) {
+        Y.one('#upstatus').setContent(e.asset + '...');
     });
 
     return panel;
