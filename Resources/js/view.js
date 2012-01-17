@@ -28,18 +28,22 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             
             var forceDeploy = Ti.UI.createMenuItem('Force Deploy', function() {
                 Ti.API.warn('Force Deploy TK');
-                var themeId = li.get('id').replace('theme-', '');
+                
+                if(confirm("Are you sure you want to upload this theme?")) {
+                    var themeId = li.get('id').replace('theme-', '');
 
-                //go through the shops, look for the theme model of interest
-                shops.some(function(shopModel) {
-                    var themeModel = shopModel.themes.getById(themeId);
-                    if(themeModel) {
-                        uploadThemeActivity(themeModel);
-                        IO.deployTheme(shopModel, themeModel);
-                        return true;
-                    }
-                    return false;
-                });
+                    //go through the shops, look for the theme model of interest
+                    shops.some(function(shopModel) {
+                        var themeModel = shopModel.themes.getById(themeId);
+                        if(themeModel) {
+                            uploadThemeActivity(themeModel);
+                            IO.deployTheme(shopModel, themeModel);
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+
             });
 
             currentMenu.appendItem(openFolder);
