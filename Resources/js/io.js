@@ -127,22 +127,31 @@ IO.deployTheme = function(shopModel, themeModel) {
             , 'config'
             , 'layout'
             , 'snippets'
-            , 'templates'
+            , 'templates',
+            , 'templates/customers'
         ]
         , uploadQ = new Y.Queue();
 
     //Build the list of files
     foldersOfInterest.forEach(function(folder) {
+
         var dir = Ti.Filesystem.getFile(path,folder)
-            , f = dir.getDirectoryListing();
-        uploadQ.add.apply(uploadQ, f);
+            , f = (dir.exists()) ? dir.getDirectoryListing() : [];
+
+        //Tear through listing
+        f.forEach(function(item) {
+            //exclude folders & hidden
+            if( !item.isDirectory() && !item.isHidden()) {
+                uploadQ.add(item.toString());
+            }
+        });
     });
 
     //And, now chew through the q, much like we do for download theme.
-    var firstUp = uploadQ.next().toString(),
+    var firstUp = uploadQ.next(),
         successSendAsset = function(e) {
             if(uploadQ.size() > 0) {
-                var next =  uploadQ.next().toString();
+                var next =  uploadQ.next();
                 IO.sendAsset(shopModel, themeModel, next.replace(path+Ti.Filesystem.getSeparator(), ''), next, {success: successSendAsset});
             } else {
                 Y.Global.fire('deploy:done');
