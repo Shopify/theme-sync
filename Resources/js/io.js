@@ -107,7 +107,7 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
 IO.getAsset = function(shopModel, themeModel, asset, handlers) {
     
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
-    assetTarget = assetTarget.concat('?', 'asset[key]=', asset);
+    assetTarget = assetTarget.concat('?', 'asset[key]=', Titanium.Network.encodeURIComponent(asset));
 
     Y.Global.fire('asset:download', {
         asset: asset
@@ -248,9 +248,11 @@ IO.get = function(target, handlers) {
         var status = this.status;
         if((400 > status)) {        
             // var response = JSON.parse(this.responseText);
+            Ti.API.info('GET Success');
             handlers.success.call({}, event);
         }
         else {
+            Ti.API.info('GET Failure');
             handlers.failure.call({}, event);
         }
     };
