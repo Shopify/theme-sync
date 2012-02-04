@@ -148,12 +148,45 @@ IO.deployTheme = function(shopModel, themeModel) {
     });
 
     //And, now chew through the q, much like we do for download theme.
-    var firstUp = uploadQ.next(),
-        successSendAsset = function(e) {
-            if(uploadQ.size() > 0) {
-                var next =  uploadQ.next();
-                IO.sendAsset(shopModel, themeModel, next.replace(path+Ti.Filesystem.getSeparator(), ''), next, {success: successSendAsset});
+    var toUpload = uploadQ.next(),
+        key = toUpload.replace(path+Ti.Filesystem.getSeparator(), ''),
+        errorCount = 0,
+        failureSendAsset = function(e) {
+            if(e.timedOut) {
+                //On a timeout we dont want to continue.
+                growlTimedOut();
+                Y.Global.fire('deploy:done');
             } else {
+                Ti.API.error('Error deployTheme: '+e.status + ' - ' + e.statusText);
+                var response = JSON.parse(e.responseText);
+                var errors = response.errors || {};
+                Y.each(errors, function(message) {
+                    growl({
+                        title: 'Error uploading',
+                        message: key.concat(' - ', message)
+                    });
+                });
+                errorCount++;
+                //Then call successSendAsset to go onto the next item...
+                successSendAsset();
+            }
+        },
+        successSendAsset = function() {
+            if(uploadQ.size() > 0) {
+                toUpload =  uploadQ.next();
+                key = toUpload.replace(path+Ti.Filesystem.getSeparator(), '');
+                
+                IO.sendAsset(shopModel, themeModel, key, toUpload, {success: successSendAsset, failure: failureSendAsset});
+            } else {
+                var doneMessage = themeModel.get('name').concat(' has been uploaded.');
+                if(errorCount > 0) {
+                    Ti.API.warn('adding to message');                    
+                    doneMessage += ("\n" + errorCount + ' ' + ((errorCount == 1)?'file':'files') +' not uploaded');
+                }
+                growl({
+                    title: 'Deploy done!',
+                    message: doneMessage
+                });
                 Y.Global.fire('deploy:done');
             }
         };
@@ -161,9 +194,12 @@ IO.deployTheme = function(shopModel, themeModel) {
     IO.sendAsset( 
         shopModel, 
         themeModel, 
-        firstUp.replace(path+Ti.Filesystem.getSeparator(), '') , 
-        firstUp, 
-        { success: successSendAsset }
+        key, 
+        toUpload, 
+        { 
+            success: successSendAsset,
+            failure: failureSendAsset 
+        }
     );
 };
 
