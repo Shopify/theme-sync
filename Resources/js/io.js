@@ -212,23 +212,23 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
 IO.put = function(target, data, handlers) {
 
     handlers = handlers || {};
-    handlers.failure = handlers.failure || function(e) {console.log('fail:PUT');console.log(e.responseText);};
-    handlers.success = handlers.success || function(e) {console.log('success:PUT');console.log(e.responseText);};
+    handlers.failure = handlers.failure || function(e) {console.log('PUT: Fail');console.log(e);};
+    handlers.success = handlers.success || function(e) {console.log('PUT: Success');};
 
     var xhr = Titanium.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
     xhr.setRequestHeader('Content-Type','application/json');
-    
-    xhr.onerror = handlers.failure;
 
     xhr.onload = function(event) {
-        var status = this.status;
-        if((400 > status)) {        
-            // var response = JSON.parse(this.responseText);
-            handlers.success.call({}, event);
-        }
-        else {
+        var status = this.status || 999, //Fallback on my own code if status is null
+            timedOut = event.timedOut;
+
+        if(timedOut || (status > 399)) {
+            Ti.API.info('PUT: Failure');
             handlers.failure.call({}, event);
+        } else {
+            Ti.API.info('PUT: Success');
+            handlers.success.call({}, event);
         }
     };
 
@@ -242,18 +242,16 @@ IO.get = function(target, handlers) {
     var xhr = Titanium.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
 
-    xhr.onerror = handlers.failure;
-
     xhr.onload = function(event) {
-        var status = this.status;
-        if((400 > status)) {        
-            // var response = JSON.parse(this.responseText);
-            Ti.API.info('GET Success');
-            handlers.success.call({}, event);
-        }
-        else {
-            Ti.API.info('GET Failure');
+        var status = this.status || 999, //Fallback on my own code if status is null
+            timedOut = event.timedOut;
+
+        if(timedOut || (status > 399)) {
+            Ti.API.info('PUT: Failure');
             handlers.failure.call({}, event);
+        } else {
+            Ti.API.info('PUT: Success');
+            handlers.success.call({}, event);
         }
     };
 
