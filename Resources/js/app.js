@@ -1,4 +1,4 @@
-YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y) {Y.on("domready", function() { 
+YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', function(Y) {Y.on("domready", function() { 
 
     var theApp = new Themer.appView();
     
@@ -26,11 +26,32 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y
 
     Y.Global.on('asset:send', function(e) {
         console.log('asset:send listener');
-        //@todo allowed list?
-        var key = e.relative,
-            path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative);
 
-        Themer.IO.sendAsset(e.shop, e.theme, key, path);
+        var key = e.relative,
+            path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
+            failureHandler = function(e) {
+                if(e.timedOut) {
+                    growl({
+                        title: 'Error contacting Shopify',
+                        message: 'The connection timed out. Please try again.'
+                    });
+                } 
+                else {
+                    //output error to console
+                    Ti.API.error(e.status);
+                    Ti.API.error(e.statusText);
+                    var response = JSON.parse(e.responseText);
+                    var errors = response.errors || {};
+                    Y.each(errors, function(message) {
+                        growl({
+                            title: 'Error uploading',
+                            message: key.concat(' - ', message)
+                        });
+                    });
+                }
+            };
+
+        Themer.IO.sendAsset(e.shop, e.theme, key, path, {failure: failureHandler});
     });
 
     //Stop right click outside of the LIs
@@ -42,6 +63,5 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse', function(Y
         // Ti.UI.setContextMenu(emptyMenu);
     });
 
-    
 });});
 
