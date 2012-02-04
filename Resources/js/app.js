@@ -31,10 +31,7 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
             path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
             failureHandler = function(e) {
                 if(e.timedOut) {
-                    growl({
-                        title: 'Error contacting Shopify',
-                        message: 'The connection timed out. Please try again.'
-                    });
+                    growlTimedOut();
                 } 
                 else {
                     //output error to console
