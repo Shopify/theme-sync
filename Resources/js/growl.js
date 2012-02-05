@@ -6,6 +6,6 @@ var growl = function(args) {
 var growlTimedOut = function() {
     growl({
         title: 'Error contacting Shopify',
-        message: 'The connection timed out. Please try again.'
+        message: 'The connection timed out. Please check your network and try again.'
     });
 };
