@@ -60,6 +60,11 @@ IO.downloadTheme = function(shopModel, themeModel) {
     //Fetch the assets list
     IO.get(assetsListTarget, {
         success: function(e) {
+            var ABORT = false;
+            Y.Global.on('download:cancel', function() {
+                ABORT = true;
+            });
+
             var result = JSON.parse(e.responseText);
 
             var assetQ = new Y.Queue();
@@ -80,7 +85,11 @@ IO.downloadTheme = function(shopModel, themeModel) {
                     
                     if(assetQ.size() > 0) {
                         toGet = assetQ.next();
-                        IO.getAsset(shopModel, themeModel, toGet, {success: successGetAsset, failure: failureGetAsset});
+                        if(!ABORT){
+                            IO.getAsset(shopModel, themeModel, toGet, {success: successGetAsset, failure: failureGetAsset});
+                        } else {
+                            Y.Global.fire('download:done', {cancelled: true});
+                        }
                     } else {
                         Y.Global.fire('download:done');
                     }
@@ -110,7 +119,11 @@ IO.downloadTheme = function(shopModel, themeModel) {
 
                 if(assetQ.size() > 0) {
                     toGet = assetQ.next();
-                    IO.getAsset(shopModel, themeModel, toGet, {success: successGetAsset, failure: failureGetAsset});
+                    if(!ABORT){
+                        IO.getAsset(shopModel, themeModel, toGet, {success: successGetAsset, failure: failureGetAsset});
+                    } else {
+                        Y.Global.fire('download:done',{cancelled: true}); //hide panel
+                    }
                 } else {
                     Y.Global.fire('download:done');
                 }
@@ -224,7 +237,7 @@ IO.deployTheme = function(shopModel, themeModel) {
                 }
                 else {
                     growl({
-                        title: 'Upload cancelled',
+                        title: 'Upload Cancelled',
                         message: 'Some files were uploaded, so check your shop'
                     });
                     Y.Global.fire('deploy:done');

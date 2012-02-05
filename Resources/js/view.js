@@ -377,14 +377,33 @@ var downloadThemeActivity = function(themeModel) {
         bodyContent: 'Downloading files to:<br>'+ themeModel.get('path')+'<div id="downstatus"></div>(^v^)/'
     });
 
+    panel.addButton({
+        value: 'Cancel',
+        action: function(e) {
+            e.preventDefault();
+            Y.Global.fire('download:cancel');
+        },
+        classNames: 'btn',
+        section: Y.WidgetStdMod.FOOTER
+    });
+
     panel.render();
 
     Y.Global.on('download:done', function(e) { 
+        var cancelled = e.cancelled || false;
         panel.hide(); 
-        growl({
+        var gmsg = {
             title: 'Download Done',
             message: 'The theme '+themeModel.get('name')+' is done downloading'
-        });
+        };
+        
+        if(cancelled){
+            gmsg = {
+                title: 'Download Cancelled',
+                message: 'Some files have been downloaded.'
+            };
+        } 
+        growl(gmsg);
     });
     Y.Global.on('download:error', function(e) { panel.hide(); });
     Y.Global.on('asset:download', function(e) {
@@ -417,7 +436,6 @@ var uploadThemeActivity = function(themeModel) {
         classNames: 'btn',
         section: Y.WidgetStdMod.FOOTER
     });
-
 
     panel.render();
 
