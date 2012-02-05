@@ -408,6 +408,17 @@ var uploadThemeActivity = function(themeModel) {
         bodyContent: 'Now uploading:<div id="upstatus"></div>(^v^)/'
     });
 
+    panel.addButton({
+        value: 'Cancel',
+        action: function(e) {
+            e.preventDefault();
+            Y.Global.fire('upload:cancel');
+        },
+        classNames: 'btn',
+        section: Y.WidgetStdMod.FOOTER
+    });
+
+
     panel.render();
 
     Y.Global.on('deploy:done', function(e) { panel.hide(); });

@@ -158,6 +158,11 @@ IO.getAsset = function(shopModel, themeModel, asset, handlers) {
 IO.deployTheme = function(shopModel, themeModel) {
     Ti.API.warn('IO.deployTheme');
 
+    var ABORT = false;
+    Y.Global.on('upload:cancel', function() {
+        ABORT = true;
+    });
+
     var files = []
         , path = themeModel.get('path')
         , foldersOfInterest = 
@@ -214,7 +219,16 @@ IO.deployTheme = function(shopModel, themeModel) {
                 toUpload =  uploadQ.next();
                 key = toUpload.replace(path+Ti.Filesystem.getSeparator(), '');
                 
-                IO.sendAsset(shopModel, themeModel, key, toUpload, {success: successSendAsset, failure: failureSendAsset});
+                if(!ABORT){
+                    IO.sendAsset(shopModel, themeModel, key, toUpload, {success: successSendAsset, failure: failureSendAsset});
+                }
+                else {
+                    growl({
+                        title: 'Upload cancelled',
+                        message: 'Some files were uploaded, so check your shop'
+                    });
+                    Y.Global.fire('deploy:done');
+                }
             } else {
                 var doneMessage = themeModel.get('name').concat(' has been uploaded.');
                 if(errorCount > 0) {
