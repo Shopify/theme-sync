@@ -54,9 +54,9 @@ var filterAssetList = function(assets) {
     return newList;
 }; 
 
-IO.downloadTheme = function(shopModel, themeModel, handlers) {
+IO.downloadTheme = function(shopModel, themeModel) {
+    console.log('IO.downloadTheme');
     var assetsListTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
-    console.log(themeModel.get('path'));
     //Fetch the assets list
     IO.get(assetsListTarget, {
         success: function(e) {
@@ -64,6 +64,28 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
 
             var assetQ = new Y.Queue();
             assetQ.add.apply(assetQ, filterAssetList(result.assets));
+
+            var toGet = assetQ.next();
+
+            var failureGetAsset =  function(e) {
+                if(e.timedOut) {
+                    growlTimedOut();
+                    Y.Global.fire('download:done');
+                } 
+                else {
+                    growl({
+                        title: 'Error',
+                        message: "Couldn't get asset "+toGet
+                    });
+                    
+                    if(assetQ.size() > 0) {
+                        toGet = assetQ.next();
+                        IO.getAsset(shopModel, themeModel, toGet, {success: successGetAsset, failure: failureGetAsset});
+                    } else {
+                        Y.Global.fire('download:done');
+                    }
+                }
+            };
 
             var successGetAsset = function(e) {
                 
@@ -74,7 +96,8 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
                 destPath.pop();
                 var destinationDir = Titanium.Filesystem.getFile(destPath.join(Titanium.Filesystem.getSeparator()));
                 if( (destinationDir.exists() == false) && (destinationDir.createDirectory() == false)) {
-                    alert('We could not create the directory: ' + destPath.nativePath());
+                    alert('We could not create the directory: ' + destPath.nativePath() + ' so we must abort.');
+                    Y.Global.fire('download:error');
                     return;
                 }
                 
@@ -86,19 +109,34 @@ IO.downloadTheme = function(shopModel, themeModel, handlers) {
                 }
 
                 if(assetQ.size() > 0) {
-                    IO.getAsset(shopModel, themeModel, assetQ.next(), {success: successGetAsset});
+                    toGet = assetQ.next();
+                    IO.getAsset(shopModel, themeModel, toGet, {success: successGetAsset, failure: failureGetAsset});
                 } else {
                     Y.Global.fire('download:done');
                 }
             };
             
+            
             //Start the download queue...
-            IO.getAsset(shopModel, themeModel, assetQ.next(), { success: successGetAsset });
+            IO.getAsset(shopModel, themeModel, toGet, { success: successGetAsset, failure: failureGetAsset });
 
         }, 
         failure: function(e) {
-            console.log('Error: assetsList fetch');
-            console.log(e);
+            if(e.timedOut) {
+                growlTimedOut();
+            } 
+            else {
+                //output error to console
+                console.log('Error: assetsList fetch');
+                Ti.API.error(e.status);
+                Ti.API.error(e.statusText);
+                Ti.API.error(e.responseText);
+                growl({
+                    title: 'Error',
+                    message: 'There was a problem fetching the Assets List for this theme.'
+                });
+            }
+            Y.Global.fire('download:error');
         }
     });
     

@@ -379,7 +379,14 @@ var downloadThemeActivity = function(themeModel) {
 
     panel.render();
 
-    Y.Global.on('download:done', function(e) { panel.hide(); });
+    Y.Global.on('download:done', function(e) { 
+        panel.hide(); 
+        growl({
+            title: 'Download Done',
+            message: 'The theme '+themeModel.get('name')+' is done downloading'
+        });
+    });
+    Y.Global.on('download:error', function(e) { panel.hide(); });
     Y.Global.on('asset:download', function(e) {
         Y.one('#downstatus').setContent(e.asset + '...');
     });
