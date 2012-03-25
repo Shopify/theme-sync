@@ -13,6 +13,10 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             e.halt(true);
             Titanium.Platform.openURL(e.currentTarget.get('href'));
         }},
+        'a#reload': { click: function(e) {
+            e.halt(true);
+            window.location.reload(true);
+        }},
         
         '#add-shop' : { click: 'addShop'},
         'ul.themes li': { contextmenu: function(e) {
