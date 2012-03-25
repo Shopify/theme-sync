@@ -394,6 +394,7 @@ var downloadThemeActivity = function(themeModel) {
     panel.render();
 
     Y.Global.on('download:done', function(e) { 
+        e = e || {};
         var cancelled = e.cancelled || false;
         panel.hide(); 
         var gmsg = {

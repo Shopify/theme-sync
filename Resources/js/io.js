@@ -313,8 +313,8 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
 IO.put = function(target, data, handlers) {
 
     handlers = handlers || {};
-    handlers.failure = handlers.failure || function(e) {console.log('PUT: Fail');console.log(e);};
-    handlers.success = handlers.success || function(e) {console.log('PUT: Success');};
+    handlers.failure = handlers.failure || function(e) {console.log('PUT: Fail/Default Handler');console.log(e);};
+    handlers.success = handlers.success || function(e) {console.log('PUT: Success/Default Handler');};
 
     var xhr = Titanium.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
@@ -348,10 +348,10 @@ IO.get = function(target, handlers) {
             timedOut = event.timedOut;
 
         if(timedOut || (status > 399)) {
-            Ti.API.info('PUT: Failure');
+            Ti.API.info('GET: Failure');
             handlers.failure.call({}, event);
         } else {
-            Ti.API.info('PUT: Success');
+            Ti.API.info('GET: Success');
             handlers.success.call({}, event);
         }
     };
