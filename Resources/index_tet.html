@@ -1,0 +1,127 @@
+<html>
+<head>
+  <script src="js/permfix.js"></script>
+  <script src="js/config.js"></script>
+  <script type="text/javascript">
+  var Ti = Titanium;
+  //@broken in 1.2 sdk :(
+  // Titanium.UI.getCurrentWindow().showInspector(true);
+  </script>  
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Shopify Theme Manager</title>
+  <meta name="author" content="Tetsuro Takara">
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+
+  <script src="js/yui-min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    var Themer = YUI.namespace('Themer'); //Our global object
+  </script>
+  
+  <script type="text/javascript" charset="utf-8">
+      Ti.include("/lib/util.php");
+  </script>
+
+  <script src="js/growl.js"></script>
+  <script src="js/io.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/views/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/watchers.js"></script>
+
+  <link rel="stylesheet" href="css/panel-skin.css" type="text/css">
+  
+  
+</head>
+
+<body class="yui3-skin-shopify">
+  <header class="grey-bg">
+    <img src="img/logo.png" />
+    <span>theme manager</span>
+  </header>
+  <section class="content clearfix">
+    <aside class="sidebar">
+      <strong>Your Shops:</strong>
+      <span id='shops'>
+        <a href="#" class="active">Your Store</a>
+        <a href="#">Your Second Store</a>
+        <a href="#">Your Third Store</a>
+        <a href="#">Oh Look Your Second Store</a> 
+      </span>
+      <div class="add-shop-action">       
+        <a class="add-shop btn btn-large" href="#">Add Shop</a>        
+      </div>
+    </aside>    
+    <div class="themes">
+      <div class="theme-header clearfix">
+        <h3>Your Themes (4)</h3>
+        <a href="#" class="btn btn-danger">Remove Shop</a>                
+        <a href="#" class="btn">Add Theme</a>
+      </div>
+      <div class="theme-list">
+        <div class="theme clearfix">
+          <div class="theme-info clearfix">
+            <div class="theme-info-left">
+              <img src="img/status_green.png" />
+            </div>
+            <div class="theme-info-right">
+              <h4>Theme Name</h4>      
+              <span>/Users/path/Desktop/my-theme-223423</span>
+            </div>
+          </div>
+          <div class="theme-options">
+            <div class="btn-group">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <img src="img/cog.png"/>
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">View Theme</a></li>
+                <li><a href="#">Show in Finder</a></li>
+                <li class="divider"></li>                    
+                <li><a href="#">Remove Theme</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/jquery-1.7.2.min.js"></script>
+  <script src="js/bootstrap-dropdown.js"></script>
+  <script>
+  $(document).ready(function() {  
+    $('.dropdown-toggle').dropdown();
+  });
+
+  </script>
+
+  <script type="text/x-template" id="shop-template">
+    <a href="#" class="{class}" id="{store}"></a>
+  </script>
+  <script type="text/x-template" id="theme-li-template">
+      <div class='actions'>{viewButton} <button class='btn remove-theme'>Remove Theme</button></div>
+      <div class='info'><span class='name nowatch'>{name}</span> <span class='role'>[{role}]</span></div>
+      <div class='path'>{path}</div>
+  </script>
+
+  <div id='add-shop-panel' class='hide'>
+      <div class='yui3-widget-bd'>
+          <form class="lform">
+              <fieldset>
+                  <div>
+                      <label for='id'>Shop</label>
+                      <input type="text" name="id" value="">
+                  </div>
+              </fieldset>
+          </form>
+      </div>
+  </div>
+
+
+
+</body>
+</html>

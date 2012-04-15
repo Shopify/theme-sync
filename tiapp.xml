@@ -12,11 +12,11 @@
 <window>
 <id>main</id>
 <title>Shopify Theme</title>
-<url>app://index.html</url>
-<width>700</width>
+<url>app://index_tet.html</url>
+<width>800</width>
 <max-width>3000</max-width>
 <min-width>0</min-width>
-<height>500</height>
+<height>600</height>
 <max-height>3000</max-height>
 <min-height>0</min-height>
 <fullscreen>false</fullscreen>

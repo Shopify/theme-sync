@@ -5,7 +5,7 @@ var IO = YUI.namespace('Themer.IO');
 
 Themer.appView = Y.Base.create('appView', Y.View, [], {
    
-    container: Y.one('#container'),
+    container: Y.one('body'),
 
     events: {
         //General External Link handler. Open in browser window.
@@ -18,7 +18,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             window.location.reload(true);
         }},
         
-        '#add-shop' : { click: 'addShop'},
+        '.add-shop' : { click: 'addShop'},
         'ul.themes li': { contextmenu: function(e) {
             e.stopPropagation();
 
@@ -86,25 +86,28 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
-            Y.one('#onboard').removeClass('util-hide');
+            // Y.one('#onboard').removeClass('util-hide');
             this.addShop();
             return this;
         }
 
-        Y.one('#onboard').addClass('util-hide');
+        // Y.one('#onboard').addClass('util-hide');
 
         var fragment = Y.one(Y.config.doc.createDocumentFragment());
 
-        Y.Array.each(e.models, function (model) {
+        Y.Array.each(e.models, function (model, index) {
             console.log('render shop id:' + model.get('id'));
             var view = new Themer.ShopView({
                 model: model,
-                container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: model.get('id')})
+                container: Y.Lang.sub(Y.one('#shop-template').getContent(), {
+                    store: model.get('id'),
+                    'class': (index == 0) ? 'active':''
+                })
             });
             fragment.append(view.render().container);
         });
 
-        this.container.one('#content').setContent(fragment);
+        this.container.one('#shops').setContent(fragment);
 
         return this;
     },
@@ -123,7 +126,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         //If its showing, hide it...
         var view = new Themer.ShopView({
             model: e.model,
-            container: Y.Lang.sub('<div id="{store}" class="shop-themes"></div>', {store: e.model.get('id')})
+            container: Y.Lang.sub(Y.one('#shop-template').getContent(), {store: e.model.get('id')})
         });
         
         this.container.one('#content').append(view.render().container);
@@ -183,7 +186,7 @@ var createAddShopPanel = function() {
     });
 
     panel.render();
-    Y.one('#add-shop-panel').removeClass('util-hide');
+    Y.one('#add-shop-panel').removeClass('hide');
 
     return panel;
 };
@@ -194,7 +197,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     //Will pass in a custom container at instantiation
     //    <div id='{store}' class='shop-themes'></div>
     // container: Y.one('#shop-template').getContent(), 
-    template: Y.one('#shop-template').getContent(),
+    template: '{store}',
     
     events: {
         'button.add-theme': { click: 'chooseTheme'},
@@ -225,14 +228,14 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             store: model.get('id')
         }));
 
-        model.themes.each(function(theme) {
-            // console.log(item.toJSON());
-            var view = new Themer.ThemeView({
-                model: theme
-            });
-            container.one('ul.themes').append(view.render().container);
-            // fragment.append(view.render().container);
-        });
+        // model.themes.each(function(theme) {
+        //     // console.log(item.toJSON());
+        //     var view = new Themer.ThemeView({
+        //         model: theme
+        //     });
+        //     container.one('ul.themes').append(view.render().container);
+        //     // fragment.append(view.render().container);
+        // });
 
         return this;
     },

@@ -1,0 +1,102 @@
+/* Box-model FTFW */
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.dropdown-menu *{-moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box;}
+*{outline:none;}
+body{width: 800px;}
+header{background:#000; color:#fff; padding:10px 20px;}
+header span{font-style:italic; color:#888; display:inline-block; padding-left:5px;}
+a{outline:none;}
+a:hover{text-decoration:none;}
+
+
+.sidebar,.themes{height:490px; padding:20px 0;}
+
+
+/* =========== */
+/* = Sidebar = */
+/* =========== */
+.sidebar{float:left; width:28.125%; background: #e1e1e1; border-right:1px solid #bbb; position:relative;}
+.sidebar *{padding:0 20px;}
+.sidebar strong{margin-bottom:15px;}
+.sidebar a, .sidebar strong{display:block;}
+.sidebar a{padding:5px 20px;}
+.sidebar a.active{color:#fff;}
+.add-shop-action{position:absolute; bottom:0; width: 100%; background: #d6d6d6; padding:20px 0; border-top: 1px solid #bbb;}
+.add-shop{width:170px; margin:0 auto;}
+
+/* =============== */
+/* = Themes Area = */
+/* =============== */
+
+.themes{float:left; width:71.875%; padding:20px; background:#f7f7f7;}
+.theme-header{margin-bottom:30px;}
+.theme-header a{display:inline-block; float:right; margin-left:5px;}
+.theme-header h3{float:left;}
+.theme{width:100%;}
+.theme .btn, .theme .btn-group{box-shadow:0px;}
+.theme-info{float:left;}
+.theme-info img{}
+.theme-info-left{float:left; margin-right:15px; padding-top:8px;}
+.theme-info-right{float:right;}
+.theme-options{float:right; padding-top:3px;}
+
+/* ============ */
+/* = Gradient = */
+/* ============ */
+
+.grey-bg{
+	background: -moz-linear-gradient(top,  #303030 0%, #000000 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#303030), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #303030 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+}
+
+.active{
+	background: #66a2d8; /* Old browsers */
+	background: -moz-linear-gradient(top,  #66a2d8 1%, #2172ba 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#66a2d8), color-stop(100%,#2172ba)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #66a2d8 1%,#2172ba 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #66a2d8 1%,#2172ba 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #66a2d8 1%,#2172ba 100%); /* IE10+ */
+	background: linear-gradient(top,  #66a2d8 1%,#2172ba 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66a2d8', endColorstr='#2172ba',GradientType=0 ); /* IE6-9 */
+	
+}
+
+
+/* ================ */
+/* = Theme Button = */
+/* ================ */
+
+.theme{display: inline-block;
+*display: inline;
+/* IE7 inline-block hack */
+
+*zoom: 1;
+padding: 10px 15px;
+margin-bottom: 0;
+font-size: 13px;
+line-height: 18px;
+color: #333333;
+text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+vertical-align: middle;
+background-color: #f5f5f5;
+background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+background-image: linear-gradient(top, #ffffff, #e6e6e6);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+border: 1px solid #cccccc;
+border-bottom-color: #b3b3b3;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+*margin-left: .3em;}
