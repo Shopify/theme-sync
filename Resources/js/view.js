@@ -155,10 +155,12 @@ var createAddShopPanel = function() {
         action: function(e) {
             e.preventDefault(); 
 
+            var shopid = Y.one('input[name=id]').get('value')
+                            .replace('.myshopify.com', '', 'i')
+                            .replace('/',''); //#fixes public issue #10
+
             var data = {
-                id: Y.one('input[name=id]').get('value').replace('.myshopify.com', '', 'i')
-                // api_key: Y.one('input[name=api_key]').get('value'),
-                // password: Y.one('input[name=password]').get('value')
+                id: shopid
             };
             
             //@todo validate data
