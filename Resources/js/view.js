@@ -204,7 +204,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     template: '{store}',
     
     events: {
-        'button.add-theme': { click: 'chooseTheme'},
+        '.add-theme': { click: 'chooseTheme'},
         'button.remove-shop': { click: 'remove'}
     },
     
@@ -249,9 +249,17 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                 model: theme
             });
             
-            Y.one('div#themes-'+store).append(view.render().container);
+            Y.one('div#themes-'+store+" .theme-list").append(view.render().container);
             // fragment.append(view.render().container);
         });
+        
+        //add delegate to listen for Add Theme button press
+        Y.one('div#themes-'+store).delegate('click', 
+            this.chooseTheme, 
+            '.add-theme', 
+            {'model': model} //Add some context
+        );
+        
 
         return this;
     },
@@ -264,22 +272,22 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
 
     //Called when theme added to the shop themes list
     addTheme: function(e) {
-        console.log('shopView: New Theme Added');        
+        console.log('shopView: New Theme Added');
         var shop = this.model,
             theme = e.model,
-            ul = this.container.one('ul.themes');
-        
+            themeList = Y.one('#themes-'+shop.get('id')+' .theme-list');
+
         var view = new Themer.ThemeView({
             model: theme
         });
-        
-        var existing = ul.one('#theme-'+theme.get('id')),
+
+        var existing = themeList.one('#theme-'+theme.get('id')),
             newNode = view.render().container;
 
         if(existing) {
-            ul.replaceChild(newNode, existing);
+            themeList.replaceChild(newNode, existing);
         } else {
-            ul.append(newNode);
+            themeList.append(newNode);
         }
 
         //Throw up activity indicator.

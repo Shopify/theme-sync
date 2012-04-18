@@ -62,40 +62,21 @@
   <script src="js/bootstrap-dropdown.js"></script>
   <script>
 YUI().use('node', function(Y) {Y.on("domready", function() { 
+  //This is already a delegate, so no need to re-init when we add new themes
   $('.dropdown-toggle').dropdown();
   
   //e.container == #shops
   //e.currentTarget = clicked A
-  Y.one('#shops').delegate('click', function(e) {
+  var shopClickHandler = function(e) {
     e.container.one('a.active').removeClass('active');
     e.currentTarget.addClass('active');
     
     Y.one('.theme-show').replaceClass('theme-show', 'theme-hide');
     Y.one('#themes-'+e.currentTarget.get('id')).replaceClass('theme-hide', 'theme-show');
-        
-    // $(".shop-list a.active").removeClass('active');
-    // Y.log(e.currentTarget.get('id'));
-  }, 'a');
+  };
+
+  Y.one('#shops').delegate('click', shopClickHandler, 'a');
 });});
-  
-  // $(document).ready(function() {  
-  //   $('.dropdown-toggle').dropdown();
-  // 
-  //   //@todo - switch to delegate pattern
-  //   //Active class and showing/hiding selected shop's themes
-  //   
-  //   $(".shop-list a").click(function() {
-  //     $(".shop-list a.active").removeClass('active');
-  //     $(this).addClass("active");
-  //     var shopId = $(this).attr('id');
-  //     Y.log('shopId');
-  //     shopId = shopId.replace('#','shop-'); // Not necessary
-  // 
-  //     $('.theme-show').removeClass('theme-show').addClass('theme-hide');
-  //     $("."+shopId).addClass('theme-show').removeClass('theme-hide');
-  //   });
-  //   
-  // });
 
   </script>
 
@@ -109,7 +90,7 @@ YUI().use('node', function(Y) {Y.on("domready", function() {
       <div class="theme-header clearfix">
         <h3>Your Themes {store}</h3>
         <a href="#" class="btn btn-danger">Remove Shop</a>                
-        <a href="#" class="btn">Add Theme</a>
+        <a href="#" class="btn add-theme">Add Theme</a>
       </div>
       <div class="theme-list">
       </div>
