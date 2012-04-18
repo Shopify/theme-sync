@@ -12,7 +12,7 @@
 <window>
 <id>main</id>
 <title>Shopify Theme</title>
-<url>app://index_tet.html</url>
+<url>app://index.html</url>
 <width>800</width>
 <max-width>3000</max-width>
 <min-width>0</min-width>
