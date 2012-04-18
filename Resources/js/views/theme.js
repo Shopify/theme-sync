@@ -24,7 +24,7 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         this.container.delegate('click', function() {
             Titanium.Platform.openURL('file://'+e.model.get('path'));
         }, '.path');
-        this.container.delegate('click', this.remove, 'button.remove-theme', this);
+        this.container.delegate('click', this.remove, '.remove-theme', this);
     },
     
     render: function() {
