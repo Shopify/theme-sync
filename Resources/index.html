@@ -148,7 +148,20 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
 
   </script>
 
-  <div id='add-shop-panel' class='hide'>
+  <div id='add-shop-panel' class='hide modal'>
+      <div class="modal-body">
+             <form class="lform form-vertical">
+                  <fieldset>
+                      <div>
+                          <label for='id'>Enter your shop's URL here:</label>
+                          <input type="text" name="id" value="" placeholder="ex: shop-name.myshopify.com">
+                      </div>
+                  </fieldset>
+              </form>    
+      </div>
+  </div>
+
+<!--   <div id='add-shop-panel' class='hide'>
       <div class='yui3-widget-bd'>
           <form class="lform">
               <fieldset>
@@ -159,7 +172,7 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
               </fieldset>
           </form>
       </div>
-  </div>
+  </div> -->
 
 </body>
 </html>

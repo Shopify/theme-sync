@@ -156,7 +156,7 @@ var createAddShopPanel = function() {
         centered: true,
         visible: false,
         modal: true,
-        // headerContent: 'Add A New Shop',
+        headerContent: '<h3>Add a New Shop</h3>',
         zIndex: 10
     });
     
@@ -192,6 +192,29 @@ var createAddShopPanel = function() {
         classNames: 'btn',
         section: Y.WidgetStdMod.FOOTER
     });
+
+
+    panel.addButton({
+         id: 'addShopOk',
+         value: 'Add Shop',
+         action: function(e) {
+             e.preventDefault(); 
+
+             var data = {
+                 id: Y.one('input[name=id]').get('value').replace('.myshopify.com', '', 'i')
+                 // api_key: Y.one('input[name=api_key]').get('value'),
+                 // password: Y.one('input[name=password]').get('value')
+             };
+
+             //@todo validate data
+             //Assuming its ok...
+             Y.fire('addShopOk', data);
+             // panel.hide();
+         },
+         classNames: 'btn btn-primary',
+         section: Y.WidgetStdMod.FOOTER
+     });
+
 
     panel.render();
     Y.one('#add-shop-panel').removeClass('hide');
@@ -258,13 +281,13 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             '.add-theme', 
             {'model': model} //Add some context
         );
-
+        
         Y.one('div#themes-'+store).delegate('click', 
             this.remove, 
             '.remove-shop', 
             this //Add some context
         );
-        
+
 
         return this;
     },

@@ -12,40 +12,20 @@
     border: 1px solid black;
     background: white;
 }
+/*
 .yui3-skin-shopify .yui3-panel-content .yui3-widget-hd {
-    padding: 8px 28px 8px 8px;  /* Room for close button. */
-    min-height: 13px;           /* For the close button */
-    _height: 13px;              /* IE6 */
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    
-    background-color: #3961c5;
-    background: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        from(#5B8A2F),
-        color-stop(0.07, #6BA538),
-        color-stop(0.5, #95C048),
-        to(#5B8A2F)
-    );
-    /*
-    TODO: Add support for IE and W3C gradients
-    */
 }
+*/
 .yui3-skin-shopify .yui3-panel-content .yui3-widget-hd .yui3-widget-button-wrapper {
     padding: 8px;
 }
 .yui3-skin-shopify .yui3-panel-content .yui3-widget-bd {
     padding: 10px;
 }
+/*
 .yui3-skin-shopify .yui3-panel-content .yui3-widget-ft {
-	background: #EAEEE2;
-	padding: 8px;
-    text-align: right;
 }
-
+*/
 .yui3-skin-shopify .yui3-panel-content .yui3-widget-ft .yui3-button {
     margin: 0px 3px;
 }
