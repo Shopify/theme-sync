@@ -522,11 +522,11 @@ var connectingPanel = function() {
         modal: true,
         buttons: [], //no close button
         zIndex: 12,
-        bodyContent: 'Connecting to Shopify...'
+        srcNode: '#connecting-shopify-panel'
     });
 
     panel.render();
-
+    Y.one('#connecting-shopify-panel').removeClass('hide');
     return panel;
 
 };
