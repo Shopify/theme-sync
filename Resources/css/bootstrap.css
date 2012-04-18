@@ -3272,7 +3272,7 @@ input[type="submit"].btn.btn-mini {
   opacity: 0.8;
   filter: alpha(opacity=80);
 }
-.modal {
+.yui3-skin-shopify .yui3-panel-content, .modal {
   z-index: 1050;
   overflow: auto;
 /*  width: 560px;*/
