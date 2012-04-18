@@ -16,7 +16,7 @@ Y.Global.on('watch:stop', function(e) {
 
 Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     
-    template: Y.one('#theme-li-template').getContent(),
+    template: Y.one('#theme-template').getContent(),
 
     initializer: function(e) {
         this.container = Y.Node.create('<div id="theme-' + e.model.get('id') + '" class="theme-container nowatch"></div>');
@@ -30,18 +30,13 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     render: function() {
         var container = this.container, 
             model = this.model;
-        
-        var viewButton = function(themeModel) {
-            var args = {text: 'Preview', src: 'http://'+themeModel.get('parent_id')+'.myshopify.com/?preview_theme_id='+themeModel.get('id') };
-            if('main' == themeModel.get('role')) {
-                 args = {text: 'View Shop', src: 'http://'+themeModel.get('parent_id')+'.myshopify.com'};
-            }
 
-            return Y.Lang.sub("<a href='{src}' class='btn external'>{text}</a>", args);
+        var viewLink = function(themeModel) {
+            return 'http://'+themeModel.get('parent_id')+'.myshopify.com/?preview_theme_id='+themeModel.get('id');
         };
 
         var data = model.toJSON();
-        data.viewButton = viewButton(model);
+        data.viewLink = viewLink(model);
         container.setContent(Y.Lang.sub(this.template, data));
         
         return this;

@@ -12,6 +12,10 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         'a.external': { click: function(e) {
             e.halt(true);
             Titanium.Platform.openURL(e.currentTarget.get('href'));
+
+            //from bootstrap :/ because we halt the event, 
+            //we need to manually close the dropdown. grrr...
+            $('[data-toggle="dropdown"]').parent().removeClass('open');
         }},
         'a#reload': { click: function(e) {
             e.halt(true);
