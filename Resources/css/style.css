@@ -16,7 +16,7 @@ a:hover{text-decoration:none;}
 /* = Sidebar = */
 /* =========== */
 .sidebar{float:left; width:28.125%; background: #e1e1e1; border-right:1px solid #bbb; position:relative;}
-.sidebar *{padding:0 20px;}
+/*.sidebar *{padding:0 20px;} Re-think this later */
 .sidebar strong{margin-bottom:15px;}
 .sidebar a, .sidebar strong{display:block;}
 .sidebar a{padding:5px 20px;}
@@ -28,16 +28,17 @@ a:hover{text-decoration:none;}
 /* = Themes Area = */
 /* =============== */
 
+.theme-hide { display: none }
+.theme-show { display: block }
 .themes{float:left; width:71.875%; padding:20px; background:#f7f7f7;}
 .theme-header{margin-bottom:30px;}
 .theme-header a{display:inline-block; float:right; margin-left:5px;}
 .theme-header h3{float:left;}
-.theme{width:100%;}
-.theme .btn, .theme .btn-group{box-shadow:0px;}
+.theme{width:100%; margin-bottom:10px;}
+.theme .btn, .theme .btn-group{box-shadow:none; background:transparent; background-image:none;}
 .theme-info{float:left;}
-.theme-info img{}
-.theme-info-left{float:left; margin-right:15px; padding-top:8px;}
-.theme-info-right{float:right;}
+.theme-status{float:left; margin-right:15px; padding-top:8px;}
+.theme-name{float:right;}
 .theme-options{float:right; padding-top:3px;}
 
 /* ============ */
@@ -73,7 +74,6 @@ a:hover{text-decoration:none;}
 
 *zoom: 1;
 padding: 10px 15px;
-margin-bottom: 0;
 font-size: 13px;
 line-height: 18px;
 color: #333333;

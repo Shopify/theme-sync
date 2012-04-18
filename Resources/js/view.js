@@ -233,7 +233,10 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         //Create the Theme container, since its not created with the shop anymore
         //(its in a different part of the dom...)
         Y.one('div#themes-container').append(Y.Lang.sub(
-            Y.one('#shop-themes-wrapper').getContent(), {store: store }
+            Y.one('#shop-themes-wrapper').getContent(), {
+                store: store,
+                'class': (container.hasClass('active')) ? 'theme-show' : 'theme-hide'
+            }
         ));
 
         model.themes.each(function(theme) {

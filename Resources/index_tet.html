@@ -44,12 +44,12 @@
   <section class="content clearfix">
     <aside class="sidebar">
       <strong>Your Shops:</strong>
-      <span id='shops'>
+      <div class="shop-list" id='shops'>
         <a href="#" class="active">Your Store</a>
         <a href="#">Your Second Store</a>
         <a href="#">Your Third Store</a>
         <a href="#">Oh Look Your Second Store</a> 
-      </span>
+      </div>
       <div class="add-shop-action">       
         <a class="add-shop btn btn-large" href="#">Add Shop</a>        
       </div>
@@ -118,9 +118,41 @@
   <script src="js/jquery-1.7.2.min.js"></script>
   <script src="js/bootstrap-dropdown.js"></script>
   <script>
-  $(document).ready(function() {  
-    $('.dropdown-toggle').dropdown();
-  });
+YUI().use('node', function(Y) {Y.on("domready", function() { 
+  $('.dropdown-toggle').dropdown();
+  
+  //e.container == #shops
+  //e.currentTarget = clicked A
+  Y.one('#shops').delegate('click', function(e) {
+    e.container.one('a.active').removeClass('active');
+    e.currentTarget.addClass('active');
+    
+    Y.one('.theme-show').replaceClass('theme-show', 'theme-hide');
+    Y.one('#themes-'+e.currentTarget.get('id')).replaceClass('theme-hide', 'theme-show');
+        
+    // $(".shop-list a.active").removeClass('active');
+    // Y.log(e.currentTarget.get('id'));
+  }, 'a');
+});});
+  
+  // $(document).ready(function() {  
+  //   $('.dropdown-toggle').dropdown();
+  // 
+  //   //@todo - switch to delegate pattern
+  //   //Active class and showing/hiding selected shop's themes
+  //   
+  //   $(".shop-list a").click(function() {
+  //     $(".shop-list a.active").removeClass('active');
+  //     $(this).addClass("active");
+  //     var shopId = $(this).attr('id');
+  //     Y.log('shopId');
+  //     shopId = shopId.replace('#','shop-'); // Not necessary
+  // 
+  //     $('.theme-show').removeClass('theme-show').addClass('theme-hide');
+  //     $("."+shopId).addClass('theme-show').removeClass('theme-hide');
+  //   });
+  //   
+  // });
 
   </script>
 
@@ -130,7 +162,7 @@
   </script>
   
   <script type="text/x-template" id="shop-themes-wrapper">
-    <div id="themes-{store}" class="themes">
+    <div id="themes-{store}" class="themes {class}">
       <div class="theme-header clearfix">
         <h3>Your Themes</h3>
         <a href="#" class="btn btn-danger">Remove Shop</a>                
@@ -158,8 +190,6 @@
           </form>
       </div>
   </div>
-
-
 
 </body>
 </html>
