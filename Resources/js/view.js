@@ -417,9 +417,9 @@ var createThemePicker = function(shopModel) {
         centered: true,
         visible: true,
         modal: true,
-        headerContent: 'Choose a theme',
+        headerContent: '<h3>Choose a theme</h3>',
         zIndex: 10,
-        bodyContent: 'Loading themes for this Shop... Just a moment please'
+        bodyContent: '<p>Loading themes for this Shop... Just a moment please</p>'
     });
     
     panel.render();
