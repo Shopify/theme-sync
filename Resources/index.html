@@ -68,10 +68,17 @@ YUI().use('node', function(Y) {Y.on("domready", function() {
   //e.container == #shops
   //e.currentTarget = clicked A
   var shopClickHandler = function(e) {
-    e.container.one('a.active').removeClass('active');
+    var currentActive = e.container.one('a.active'),
+        currentThemeActive = Y.one('.theme-show');
+        
+    if(currentActive) { 
+      currentActive.removeClass('active');
+    }
     e.currentTarget.addClass('active');
     
-    Y.one('.theme-show').replaceClass('theme-show', 'theme-hide');
+    if(currentThemeActive) {
+      Y.one('.theme-show').replaceClass('theme-show', 'theme-hide');
+    }
     Y.one('#themes-'+e.currentTarget.get('id')).replaceClass('theme-hide', 'theme-show');
   };
 
@@ -89,7 +96,7 @@ YUI().use('node', function(Y) {Y.on("domready", function() {
     <div id="themes-{store}" class="themes {class}">
       <div class="theme-header clearfix">
         <h3>Your Themes {store}</h3>
-        <a href="#" class="btn btn-danger">Remove Shop</a>                
+        <a href="#" class="btn btn-danger remove-shop">Remove Shop</a>                
         <a href="#" class="btn add-theme">Add Theme</a>
       </div>
       <div class="theme-list">

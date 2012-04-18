@@ -7,6 +7,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
    
     container: Y.one('body'),
 
+    //These events are app wide - hooked off body
     events: {
         //General External Link handler. Open in browser window.
         'a.external': { click: function(e) {
@@ -126,8 +127,8 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     //Called when shop added to the shops list
     add: function(e) {
         console.log('appView: New Shop Added');
-        Y.one('#onboard').hide();
         //If its showing, hide it...
+        // Y.one('#onboard').hide();
         var view = new Themer.ShopView({
             model: e.model,
             container: Y.Lang.sub(Y.one('#shop-template').getContent(), {store: e.model.get('id')})
@@ -152,7 +153,7 @@ var createAddShopPanel = function() {
         centered: true,
         visible: false,
         modal: true,
-        headerContent: 'Add A New Shop',
+        // headerContent: 'Add A New Shop',
         zIndex: 10
     });
     
@@ -202,11 +203,6 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     //    <div id='{store}' class='shop-themes'></div>
     // container: Y.one('#shop-template').getContent(), 
     template: '{store}',
-    
-    events: {
-        '.add-theme': { click: 'chooseTheme'},
-        'button.remove-shop': { click: 'remove'}
-    },
     
     initializer: function() {
         console.log('ShopView: initializer');
@@ -259,6 +255,12 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             '.add-theme', 
             {'model': model} //Add some context
         );
+
+        Y.one('div#themes-'+store).delegate('click', 
+            this.remove, 
+            '.remove-shop', 
+            this //Add some context
+        );
         
 
         return this;
@@ -266,6 +268,9 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     
     remove: function(e) {
         console.log('ShopView:remove');
+        //Delete the associated themes list view
+        Y.one('#themes-'+this.model.get('id')).remove(true);
+
         this.constructor.superclass.remove.call(this);
         this.model.destroy({'delete': true});
     },
