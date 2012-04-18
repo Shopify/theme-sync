@@ -19,7 +19,7 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
     template: Y.one('#theme-li-template').getContent(),
 
     initializer: function(e) {
-        this.container = Y.Node.create('<li id="theme-' + e.model.get('id') + '" class="nowatch"></li>');
+        this.container = Y.Node.create('<div id="theme-' + e.model.get('id') + '" class="theme-container nowatch"></div>');
         //Attach here instead, because container isn't available during create
         this.container.delegate('click', function() {
             Titanium.Platform.openURL('file://'+e.model.get('path'));

@@ -129,7 +129,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             container: Y.Lang.sub(Y.one('#shop-template').getContent(), {store: e.model.get('id')})
         });
         
-        this.container.one('#content').append(view.render().container);
+        this.container.one('#shops').append(view.render().container);
         view.chooseTheme();
         
     },
@@ -221,21 +221,30 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
     },
     
     render: function() {
+        Y.log('Render Shopview');
         var container = this.container, 
-            model = this.model;
+            model = this.model,
+            store = this.model.get('id');
             
         container.setContent(Y.Lang.sub(this.template, {
-            store: model.get('id')
+            store: store
         }));
 
-        // model.themes.each(function(theme) {
-        //     // console.log(item.toJSON());
-        //     var view = new Themer.ThemeView({
-        //         model: theme
-        //     });
-        //     container.one('ul.themes').append(view.render().container);
-        //     // fragment.append(view.render().container);
-        // });
+        //Create the Theme container, since its not created with the shop anymore
+        //(its in a different part of the dom...)
+        Y.one('div#themes-container').append(Y.Lang.sub(
+            Y.one('#shop-themes-wrapper').getContent(), {store: store }
+        ));
+
+        model.themes.each(function(theme) {
+            // console.log(item.toJSON());
+            var view = new Themer.ThemeView({
+                model: theme
+            });
+            
+            Y.one('div#themes-'+store).append(view.render().container);
+            // fragment.append(view.render().container);
+        });
 
         return this;
     },
