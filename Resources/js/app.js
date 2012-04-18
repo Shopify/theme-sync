@@ -7,16 +7,18 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
 
     //Returning from the callback...
     if(window.location.search != '') {
-        var qs = Y.QueryString.parse(window.location.search.replace('?', ''));
+        var qs = Y.QueryString.parse(window.location.search.replace('?', '')),
+            shopid = qs.shop.replace('.myshopify.com', '', 'i');
 
         theApp.shops.create({
-            id:qs.shop.replace('.myshopify.com', '', 'i'),
+            id: shopid,
             api_key: APP_API_KEY,
             password: Titanium.Codec.digestToHex(Titanium.Codec.MD5, SHARED_SECRET+qs.t)         
         }, function(err) {
             //Hack hack hack!
             if(!err) {
-                theApp.addShopForm.hide();
+                Y.log('Shop Created!');
+                Themer.shopFocus = shopid; //force focus onto new shop
             } else {
                 //@todo Throw up error panel.
                 alert(err);

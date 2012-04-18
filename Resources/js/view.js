@@ -131,10 +131,13 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         // Y.one('#onboard').hide();
         var view = new Themer.ShopView({
             model: e.model,
-            container: Y.Lang.sub(Y.one('#shop-template').getContent(), {store: e.model.get('id')})
+            container: Y.Lang.sub(
+                Y.one('#shop-template').getContent(), {store: e.model.get('id'), 'class': ''}
+            )
         });
         
         this.container.one('#shops').append(view.render().container);
+        
         view.chooseTheme();
         
     },

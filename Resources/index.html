@@ -17,6 +17,7 @@
   <script src="js/yui-min.js"></script>
   <script type="text/javascript" charset="utf-8">
     var Themer = YUI.namespace('Themer'); //Our global object
+    Themer.shopFocus = false; //Custom Property
   </script>
   
   <script type="text/javascript" charset="utf-8">
@@ -61,7 +62,7 @@
   <script src="js/jquery-1.7.2.min.js"></script>
   <script src="js/bootstrap-dropdown.js"></script>
   <script>
-YUI().use('node', function(Y) {Y.on("domready", function() { 
+YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() { 
   //This is already a delegate, so no need to re-init when we add new themes
   $('.dropdown-toggle').dropdown();
   
@@ -83,6 +84,15 @@ YUI().use('node', function(Y) {Y.on("domready", function() {
   };
 
   Y.one('#shops').delegate('click', shopClickHandler, 'a');
+  Y.Global.on('shop:switch', shopClickHandler);
+  
+  if(Themer.shopFocus !== false) {
+    Y.Global.fire('shop:switch', {
+      container: Y.one('#shops'), 
+      currentTarget: Y.one('#'+Themer.shopFocus)
+    });
+  }
+
 });});
 
   </script>
