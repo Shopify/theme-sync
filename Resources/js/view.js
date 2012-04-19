@@ -453,7 +453,14 @@ var downloadThemeActivity = function(themeModel) {
 
     panel.render();
 
-    Y.Global.on('download:done', function(e) { 
+    var assetDlHandle = Y.Global.on('asset:download', function(e) {
+        Y.one('#downstatus').setContent(e.asset + '...');
+    });
+
+    var ddHandle = Y.Global.once('download:done', function(e) { 
+        //cleanup
+        assetDlHandle.detach();
+
         e = e || {};
         var cancelled = e.cancelled || false;
         panel.hide(); 
@@ -469,11 +476,22 @@ var downloadThemeActivity = function(themeModel) {
             };
         } 
         growl(gmsg);
+        //detach listener...
+        // ddHandle.detach();
+        cleanUp();
     });
-    Y.Global.on('download:error', function(e) { panel.hide(); });
-    Y.Global.on('asset:download', function(e) {
-        Y.one('#downstatus').setContent(e.asset + '...');
+    // Y.log(ddHandle);
+    
+    var deHandle = Y.Global.once('download:error', function(e) { 
+        panel.hide(); 
+        cleanUp(); 
     });
+
+    var cleanUp = function() {
+        ddHandle.detach();
+        deHandle.detach();
+        assetDlHandle.detach();
+    };
 
     return panel;
     
