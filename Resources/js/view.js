@@ -476,11 +476,8 @@ var downloadThemeActivity = function(themeModel) {
             };
         } 
         growl(gmsg);
-        //detach listener...
-        // ddHandle.detach();
         cleanUp();
     });
-    // Y.log(ddHandle);
     
     var deHandle = Y.Global.once('download:error', function(e) { 
         panel.hide(); 
@@ -505,9 +502,9 @@ var uploadThemeActivity = function(themeModel) {
         visible: true,
         modal: true,
         buttons: [], //no close button
-        headerContent: 'Uploading theme: '+ themeModel.get('name'),
+        headerContent: '<h3>Uploading theme: '+ themeModel.get('name')+'</h3>',
         zIndex: 10,
-        bodyContent: 'Now uploading:<div id="upstatus"></div>(^v^)/'
+        bodyContent: '<h4>Now uploading:<div id="upstatus"></div></h4>(^v^)/'
     });
 
     panel.addButton({
