@@ -436,9 +436,9 @@ var downloadThemeActivity = function(themeModel) {
         visible: true,
         modal: true,
         buttons: [], //no close button
-        headerContent: 'Download theme: '+ themeModel.get('name'),
+        headerContent: '<h3>Download theme: '+ themeModel.get('name')+'</h3>',
         zIndex: 10,
-        bodyContent: 'Downloading files to:<br>'+ themeModel.get('path')+'<div id="downstatus"></div>(^v^)/'
+        bodyContent: '<h4>Downloading files to:<br>'+ themeModel.get('path')+'</h4><div id="downstatus"></div>(^v^)/'
     });
 
     panel.addButton({
