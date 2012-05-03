@@ -11,6 +11,19 @@ a:hover{text-decoration:none;}
 
 .sidebar,.themes{height:490px; padding:20px 0;}
 
+/* =========== */
+/* = No Shops = */
+/* =========== */
+#no-shops {
+    padding-top: 120px;
+}
+#no-shops h1 {
+    font-size: ;
+}
+#no-shops h1, #no-shops h3 {
+    color: #B3B3B3;
+    text-align: center;
+}
 
 /* =========== */
 /* = Sidebar = */

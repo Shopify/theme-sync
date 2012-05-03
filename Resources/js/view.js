@@ -91,12 +91,12 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
-            // Y.one('#onboard').removeClass('util-hide');
+            Y.one('#no-shops').removeClass('hide');
             this.addShop();
             return this;
         }
 
-        // Y.one('#onboard').addClass('util-hide');
+        Y.one('#no-shops').addClass('hide');
 
         var fragment = Y.one(Y.config.doc.createDocumentFragment());
 
@@ -128,7 +128,8 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     add: function(e) {
         console.log('appView: New Shop Added');
         //If its showing, hide it...
-        // Y.one('#onboard').hide();
+        if(this && this.AddShopForm){ this.addShopForm.hide(); }
+        Y.one('#no-shops').addClass('hide');
         var view = new Themer.ShopView({
             model: e.model,
             container: Y.Lang.sub(
@@ -144,6 +145,14 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
     remove: function(e) {
         console.log('appView: Shop Removed');
+        if(this.shops.isEmpty()) {
+            Y.one('#no-shops').removeClass('hide');
+        } else {
+            Y.Global.fire('shop:switch', {
+              container: Y.one('#shops'), 
+              currentTarget: Y.one('#'+this.shops.item(0).get('id'))
+            });
+        }
     }
 
 });
