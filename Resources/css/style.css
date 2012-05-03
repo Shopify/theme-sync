@@ -117,19 +117,18 @@ ul.theme-picker {
     margin: 5px 0;
     padding: 5px 3px;
     border-radius: 5px;
+    border: 1px solid #eee;
 }
 
 .theme-picker li:nth-child(odd)  {
-    background-color: #eee;
+    background-color: #fff;
 }
 
 .theme-picker li:nth-child(even)  {
-    background-color: #ccc;
+    background-color: #F9F9F9;
 }
 
 .theme-picker li:hover {
-/*    border: 1px solid green;*/
-    background-color: #808000;
-    font-weight: bold;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
 }
-
