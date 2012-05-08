@@ -503,40 +503,6 @@ var downloadThemeActivity = function(themeModel) {
     
 };
 
-var uploadThemeActivity = function(themeModel) {
-
-    var panel = new Y.Panel({
-        width: 500, 
-        centered: true,
-        visible: true,
-        modal: true,
-        buttons: [], //no close button
-        headerContent: '<h3>Uploading theme: '+ themeModel.get('name')+'</h3>',
-        zIndex: 10,
-        bodyContent: '<h4>Now uploading:<div id="upstatus"></div></h4>(^v^)/'
-    });
-
-    panel.addButton({
-        value: 'Cancel',
-        action: function(e) {
-            e.preventDefault();
-            Y.Global.fire('upload:cancel');
-        },
-        classNames: 'btn',
-        section: Y.WidgetStdMod.FOOTER
-    });
-
-    panel.render();
-
-    Y.Global.on('deploy:done', function(e) { panel.hide(); });
-    Y.Global.on('asset:upload', function(e) {
-        Y.one('#upstatus').setContent(e.asset + '...');
-    });
-
-    return panel;
-    
-};
-
 var connectingPanel = function() {
 
     var panel = new Y.Panel({

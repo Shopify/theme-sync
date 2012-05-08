@@ -1,6 +1,6 @@
 YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', function(Y) {Y.on("domready", function() { 
-
-    var theApp = new Themer.appView();
+    //make running app object accessible all over
+    var theApp = Themer.theApp = new Themer.appView();
     
     //Spin up watchers...
     Themer.Watcher.init(theApp);
