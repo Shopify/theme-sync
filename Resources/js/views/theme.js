@@ -3,14 +3,14 @@ YUI().use('view','event-custom','event-focus','array-extras', function(Y) {
 
 //Global handler for when a theme is being watched/unwatched.
 Y.Global.on('watch:start', function(e) {
-    var el = Y.one('.themes li#theme-'+e.themeId+'.nowatch');
+    var el = Y.one('#theme-'+e.themeId+' .theme-status.nowatch');
     if(el) {
         el.replaceClass('nowatch', 'watch');
     }
 });
 
 Y.Global.on('watch:stop', function(e) {
-    var el = Y.one('.themes li#theme-'+e.themeId+'.watch');
+    var el = Y.one('#theme-'+e.themeId+' .theme-status.watch');
     el.replaceClass('watch', 'nowatch');
 });
 

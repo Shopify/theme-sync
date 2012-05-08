@@ -15,15 +15,9 @@ a:hover{text-decoration:none;}
 /* = No Shops = */
 /* =========== */
 #no-shops {
-    padding-top: 120px;
+    padding-top: 200px; text-align: center; color: #B3B3B3;
 }
-#no-shops h1 {
-    font-size: ;
-}
-#no-shops h1, #no-shops h3 {
-    color: #B3B3B3;
-    text-align: center;
-}
+#no-shops h1 { font-size:36px; padding-bottom:10px;}
 
 /* =========== */
 /* = Sidebar = */
@@ -50,9 +44,16 @@ a:hover{text-decoration:none;}
 .theme{width:100%; margin-bottom:10px;}
 .theme .btn, .theme .btn-group{box-shadow:none; background:transparent; background-image:none;}
 .theme-info{float:left;}
-.theme-status{float:left; margin-right:15px; padding-top:8px;}
+.theme-status{float:left; margin-right:15px; margin-top: 7px; width:20px; height:20px;}
 .theme-name{float:right;}
 .theme-options{float:right; padding-top:3px;}
+
+.theme-status.nowatch {
+    background-image: url('../img/status_red.png');
+}
+.theme-status.watch {
+    background-image: url('../img/status_green.png');
+}
 
 /* ============ */
 /* = Gradient = */
