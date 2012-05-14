@@ -170,6 +170,34 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             zIndex: 10
         });
 
+        var submitHandler = function(e) {
+             e.preventDefault(); 
+
+             //Step through and remove all unwanted crap that may be submitted
+             var sanitizeShopId = function(str) {
+                 var sid = str.replace('http://', '', 'i') 
+                           .replace('https://', '', 'i') //In case someone uses https://
+                           .replace('.myshopify.com', '', 'i')
+                           .replace('/',''); //#fixes public issue #10 - trailing slash
+
+                return Y.Lang.trim(sid);
+             };
+
+             var data = {
+                 id: sanitizeShopId(Y.one('input[name=id]').get('value'))
+             };
+
+             if((data.id == '') || (currentShops.getById(data.id) != null)) {
+                 Y.one('input[name=id]').set('value','');
+                 panel.hide();
+             }
+             else {
+                 //Does this already exist?
+                 Y.fire('addShopOk', data);                 
+             }
+        };
+
+
         panel.addButton({
             value: 'Cancel',
             action: function(e) {
@@ -180,36 +208,11 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             section: Y.WidgetStdMod.FOOTER
         });
 
-
+        panel.get('contentBox').one('form').on('submit', submitHandler);
         panel.addButton({
              id: 'addShopOk',
              value: 'Add Shop',
-             action: function(e) {
-                 e.preventDefault(); 
-
-                 //Step through and remove all unwanted crap that may be submitted
-                 var sanitizeShopId = function(str) {
-                     var sid = str.replace('http://', '', 'i') 
-                               .replace('https://', '', 'i') //In case someone uses https://
-                               .replace('.myshopify.com', '', 'i')
-                               .replace('/',''); //#fixes public issue #10 - trailing slash
-
-                    return Y.Lang.trim(sid);
-                 };
-
-                 var data = {
-                     id: sanitizeShopId(Y.one('input[name=id]').get('value'))
-                 };
-
-                 if((data.id == '') || (currentShops.getById(data.id) != null)) {
-                     Y.one('input[name=id]').set('value','');
-                     panel.hide();
-                 }
-                 else {
-                     //Does this already exist?
-                     Y.fire('addShopOk', data);                 
-                 }
-             },
+             action: submitHandler,
              classNames: 'btn btn-primary',
              section: Y.WidgetStdMod.FOOTER
          });
@@ -518,6 +521,9 @@ var connectingPanel = function() {
 
     panel.render();
     Y.one('#connecting-shopify-panel').removeClass('hide');
+
+    panel.set('centered', true); //to re-center
+
     return panel;
 
 };
