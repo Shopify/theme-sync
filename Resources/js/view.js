@@ -121,7 +121,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     // Click handler for the add shop button
     addShop: function(e) {
         //Setup the Add Shop form overlay
-        this.addShopForm = this.addShopForm || createAddShopPanel();        
+        this.addShopForm = this.addShopForm || this.createAddShopPanel();        
         this.addShopForm.show();
     }, 
 
@@ -154,70 +154,74 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
               currentTarget: Y.one('#'+this.shops.item(0).get('id'))
             });
         }
+    },
+    
+    createAddShopPanel: function() {
+
+        var currentShops = this.shops; 
+
+        var panel = new Y.Panel({
+            srcNode: '#add-shop-panel',
+            width: 500, 
+            centered: true,
+            visible: false,
+            modal: true,
+            headerContent: '<h3>Add a New Shop</h3>',
+            zIndex: 10
+        });
+
+        panel.addButton({
+            value: 'Cancel',
+            action: function(e) {
+                e.preventDefault(); 
+                panel.hide();
+            },
+            classNames: 'btn',
+            section: Y.WidgetStdMod.FOOTER
+        });
+
+
+        panel.addButton({
+             id: 'addShopOk',
+             value: 'Add Shop',
+             action: function(e) {
+                 e.preventDefault(); 
+
+                 //Step through and remove all unwanted crap that may be submitted
+                 var sanitizeShopId = function(str) {
+                     var sid = str.replace('http://', '', 'i') 
+                               .replace('https://', '', 'i') //In case someone uses https://
+                               .replace('.myshopify.com', '', 'i')
+                               .replace('/',''); //#fixes public issue #10 - trailing slash
+
+                    return Y.Lang.trim(sid);
+                 };
+
+                 var data = {
+                     id: sanitizeShopId(Y.one('input[name=id]').get('value'))
+                 };
+
+                 if((data.id == '') || (currentShops.getById(data.id) != null)) {
+                     Y.one('input[name=id]').set('value','');
+                     panel.hide();
+                 }
+                 else {
+                     //Does this already exist?
+                     Y.fire('addShopOk', data);                 
+                 }
+             },
+             classNames: 'btn btn-primary',
+             section: Y.WidgetStdMod.FOOTER
+         });
+
+
+        panel.render();
+        Y.one('#add-shop-panel').removeClass('hide');
+
+        return panel;
     }
 
 });
-
-var createAddShopPanel = function() {
-
-    var panel = new Y.Panel({
-        srcNode: '#add-shop-panel',
-        width: 500, 
-        centered: true,
-        visible: false,
-        modal: true,
-        headerContent: '<h3>Add a New Shop</h3>',
-        zIndex: 10
-    });
-    
-    panel.addButton({
-        value: 'Cancel',
-        action: function(e) {
-            e.preventDefault(); 
-            panel.hide();
-        },
-        classNames: 'btn',
-        section: Y.WidgetStdMod.FOOTER
-    });
-
-
-    panel.addButton({
-         id: 'addShopOk',
-         value: 'Add Shop',
-         action: function(e) {
-             e.preventDefault(); 
-
-             //Step through and remove all unwanted crap that may be submitted
-             var sanitizeShopId = function(str) {
-                 var sid = str.replace('http://', '', 'i') 
-                           .replace('https://', '', 'i') //In case someone uses https://
-                           .replace('.myshopify.com', '', 'i')
-                           .replace('/',''); //#fixes public issue #10 - trailing slash
-                           
-                return Y.Lang.trim(sid);
-             };
-
-             var data = {
-                 id: sanitizeShopId(Y.one('input[name=id]').get('value'))
-             };
-             
-             if(data.id.length == '') {
-                 panel.hide();
-             }
-             else {
-                 Y.fire('addShopOk', data);                 
-             }
-         },
-         classNames: 'btn btn-primary',
-         section: Y.WidgetStdMod.FOOTER
-     });
-
-
-    panel.render();
-    Y.one('#add-shop-panel').removeClass('hide');
-
-    return panel;
-};
 
 
 Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
