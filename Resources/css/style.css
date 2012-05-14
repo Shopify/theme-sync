@@ -21,6 +21,13 @@ a:hover{text-decoration:none;}
 .nothing h1 { font-size:36px; padding-bottom:10px;}
 
 /* =========== */
+/* = Form Override = */
+/* =========== */
+input[name=id] {
+    width: 98%;
+}
+
+/* =========== */
 /* = Sidebar = */
 /* =========== */
 .sidebar{float:left; width:28.125%; background: #e1e1e1; border-right:1px solid #bbb; position:relative;}
