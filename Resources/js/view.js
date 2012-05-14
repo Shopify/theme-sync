@@ -458,7 +458,7 @@ var downloadThemeActivity = function(themeModel) {
     });
 
     panel.render();
-
+    panel.set('centered', true); //to re-center post render
     var assetDlHandle = Y.Global.on('asset:download', function(e) {
         Y.one('#downstatus').setContent(e.asset + '...');
     });
