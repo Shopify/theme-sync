@@ -109,6 +109,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
                     'class': (index == 0) ? 'active':''
                 })
             });
+            
             fragment.append(view.render().container);
         });
 
@@ -274,6 +275,13 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
             }
         ));
 
+        //Handle no themes on the active theme created at init...
+        if(model.themes.isEmpty() && container.hasClass('active')) {
+          Y.one('div#themes-'+store).append(Y.one('#no-themes'));
+          Y.one('#no-themes').removeClass('hide');
+        } 
+
+        //If themes, empty, does nothing, so we dont bother with if/else
         model.themes.each(function(theme) {
             // console.log(item.toJSON());
             var view = new Themer.ThemeView({
@@ -329,6 +337,8 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         } else {
             themeList.append(newNode);
         }
+        
+        Y.one('#no-themes').addClass('hide');
 
         //Throw up activity indicator.
         var panel = downloadThemeActivity(theme);

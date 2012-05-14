@@ -56,7 +56,7 @@
     </aside>    
     <!-- This gets populated with the themes for the shop -->
     <div id="themes-container">
-      <div id="no-shops" class="hide">
+      <div id="no-shops" class="nothing hide">
         <h1>No Shops Found</h1>
         <h3>Click the Add Shop button to get started.</h3>
       </div>
@@ -74,7 +74,8 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
   //e.currentTarget = clicked A
   var shopClickHandler = function(e) {
     var currentActive = e.container.one('a.active'),
-        currentThemeActive = Y.one('.theme-show');
+        currentThemeActive = Y.one('.theme-show'),
+        shopId = e.currentTarget.get('id');
         
     if(currentActive) { 
       currentActive.removeClass('active');
@@ -84,7 +85,14 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
     if(currentThemeActive) {
       Y.one('.theme-show').replaceClass('theme-show', 'theme-hide');
     }
-    Y.one('#themes-'+e.currentTarget.get('id')).replaceClass('theme-hide', 'theme-show');
+    Y.one('#themes-'+shopId).replaceClass('theme-hide', 'theme-show');
+    
+    if(Themer.theApp.shops.getById(shopId).themes.isEmpty()) {
+      Y.one('#themes-'+shopId).append(Y.one('#no-themes'));
+      Y.one('#no-themes').removeClass('hide');
+    } else {
+      Y.one('#no-themes').addClass('hide');
+    }    
   };
 
   Y.one('#shops').delegate('click', shopClickHandler, 'a');
@@ -165,6 +173,11 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
                   </fieldset>
               </form>    
       </div>
+  </div>
+
+  <div id="no-themes" class="nothing hide">
+    <h1>No Themes Found</h1>
+    <h3>Click the Add Theme button to get started.</h3>
   </div>
 
   <div id='connecting-shopify-panel' class='hide modal'>

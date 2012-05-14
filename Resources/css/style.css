@@ -12,12 +12,13 @@ a:hover{text-decoration:none;}
 .sidebar,.themes{height:490px; padding:20px 0;}
 
 /* =========== */
-/* = No Shops = */
+/* = No Shops/No Themes = */
 /* =========== */
-#no-shops {
+.nothing {
     padding-top: 200px; text-align: center; color: #B3B3B3;
 }
-#no-shops h1 { font-size:36px; padding-bottom:10px;}
+#no-themes { padding-top: 100px; }
+.nothing h1 { font-size:36px; padding-bottom:10px;}
 
 /* =========== */
 /* = Sidebar = */
