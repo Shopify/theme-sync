@@ -187,16 +187,26 @@ var createAddShopPanel = function() {
          action: function(e) {
              e.preventDefault(); 
 
-             var data = {
-                 id: Y.one('input[name=id]').get('value').replace('.myshopify.com', '', 'i')
-                 // api_key: Y.one('input[name=api_key]').get('value'),
-                 // password: Y.one('input[name=password]').get('value')
+             //Step through and remove all unwanted crap that may be submitted
+             var sanitizeShopId = function(str) {
+                 var sid = str.replace('http://', '', 'i') 
+                           .replace('https://', '', 'i') //In case someone uses https://
+                           .replace('.myshopify.com', '', 'i')
+                           .replace('/',''); //#fixes public issue #10 - trailing slash
+                           
+                return Y.Lang.trim(sid);
              };
 
-             //@todo validate data
-             //Assuming its ok...
-             Y.fire('addShopOk', data);
-             // panel.hide();
+             var data = {
+                 id: sanitizeShopId(Y.one('input[name=id]').get('value'))
+             };
+             
+             if(data.id.length == '') {
+                 panel.hide();
+             }
+             else {
+                 Y.fire('addShopOk', data);                 
+             }
          },
          classNames: 'btn btn-primary',
          section: Y.WidgetStdMod.FOOTER
