@@ -171,29 +171,6 @@ var createAddShopPanel = function() {
     });
     
     panel.addButton({
-        id: 'addShopOk',
-        value: 'Add Shop',
-        action: function(e) {
-            e.preventDefault(); 
-
-            var shopid = Y.one('input[name=id]').get('value')
-                            .replace('.myshopify.com', '', 'i')
-                            .replace('/',''); //#fixes public issue #10
-
-            var data = {
-                id: shopid
-            };
-            
-            //@todo validate data
-            //Assuming its ok...
-            Y.fire('addShopOk', data);
-            // panel.hide();
-        },
-        classNames: 'btn',
-        section: Y.WidgetStdMod.FOOTER
-    });
-
-    panel.addButton({
         value: 'Cancel',
         action: function(e) {
             e.preventDefault(); 
