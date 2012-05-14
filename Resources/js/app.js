@@ -10,10 +10,6 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
         var qs = Y.QueryString.parse(window.location.search.replace('?', '')),
             shopid = qs.shop.replace('.myshopify.com', '', 'i');
 
-        if(theApp.addShopForm) {
-            theApp.addShopForm.hide();
-        }
-
         theApp.shops.create({
             id: shopid,
             api_key: APP_API_KEY,

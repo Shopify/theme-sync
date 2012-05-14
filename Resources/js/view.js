@@ -129,7 +129,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
     add: function(e) {
         console.log('appView: New Shop Added');
         //If its showing, hide it...
-        if(this && this.AddShopForm){ this.addShopForm.hide(); }
+        if(this && this.addShopForm){ this.addShopForm.hide(); }
         Y.one('#no-shops').addClass('hide');
         var view = new Themer.ShopView({
             model: e.model,
