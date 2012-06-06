@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en-us</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.meeech.shopify_theme2.help</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ShopifyTheme</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>HPDBookAccessPath</key>
+	<string>ShopifyTheme.html</string>
+	<key>HPDBookIconPath</key>
+	<string>shrd/shopify-36.png</string>
+	<key>HPDBookKBProduct</key>
+	<string>shopifytheme</string>
+	<key>HPDBookKBURL</key>
+	<string>http://www.shopify.com</string>
+	<key>HPDBookTitle</key>
+	<string>Shopify Theme Help</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+</dict>
+</plist>
