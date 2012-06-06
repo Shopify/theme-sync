@@ -24,6 +24,6 @@
 <chrome scrollbars="true">true</chrome>
 <maximizable>false</maximizable>
 <minimizable>true</minimizable>
-<closeable>true</closeable>
+<closeable>false</closeable>
 </window>
 </ti:app>
