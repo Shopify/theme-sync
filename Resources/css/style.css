@@ -55,7 +55,7 @@ input[name=id] {
 .theme-status{float:left; margin-right:15px; margin-top: 7px; width:20px; height:20px;}
 .theme-name{float:right;}
 .theme-options{float:right; padding-top:3px;}
-
+.theme-name span { display: inline-block; width: 400px; }
 .theme-status.nowatch {
     background-image: url('../img/status_red.png');
 }
