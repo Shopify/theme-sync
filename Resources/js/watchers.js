@@ -90,7 +90,7 @@ Watcher.watch = function(shop, theme, port) {
 Watcher.connect = function(shop, theme, port, attempt) {
     console.log('Connecting socket theme: '+theme.get('id') +  ' on port '+ port);
         
-    var maxAttempts = 5;
+    var maxAttempts = 10;
 
     attempt = attempt || 1;
 
