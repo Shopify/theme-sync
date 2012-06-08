@@ -13,7 +13,7 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
         theApp.shops.create({
             id: shopid,
             api_key: APP_API_KEY,
-            password: Titanium.Codec.digestToHex(Titanium.Codec.MD5, SHARED_SECRET+qs.t)         
+            password: qs.p
         }, function(err) {
             //Hack hack hack!
             if(!err) {
