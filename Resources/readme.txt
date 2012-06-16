@@ -1,4 +1,8 @@
 Welcome to Shopify Theme Tool.
 
-* Ignores .git/.svn folders.
-* Don't rename the folders - the app won't be able to find them
+Add your shop, download your themes. 
+The app will then watch the theme folder for changes, and upload it to the shop.
+
+Written with Titanium Desktop. 
+
+See in-app Help for instructions.
