@@ -121,6 +121,7 @@ Watcher.connect = function(shop, theme, port, attempt) {
     socket.onRead(function(e) {
         console.log('Read');
         var resp = e.toString();
+        Ti.API.info(resp);
         //Bad data comes down socket for some reason from time to time
         if(resp.length == 1) { return; }
 
