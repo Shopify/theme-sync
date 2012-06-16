@@ -63,6 +63,14 @@ input[name=id] {
     background-image: url('../img/status_green.png');
 }
 
+span.path {
+    cursor: pointer;
+}
+
+span.path {
+    background-color: '#f00';
+}
+
 /* ============ */
 /* = Gradient = */
 /* ============ */
