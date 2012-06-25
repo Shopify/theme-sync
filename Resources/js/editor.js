@@ -1,4 +1,4 @@
-YUI().use('event-custom', function(Y) { 
+YUI().use(function(Y) { 
 /////
 
 var Editor = YUI.namespace('Themer.Editor');
