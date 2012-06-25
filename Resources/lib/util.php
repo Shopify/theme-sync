@@ -16,7 +16,7 @@ function is_binary($filepath) {
     return ('binary' == end($info));
 }
 
-//Trying passing in editor and path ""
+//Open editor app with path
 function open_in_editor($editor, $path) {
-  `open -a {$editor} {$path}`;
+  `open -a "{$editor}" "{$path}"`;
 }
