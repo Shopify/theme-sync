@@ -1,6 +1,7 @@
 YUI().use('view', 'panel', 'event-custom','event-focus','array-extras', function(Y) { 
 ///start
-var IO = YUI.namespace('Themer.IO');
+var IO = YUI.namespace('Themer.IO'),
+    EDITOR = YUI.namespace('Themer.Editor');
 
 //Global handler for when a theme is being watched/unwatched.
 Y.Global.on('watch:start', function(e) {
@@ -25,8 +26,24 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
         this.container.delegate('click', function() {
             Titanium.Platform.openURL('file://'+escape(e.model.get('path')));
         }, '.path');
+        this.container.delegate('click', this.openIn, '.open-in', this);
         this.container.delegate('click', this.remove, '.remove-theme', this);
         this.container.delegate('click', this.deploy, '.force-deploy', this);
+    },
+    
+    openIn: function(e) {
+        var themeModel = this.model;
+        if(EDITOR.app == '') {
+            EDITOR.pickEditor(themeModel.get('path'));
+        }
+        else {
+            EDITOR.open(themeModel.get('path'));
+        }
+
+        //check if themer editor is set, otherwise, open editor picker.
+        
+        // open_in_editor(themeModel.get('path'));
+        // opener.launch();
     },
     
     render: function() {
