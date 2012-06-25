@@ -31,15 +31,18 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
 
         var key = e.relative,
             path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
-            failureHandler = function(e) {
-                if(e.timedOut) {
+            successHandler = function(_e) {
+                growl({title: 'File Uploaded', message: key});
+            },
+            failureHandler = function(_e) {
+                if(_e.timedOut) {
                     growlTimedOut();
                 } 
                 else {
                     //output error to console
-                    Ti.API.error(e.status);
-                    Ti.API.error(e.statusText);
-                    var response = JSON.parse(e.responseText);
+                    Ti.API.error(_e.status);
+                    Ti.API.error(_e.statusText);
+                    var response = JSON.parse(_e.responseText);
                     var errors = response.errors || {};
                     Y.each(errors, function(message) {
                         growl({
@@ -50,7 +53,7 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
                 }
             };
 
-        Themer.IO.sendAsset(e.shop, e.theme, key, path, {failure: failureHandler});
+        Themer.IO.sendAsset(e.shop, e.theme, key, path, {success: successHandler, failure: failureHandler});
     });
 
     //Stop right click outside of the LIs
