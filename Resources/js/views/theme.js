@@ -56,6 +56,7 @@ Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
 
         var data = model.toJSON();
         data.viewLink = viewLink(model);
+        data.editor = (Themer.Editor.app == '') ? '...' : Themer.Editor.app; 
         container.setContent(Y.Lang.sub(this.template, data));
         
         return this;
