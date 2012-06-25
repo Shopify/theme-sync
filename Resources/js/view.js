@@ -394,16 +394,18 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                     
                     //Show folder picker
                     Titanium.UI.currentWindow.openFolderChooserDialog(function(dir) {
-                        if(dir.length == 0) { return false; }
-                        selectedTheme.path = dir[0].concat(Ti.Filesystem.getSeparator(), selectedTheme.parent_id, '-', selectedTheme.id);
-                        shopWorkingThemes.create(selectedTheme);
-                        return true;
-                    },
-                    {
-                        title: 'Choose Download Location',
-                        multiple:false,
-                        directories:true,
-                        files:false});
+                            if(dir.length == 0) { return false; }
+                            selectedTheme.path = dir[0].concat(Ti.Filesystem.getSeparator(), selectedTheme.parent_id, '-', selectedTheme.id);
+                            shopWorkingThemes.create(selectedTheme);
+                            return true;
+                        },
+                        {
+                            title: 'Choose Download Location',
+                            multiple:false,
+                            directories:true,
+                            files:false
+                        }
+                    );
                     
                 }, 'li');
 
