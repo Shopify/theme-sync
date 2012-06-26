@@ -92,7 +92,8 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         if(this.shops.isEmpty()) {
             console.log('No Shops! Show Onboard!');
             Y.one('#no-shops').removeClass('hide');
-            this.addShop();
+            this.splash();
+            // this.addShop();
             return this;
         }
 
@@ -117,18 +118,30 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
 
         return this;
     },
+
+    splash: function() {
+        this.splashPanel = splashPanel();
+        this.splashPanel.show();
+    },
    
     // Click handler for the add shop button
     addShop: function(e) {
         //Setup the Add Shop form overlay
         this.addShopForm = this.addShopForm || this.createAddShopPanel();        
         this.addShopForm.show();
+        
+        if(this.splashPanel) {
+            this.splashPanel.hide();
+        }
+        
     }, 
 
     //Called when shop added to the shops list
     add: function(e) {
         console.log('appView: New Shop Added');
+
         //If its showing, hide it...
+        if(this && this.splashPanel){ this.splashPanel.hide(); }
         if(this && this.addShopForm){ this.addShopForm.hide(); }
         Y.one('#no-shops').addClass('hide');
         var view = new Themer.ShopView({
@@ -507,6 +520,28 @@ var downloadThemeActivity = function(themeModel) {
 
     return panel;
     
+};
+
+var splashPanel = function() {
+
+    var panel = new Y.Panel({
+        width: 700, 
+        height: 450,
+        centered: true,
+        visible: true,
+        modal: true,
+        buttons: [], //no close button
+        zIndex: 12,
+        srcNode: '#splash-page'
+    });
+
+    panel.render();
+    Y.one('#splash-page').removeClass('hide');
+
+    panel.set('centered', true); //to re-center
+
+    return panel;
+
 };
 
 var connectingPanel = function() {

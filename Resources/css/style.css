@@ -162,3 +162,29 @@ ul.theme-picker {
     border: 1px solid #ddd;
     background-color: #f5f5f5;
 }
+
+
+/* Splash Page */
+#splash-page img {
+  float: left;
+  padding-top: 50px;
+}
+
+#splash-page h1 {
+  color: #000;
+  font-size: 43px;
+  padding-top: 80px;  
+}
+
+#splash-page p {
+  color: #000;
+  font-size: 17px;
+  margin-top: 30px;
+  margin-right: 20px;
+}
+
+#splash-page #splash-btn-con {
+  float: right;
+  padding-top: 20px;
+  padding-right: 30px;
+}
