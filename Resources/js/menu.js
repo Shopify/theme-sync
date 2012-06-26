@@ -4,8 +4,8 @@ YUI().use(function(Y) {
 var menu = Titanium.UI.createMenu(),
     utility = Titanium.UI.createMenuItem('Utility');
 
-utility.addItem("Choose 'Open With...' Editor", function() {
-    alert('run!');
+utility.addItem("Choose 'Open In ...' Editor", function() {
+    Themer.Editor.pickEditor();
 });
 
 menu.appendItem(utility);

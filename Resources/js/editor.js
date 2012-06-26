@@ -19,10 +19,15 @@ Editor.pickEditor = function(path) {
             Editor.app = selectedApp;
             Ti.App.Properties.setString('editor', selectedApp);
             Y.all('.editor-name').set('text', selectedApp);
+
             if(path) {
                 Editor.open(path);
             }
+            else {
+                growl({title: 'Editor set to '+Editor.app});
+            }
             return true;
+
         },
         {
             title: 'Choose Your Editor',
