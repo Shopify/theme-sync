@@ -31,6 +31,7 @@ Editor.pickEditor = function(path) {
         },
         {
             title: 'Choose Your Editor',
+            path: '/Applications',
             multiple:false,
             types:['app']
         }
