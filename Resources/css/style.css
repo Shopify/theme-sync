@@ -67,8 +67,8 @@ span.path {
     cursor: pointer;
 }
 
-span.path {
-    background-color: '#f00';
+span.path:hover {
+    text-decoration: underline;
 }
 
 /* ============ */
@@ -187,4 +187,13 @@ ul.theme-picker {
   float: right;
   padding-top: 20px;
   padding-right: 30px;
+}
+
+.theme-header h3, .theme-name h4, .sidebar strong, header span{
+    cursor: default;
+}
+.btn, a, .add-shop-action a, .shop-list a, h3, h4, span, img, strong{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
