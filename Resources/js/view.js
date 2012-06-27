@@ -23,42 +23,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             window.location.reload(true);
         }},
         
-        '.add-shop' : { click: 'addShop'},
-        'ul.themes li': { contextmenu: function(e) {
-            e.stopPropagation();
-
-            var li = e.currentTarget,
-                currentMenu = Ti.UI.createMenu(),
-                shops = this.shops;
-
-            var openFolder = Ti.UI.createMenuItem('Open In Finder', function() {
-                li.one('.path').simulate('click');
-            });
-            
-            var forceDeploy = Ti.UI.createMenuItem('Force Deploy', function() {
-                Ti.API.warn('Force Deploy TK');
-                
-                if(confirm("Are you sure you want to upload this theme?")) {
-                    var themeId = li.get('id').replace('theme-', '');
-
-                    //go through the shops, look for the theme model of interest
-                    shops.some(function(shopModel) {
-                        var themeModel = shopModel.themes.getById(themeId);
-                        if(themeModel) {
-                            uploadThemeActivity(themeModel);
-                            IO.deployTheme(shopModel, themeModel);
-                            return true;
-                        }
-                        return false;
-                    });
-                }
-
-            });
-
-            currentMenu.appendItem(openFolder);
-            currentMenu.appendItem(forceDeploy);
-            Ti.UI.setContextMenu(currentMenu);
-        }}
+        '.add-shop' : { click: 'addShop'}
     },
    
     initializer: function() {
