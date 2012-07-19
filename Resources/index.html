@@ -23,6 +23,7 @@
       Ti.include("/lib/util.php");
   </script>
 
+  <script src="js/alert.js"></script>
   <script src="js/growl.js"></script>
   <script src="js/io.js"></script>
   <script src="js/menu.js"></script>
@@ -181,6 +182,11 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
   <div id="no-themes" class="nothing hide">
     <h1>No Themes Found</h1>
     <h3>Click the Add Theme button to get started.</h3>
+  </div>
+
+  <div id="info-box" class="alert alert-info">
+    <h4 class="alert-heading">File uploaded</h4>
+    <span class="message">{filename}</span>
   </div>
 
   <div id='splash-page' class='hide modal'>

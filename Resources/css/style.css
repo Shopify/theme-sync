@@ -197,3 +197,11 @@ ul.theme-picker {
     -webkit-user-select: none;
     user-select: none;
 }
+
+#info-box {
+  display: inline-block; 
+  position: absolute;
+  top: 0;
+  right:0;
+  opacity: 0;
+}
