@@ -1,11 +1,12 @@
 YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', function(Y) {Y.on("domready", function() { 
-    //make running app object accessible all over
+
+    //app instance accessible all over.
     var theApp = Themer.theApp = new Themer.appView();
     
-    //Spin up watchers...
+    //Spin up theme watchers...
     Themer.Watcher.init(theApp);
 
-    //Returning from the callback...
+    //Returning from authorizing shop callback
     if(window.location.search != '') {
         var qs = Y.QueryString.parse(window.location.search.replace('?', '')),
             shopid = qs.shop.replace('.myshopify.com', '', 'i');
@@ -20,51 +21,20 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
                 console.log('Shop Created!');
                 Themer.shopFocus = shopid; //force focus onto new shop
             } else {
-                //@todo Throw up error panel.
-                alert(err);
+                console.log(err);
+                growl({title: 'Error', message: 'There was a problem adding your shop'});
             }
         });
     }
 
-    Y.Global.on('asset:send', function(e) {
-        console.log('asset:send listener');
-
-        var key = e.relative,
-            path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
-            successHandler = function(_e) {
-                // fileUploadedAlert(key);
-                growl({title: 'File Uploaded', message: key});
-            },
-            failureHandler = function(_e) {
-                if(_e.timedOut) {
-                    growlTimedOut();
-                } 
-                else {
-                    //output error to console
-                    Ti.API.error(_e.status);
-                    Ti.API.error(_e.statusText);
-                    var response = JSON.parse(_e.responseText);
-                    var errors = response.errors || {};
-                    Y.each(errors, function(message) {
-                        growl({
-                            title: 'Error uploading',
-                            message: key.concat(' - ', message)
-                        });
-                    });
-                }
-            };
-
-        Themer.IO.sendAsset(e.shop, e.theme, key, path, {success: successHandler, failure: failureHandler});
-    });
-
     //Stop right click outside of the LIs
     //LI contextmenu listener setup in view.js
-    Y.one('body').on('contextmenu', function(e) {
-        // e.preventDefault();
+    // Y.one('body').on('contextmenu', function(e) {
+        //e.preventDefault();
         //Remove contextual right click options
-        // var emptyMenu = Ti.UI.createMenu();
-        // Ti.UI.setContextMenu(emptyMenu);
-    });
+        //var emptyMenu = Ti.UI.createMenu();
+        //Ti.UI.setContextMenu(emptyMenu);
+    // });
 
 });});
 
