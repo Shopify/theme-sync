@@ -17,7 +17,7 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
         }, function(err) {
             //Hack hack hack!
             if(!err) {
-                Y.log('Shop Created!');
+                console.log('Shop Created!');
                 Themer.shopFocus = shopid; //force focus onto new shop
             } else {
                 //@todo Throw up error panel.

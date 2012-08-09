@@ -30,6 +30,7 @@
   <script src="js/editor.js"></script>
   <script src="js/models.js"></script>
   <script src="js/view.js"></script>
+  <script src="js/views/shop.js"></script>
   <script src="js/views/theme.js"></script>
   <script src="js/app.js"></script>
   <script src="js/watchers.js"></script>
@@ -111,6 +112,10 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
 
   </script>
 
+<!-- Some templates -->
+
+  <!-- Get Contents of these in scripts -->
+  
   <!-- This it the wrapper around the Shop Links in the sidebar -->
   <script type="text/x-template" id="shop-template">
     <a href="#" class="{class}" id="{store}"></a>
@@ -126,11 +131,6 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
       <div class="theme-list">
       </div>
     </div>
-  </script>
-  <script type="text/x-template" id="theme-li-template">
-      <div class='actions'>{viewButton} <button class='btn remove-theme'>Remove Theme</button></div>
-      <div class='info'><span class='name nowatch'>{name}</span> <span class='role'>[{role}]</span></div>
-      <div class='path'>{path}</div>
   </script>
 
   <script type="text/x-template" id="theme-template">
@@ -163,20 +163,20 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
         </div>
       </div>
     </div>
-
   </script>
 
+  <!-- These are grabbed as srcNode for panels -->
   <div id='add-shop-panel' class='hide modal'>
-      <div class="modal-body">
-             <form class="lform form-vertical">
-                  <fieldset>
-                      <div>
-                          <label for='id'>Enter your shop's URL here:</label>
-                          <input type="text" name="id" value="" placeholder="ex: shop-name.myshopify.com">
-                      </div>
-                  </fieldset>
-              </form>    
-      </div>
+    <div class="modal-body">
+      <form class="lform form-vertical">
+          <fieldset>
+              <div>
+                  <label for='id'>Enter your shop's URL here:</label>
+                  <input type="text" name="id" value="" placeholder="ex: shop-name.myshopify.com">
+              </div>
+          </fieldset>
+      </form>    
+    </div>
   </div>
 
   <div id="no-themes" class="nothing hide">
