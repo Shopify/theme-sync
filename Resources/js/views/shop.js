@@ -242,8 +242,6 @@ var downloadThemeActivity = function(themeModel) {
     });
 
     var ddHandle = Y.Global.once('download:done', function(e) { 
-        //cleanup
-        assetDlHandle.detach();
 
         e = e || {};
         var cancelled = e.cancelled || false;
