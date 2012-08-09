@@ -8,6 +8,7 @@
 <url>http://mitchell.amihod.com</url>
 <icon>shopify.png</icon>
 <copyright>2011 by meeech</copyright>
+ <analytics>false</analytics>
 <!-- Window Definition - these values can be edited -->
 <window>
 <id>main</id>
