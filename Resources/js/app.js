@@ -32,8 +32,8 @@ YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', func
         var key = e.relative,
             path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
             successHandler = function(_e) {
-                fileUploadedAlert(key);
-                // growl({title: 'File Uploaded', message: key, callback: function() {console.log('growlcallback');return false;}});
+                // fileUploadedAlert(key);
+                growl({title: 'File Uploaded', message: key});
             },
             failureHandler = function(_e) {
                 if(_e.timedOut) {
