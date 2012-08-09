@@ -126,21 +126,17 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         });
     },
 
-
+    //Open & handle the theme selection panel
     chooseTheme: function() {
         console.log('ShopView:chooseTheme');
         var ThisShopModel = this.model,
             shopWorkingThemes = ThisShopModel.themes;
 
-        //Open Panel
         var panel = createThemePicker();
-        //Fetch Themes
+
         IO.fetchThemesList(ThisShopModel, {
 
-            success: function(resp) {
-                // console.log('Success!');
-                // console.log(resp);
-                
+            success: function(resp) {                
                 var result = JSON.parse(resp.responseText),
                     themeList = Y.Node.create('<ul class="theme-picker"></ul>');
                 
@@ -150,7 +146,6 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                 });
                 
                 themeList.delegate('click', function(e) {
-                    // console.log(e);
                     var selectedId = e.currentTarget.get('id').replace('theme-', '');
                     
                     var selectedTheme = Y.Array.find(result.themes, function(item) {
@@ -163,11 +158,13 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                     
                     //Show folder picker
                     Titanium.UI.currentWindow.openFolderChooserDialog(function(dir) {
+                            //handle the user choice
                             if(dir.length == 0) { return false; }
                             selectedTheme.path = dir[0].concat(Ti.Filesystem.getSeparator(), selectedTheme.parent_id, '-', selectedTheme.id);
                             shopWorkingThemes.create(selectedTheme);
                             return true;
                         },
+                        //options for the picker
                         {
                             title: 'Choose Download Location',
                             multiple:false,
@@ -188,9 +185,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                 var result = JSON.parse(resp.responseText);
                 panel.set('bodyContent', result.errors || "Unknown Error");
             }
-        });
-        //On selection of theme, prompt with folder. 
-        
+        });        
     }
 });
 
@@ -241,6 +236,7 @@ var downloadThemeActivity = function(themeModel) {
         Y.one('#downstatus').setContent(e.asset + '...');
     });
 
+    //Handle some download events
     var ddHandle = Y.Global.once('download:done', function(e) { 
 
         e = e || {};
