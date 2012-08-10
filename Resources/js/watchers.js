@@ -76,8 +76,7 @@ Watcher.watch = function(shop, theme, port) {
         'themeId': theme.get('id'),
         'process':process
     });
-    
-    //@todo check if we get a race condition where process isn't running, but we try to establish socket
+
     console.log('Watch process launched: '+ process.getPID());
     console.log('Watch process running: '+ process.isRunning());
     //Give server a second to spinup

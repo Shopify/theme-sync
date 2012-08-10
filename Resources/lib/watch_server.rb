@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-# @todo ERROR Handling! What happens when things crap out?
+#There is room for improvement in this script. critique welcomed.
 require 'socket'
 require 'rubygems'
 
