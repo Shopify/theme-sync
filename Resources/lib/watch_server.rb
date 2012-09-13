@@ -11,7 +11,7 @@ Gem.use_paths(nil, [gem_path])
 require 'json'
 require 'listen'
 
-path = ARGV.shift
+base_path = ARGV.shift
 port = ARGV.shift || 0 # default is to use the next available port
 host = ARGV.shift # default is to bind everything
 
@@ -32,35 +32,56 @@ addr = s.peeraddr[3]
 # startEvent = { :event => 'connected'}
 # s.puts = "connected"
 
-FSSM.monitor path do |m|
-    m.update do |base, relative|
-
-      unless ignore? relative
-        payload = {
-          :event => "update",
-          :base => base,
-          :relative => relative
-        }
-        s.puts payload.to_json
-      end
-
-    end
-
-    m.create do |base, relative|
-
-      unless ignore? relative
-        payload = {
-          :event => "create",
-          :base => base,
-          :relative => relative
-        }
-        s.puts payload.to_json
-      end
-      
-    end
-    # if !options['keep_files']
-    #   m.delete do |base, relative|
-    #     delete_asset(relative, options['quiet'])          
-    #   end
-    # end
+def broadcast_assets(assets, event_type, base, socket)
+  
+  assets.each do |relative|
+    payload = {
+      :event => event_type,
+      :base => base,
+      :relative => relative
+    }
+    socket.puts payload.to_json  
+  end
+  
 end
+
+Listen.to(base_path, :relative_paths => true) do |modified, added, removed|
+
+  broadcast_assets(modified, 'update', base_path, s)
+  broadcast_assets(added, 'create', base_path, s)
+
+end
+
+
+# FSSM.monitor path do |m|
+#     m.update do |base, relative|
+# 
+#       unless ignore? relative
+#         payload = {
+#           :event => "update",
+#           :base => base,
+#           :relative => relative
+#         }
+#         s.puts payload.to_json
+#       end
+# 
+#     end
+# 
+#     m.create do |base, relative|
+# 
+#       unless ignore? relative
+#         payload = {
+#           :event => "create",
+#           :base => base,
+#           :relative => relative
+#         }
+#         s.puts payload.to_json
+#       end
+#       
+#     end
+#     # if !options['keep_files']
+#     #   m.delete do |base, relative|
+#     #     delete_asset(relative, options['quiet'])          
+#     #   end
+#     # end
+# end
