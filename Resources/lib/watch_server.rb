@@ -9,7 +9,7 @@ gem_path = File.join(root, '../', 'vendor', 'bundle','ruby','1.8')
 Gem.use_paths(nil, [gem_path])
 
 require 'json'
-require 'fssm'
+require 'listen'
 
 path = ARGV.shift
 port = ARGV.shift || 0 # default is to use the next available port
@@ -31,16 +31,6 @@ addr = s.peeraddr[3]
 # puts "*** recieving from #{name}:#{peerport}"
 # startEvent = { :event => 'connected'}
 # s.puts = "connected"
-
-# used to check asssets against ignore list.
-def ignore? key
-   ['.git', '.svn'].each { |e|
-    if(key.include?(e) == true)
-      return true;
-    end
-  }
-  return false
-end
 
 FSSM.monitor path do |m|
     m.update do |base, relative|
