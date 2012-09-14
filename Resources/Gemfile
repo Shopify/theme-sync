@@ -1,5 +1,5 @@
-# A sample Gemfile
-source "http://rubygems.org"
+gem "listen", :git => "git://github.com/meeech/listen.git", :branch => "fix_for_fallback_0.5.1"
 
-gem "fssm"
+source "http://rubygems.org"
+gem "rb-fsevent"
 gem "json"
