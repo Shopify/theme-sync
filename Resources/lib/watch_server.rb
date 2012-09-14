@@ -3,7 +3,7 @@
 require 'socket'
 require 'rubygems'
 
-# To use bundled gem
+# To use bundled gems
 root = File.dirname(__FILE__)
 gem_path = File.join(root, '../', 'vendor', 'bundle','ruby','1.8')
 Gem.use_paths(nil, [gem_path])
@@ -29,8 +29,6 @@ name = s.peeraddr[2]
 addr = s.peeraddr[3]
 
 # puts "*** recieving from #{name}:#{peerport}"
-# startEvent = { :event => 'connected'}
-# s.puts = "connected"
 
 def broadcast_assets(assets, event_type, base, socket)
   
@@ -51,37 +49,3 @@ Listen.to(base_path, :relative_paths => true) do |modified, added, removed|
   broadcast_assets(added, 'create', base_path, s)
 
 end
-
-
-# FSSM.monitor path do |m|
-#     m.update do |base, relative|
-# 
-#       unless ignore? relative
-#         payload = {
-#           :event => "update",
-#           :base => base,
-#           :relative => relative
-#         }
-#         s.puts payload.to_json
-#       end
-# 
-#     end
-# 
-#     m.create do |base, relative|
-# 
-#       unless ignore? relative
-#         payload = {
-#           :event => "create",
-#           :base => base,
-#           :relative => relative
-#         }
-#         s.puts payload.to_json
-#       end
-#       
-#     end
-#     # if !options['keep_files']
-#     #   m.delete do |base, relative|
-#     #     delete_asset(relative, options['quiet'])          
-#     #   end
-#     # end
-# end
