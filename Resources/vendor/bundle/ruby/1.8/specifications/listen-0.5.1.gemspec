@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'listen/version'
 
 Gem::Specification.new do |s|
   s.name        = 'listen'
-  s.version     = Listen::VERSION
+  s.version     = "0.5.1"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Thibaud Guillaume-Gentil', 'Maher Sallam']
   s.email       = ['thibaud@thibaud.me', 'maher@sallam.me']

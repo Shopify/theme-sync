@@ -2,6 +2,13 @@
 
 require 'socket'
 require 'rubygems'
+
+# require '../Resources/vendor/bundle/bundler/setup'
+ 
+root = File.dirname(__FILE__)
+gem_path = File.join(root, '../', 'Resources', 'vendor', 'bundle','ruby','1.8')
+Gem.use_paths(gem_path)
+
 require 'json'
 require 'listen'
 
