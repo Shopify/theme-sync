@@ -12,6 +12,6 @@ Mitchell Amihod [@meeech](https://twitter.com/meeech)
 **Thanks**
 
 [TideSDK](http://www.tidesdk.org)  
-[FSSM](https://rubygems.org/gems/fssm)  
+[Listen](https://rubygems.org/gems/listen)  
 Beta Testers  
 Shopify
