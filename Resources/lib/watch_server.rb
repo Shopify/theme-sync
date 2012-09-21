@@ -9,6 +9,7 @@ gem_path = File.join(root, '../', 'vendor', 'bundle','ruby','1.8')
 Gem.use_paths(nil, [gem_path])
 
 require 'json'
+require 'rb-fsevent'
 require 'listen'
 
 base_path = ARGV.shift
