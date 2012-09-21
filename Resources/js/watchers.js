@@ -71,6 +71,10 @@ Watcher.watch = function(shop, theme, port) {
         env: {'PATH': '/usr/bin:/bin'}
     });
 
+    // process.setOnReadLine(function(output) {
+    //     console.log(output);
+    // });
+
     process.launch();
     Watcher.processes.push({
         'themeId': theme.get('id'),
