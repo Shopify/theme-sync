@@ -30,6 +30,8 @@ name = s.peeraddr[2]
 addr = s.peeraddr[3]
 
 # puts "*** recieving from #{name}:#{peerport}"
+connectEvent = {:event => "connect"}
+s.puts connectEvent.to_json
 
 def broadcast_assets(assets, event_type, base, socket)
   

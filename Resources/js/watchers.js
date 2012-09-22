@@ -122,30 +122,29 @@ Watcher.connect = function(shop, theme, port, attempt) {
     });
     
     socket.onRead(function(e) {
-        console.log('Read');
+        // console.log('Read');
         var resp = e.toString();
         Ti.API.info(resp);
         //Bad data comes down socket for some reason from time to time
-        if(resp.length == 1) { return; }
+        if(resp.length <= 1) { return; }
 
         resp = JSON.parse(resp);
-        //Right now, only 2 events - update + create, both should have the same result.
-        if(resp.event) {
+
+        //update & create should have the same action.
+        if((resp.event == 'update') || (resp.event == 'create')) {
             resp.theme = theme;
             resp.shop = shop;
             Y.Global.fire('asset:send', resp);
         }
+        else if(resp.event == 'connect') {
+            Y.Global.fire('watch:start', {
+                themeId: theme.get('id')
+            });            
+        }
 
-        
     });
 
     socket.connect();
-
-    if(!socket.isClosed()) {        
-        Y.Global.fire('watch:start', {
-            themeId: theme.get('id')
-        });
-    }
 
 };
 
