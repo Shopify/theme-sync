@@ -83,6 +83,11 @@ Watcher.watch = function(shop, theme, port) {
 
     console.log('Watch process launched: '+ process.getPID());
     console.log('Watch process running: '+ process.isRunning());
+    
+    Y.Global.fire('watch:loading', {
+        themeId: theme.get('id')
+    });
+    
     //Give server a second to spinup
     setTimeout(function() {
         Watcher.connect(shop, theme, port);
@@ -92,7 +97,7 @@ Watcher.watch = function(shop, theme, port) {
 
 Watcher.connect = function(shop, theme, port, attempt) {
     console.log('Connecting socket theme: '+theme.get('id') +  ' on port '+ port);
-        
+
     var maxAttempts = 10;
 
     attempt = attempt || 1;

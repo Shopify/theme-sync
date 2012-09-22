@@ -59,6 +59,9 @@ input[name=id] {
 .theme-status.nowatch {
     background-image: url('../img/status_red.png');
 }
+.theme-status.loading-watch {
+    background-image: url('../img/status_yellow.png');
+}
 .theme-status.watch {
     background-image: url('../img/status_green.png');
 }

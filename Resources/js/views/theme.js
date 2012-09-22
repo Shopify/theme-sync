@@ -5,15 +5,24 @@ var IO = YUI.namespace('Themer.IO'),
 
 //Global handler for when a theme is being watched/unwatched.
 Y.Global.on('watch:start', function(e) {
+    var el = Y.one('#theme-'+e.themeId+' .theme-status.loading-watch');
+    if(el) {
+        el.replaceClass('loading-watch', 'watch');
+    }
+});
+
+Y.Global.on('watch:loading', function(e) {
     var el = Y.one('#theme-'+e.themeId+' .theme-status.nowatch');
     if(el) {
-        el.replaceClass('nowatch', 'watch');
+        el.replaceClass('nowatch', 'loading-watch');
     }
 });
 
 Y.Global.on('watch:stop', function(e) {
     var el = Y.one('#theme-'+e.themeId+' .theme-status.watch');
-    el.replaceClass('watch', 'nowatch');
+    if(el) {
+        el.replaceClass('watch', 'nowatch');
+    }
 });
 
 Themer.ThemeView = Y.Base.create('themeView', Y.View, [], {
