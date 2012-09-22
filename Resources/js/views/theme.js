@@ -19,7 +19,7 @@ Y.Global.on('watch:loading', function(e) {
 });
 
 Y.Global.on('watch:stop', function(e) {
-    var el = Y.one('#theme-'+e.themeId+' .theme-status.watch');
+    var el = Y.one('#theme-'+e.themeId+' .theme-status.watch') || Y.one('#theme-'+e.themeId+' .theme-status.loading-watch');
     if(el) {
         el.replaceClass('watch', 'nowatch');
     }
