@@ -3,7 +3,7 @@ YUI().use('view', 'panel', 'event-custom','event-focus','array-extras', function
 var IO = YUI.namespace('Themer.IO'),
     EDITOR = YUI.namespace('Themer.Editor');
 
-//Global handler for when a theme is being watched/unwatched.
+//Global handlers for displaying watch status
 Y.Global.on('watch:start', function(e) {
     var el = Y.one('#theme-'+e.themeId+' .theme-status.loading-watch');
     if(el) {
