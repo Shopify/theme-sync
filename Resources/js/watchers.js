@@ -157,7 +157,7 @@ var killAllWatchers = function() {
     Titanium.API.warn('Killing Watchers...');
     Watcher.processes.forEach(function(o) {
         Titanium.API.warn('Killing '+ o.process.getPID());
-        if(o.process.isRunning()) { o.process.kill(); }
+        if(o.process.isRunning()) { o.process.sendSignal(Titanium.Process.SIGINT); }
     });
 };
 
