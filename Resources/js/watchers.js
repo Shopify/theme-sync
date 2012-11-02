@@ -26,7 +26,7 @@ Watcher.kill = function(themeId) {
     Watcher.processes.forEach(function(o) {
         if(o.themeId == themeId) {
             Titanium.API.warn('Killing '+ o.process.getPID());
-            o.process.kill();
+            o.process.sendSignal(Titanium.Process.SIGINT);
         }
     });
 };
