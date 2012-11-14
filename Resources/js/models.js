@@ -49,7 +49,7 @@ Themer.themeList = Y.Base.create('themeList', Y.ModelList, [], {
 //Based off LocalStorageSync from YUI example
 function PropertiesStorageSync(key) {
     
-    var data = JSON.parse(Titanium.App.Properties.getString(key, '{}'));
+    var data = JSON.parse(Ti.App.Properties.getString(key, '{}'));
     
     function destroy(id) {
         var modelHash;

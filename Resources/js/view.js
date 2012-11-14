@@ -13,7 +13,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         //General External Link handler. Open in browser window.
         'a.external': { click: function(e) {
             e.halt(true);
-            Titanium.Platform.openURL(e.currentTarget.get('href'));
+            Ti.Platform.openURL(e.currentTarget.get('href'));
 
             //from bootstrap :/ because we halt the event, 
             //we need to manually close the dropdown. grrr...

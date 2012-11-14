@@ -2,10 +2,10 @@
 //Resources aren't being copied with proper permissions.
 //This aims to fix that. 
 var path_to_script = [
-    Titanium.Filesystem.getResourcesDirectory(),
-    'lib','watch_server.rb'].join(Titanium.Filesystem.getSeparator());
+    Ti.Filesystem.getResourcesDirectory(),
+    'lib','watch_server.rb'].join(Ti.Filesystem.getSeparator());
 
-var chmoder= Titanium.Process.createProcess({
+var chmoder= Ti.Process.createProcess({
    args: ['chmod', '755', path_to_script],
    env: {'PATH': '/bin'}
 });

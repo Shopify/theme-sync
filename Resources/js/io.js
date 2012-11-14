@@ -99,11 +99,11 @@ IO.downloadTheme = function(shopModel, themeModel) {
             var successGetAsset = function(e) {
                 
                 var assetRes = JSON.parse(e.responseText),
-                    fileHandle = Titanium.Filesystem.getFile(themeModel.get('path'), assetRes.asset.key);
+                    fileHandle = Ti.Filesystem.getFile(themeModel.get('path'), assetRes.asset.key);
 
-                var destPath = fileHandle.nativePath().split(Titanium.Filesystem.getSeparator());
+                var destPath = fileHandle.nativePath().split(Ti.Filesystem.getSeparator());
                 destPath.pop();
-                var destinationDir = Titanium.Filesystem.getFile(destPath.join(Titanium.Filesystem.getSeparator()));
+                var destinationDir = Ti.Filesystem.getFile(destPath.join(Ti.Filesystem.getSeparator()));
                 if( (destinationDir.exists() == false) && (destinationDir.createDirectory() == false)) {
                     alert('We could not create the directory: ' + destPath.nativePath() + ' so we must abort.');
                     Y.Global.fire('download:error');
@@ -158,7 +158,7 @@ IO.downloadTheme = function(shopModel, themeModel) {
 IO.getAsset = function(shopModel, themeModel, asset, handlers) {
     
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
-    assetTarget = assetTarget.concat('?', 'asset[key]=', Titanium.Network.encodeURIComponent(asset));
+    assetTarget = assetTarget.concat('?', 'asset[key]=', Ti.Network.encodeURIComponent(asset));
 
     Y.Global.fire('asset:download', {
         asset: asset
@@ -280,7 +280,7 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
     //Ti throws exception when trying to read empty file,
     //but no advice given how to catch said exception. try/catch doesn't work - app still crashes,
     //To work around, we create File obj first, and check size()
-    var assetFile = Titanium.Filesystem.getFile(filePath),
+    var assetFile = Ti.Filesystem.getFile(filePath),
 
         contents = '',
 
@@ -291,13 +291,13 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
         };
 
     if(0 < assetFile.size()) {
-        var readfile = Titanium.Filesystem.getFileStream(assetFile);
+        var readfile = Ti.Filesystem.getFileStream(assetFile);
         readfile.open();
         contents = readfile.read();
     }
 
     if(is_binary(filePath)) {
-        payload.asset.attachment = Titanium.Codec.encodeBase64(contents);
+        payload.asset.attachment = Ti.Codec.encodeBase64(contents);
     } else {
         payload.asset.value = contents.toString();
     }
@@ -316,7 +316,7 @@ IO.put = function(target, data, handlers) {
     handlers.failure = handlers.failure || function(e) {console.log('PUT: Fail/Default Handler');console.log(e);};
     handlers.success = handlers.success || function(e) {console.log('PUT: Success/Default Handler');};
 
-    var xhr = Titanium.Network.createHTTPClient();
+    var xhr = Ti.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
     xhr.setRequestHeader('Content-Type','application/json');
 
@@ -340,7 +340,7 @@ IO.put = function(target, data, handlers) {
 
 IO.get = function(target, handlers) {
 
-    var xhr = Titanium.Network.createHTTPClient();
+    var xhr = Ti.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
 
     xhr.onload = function(event) {

@@ -4,15 +4,15 @@ YUI().use('node', function(Y) {
 var Editor = YUI.namespace('Themer.Editor');
 
 //Hold the user's editor choice.
-// Titanium.App.Properties.setString('editor', '');
-Editor.app = Titanium.App.Properties.getString('editor', '');
+// Ti.App.Properties.setString('editor', '');
+Editor.app = Ti.App.Properties.getString('editor', '');
 
 //string path (opt) if provided, we open in the editor after its picked.
 Editor.pickEditor = function(path) {
     
     path = path || false;
     
-    Titanium.UI.currentWindow.openFileChooserDialog(function(file) {
+    Ti.UI.currentWindow.openFileChooserDialog(function(file) {
             if(file.length == 0) { return false; }
             
             var selectedApp = file[0].split('/').pop().replace('.app', '');

@@ -106,7 +106,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
         var panel = downloadThemeActivity(theme);
 
 
-        var destinationDir = Titanium.Filesystem.getFile(theme.get('path'));
+        var destinationDir = Ti.Filesystem.getFile(theme.get('path'));
         //Will create folder if it doesn't exist.
         if( (destinationDir.exists() == false) && (destinationDir.createDirectory() == false)) {
             alert('We could not create the download directory.');
@@ -157,7 +157,7 @@ Themer.ShopView = Y.Base.create('shopView', Y.View, [], {
                     panel.destroy();
                     
                     //Show folder picker
-                    Titanium.UI.currentWindow.openFolderChooserDialog(function(dir) {
+                    Ti.UI.currentWindow.openFolderChooserDialog(function(dir) {
                             //handle the user choice
                             if(dir.length == 0) { return false; }
                             selectedTheme.path = dir[0].concat(Ti.Filesystem.getSeparator(), selectedTheme.parent_id, '-', selectedTheme.id);
