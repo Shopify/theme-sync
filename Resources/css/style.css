@@ -48,7 +48,7 @@ input[name=id] {
 .themes{float:left; width:71.875%; padding:20px; background:#f7f7f7;}
 .theme-header{margin-bottom:30px;}
 .theme-header a{display:inline-block; float:right; margin-left:5px;}
-.theme-header h3{float:left;}
+.theme-header h3{float:left; width: 332px}
 .theme{width:100%; margin-bottom:10px;}
 .theme .btn, .theme .btn-group{box-shadow:none; background:transparent; background-image:none;}
 .theme-info{float:left;}
