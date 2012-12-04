@@ -16,7 +16,7 @@ IO.authUrl = function(shopId) {
 //@param shop ShopModel
 //@param endpoint our target, like themes
 IO.url = function(shopModel, endpoint) {
-    return Y.Lang.sub('http://{api_key}:{password}@{store}.myshopify.com/admin/{endpoint}.json', {
+    return Y.Lang.sub('https://{api_key}:{password}@{store}.myshopify.com/admin/{endpoint}.json', {
         store: shopModel.get('id'), 
         api_key: shopModel.get('api_key'),
         password: shopModel.get('password'),
