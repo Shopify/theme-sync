@@ -1,6 +1,17 @@
-Welcome to Shopify Theme Tool.
+Theme Tool
 
-Add your shop, download your themes. The app will then watch the theme folder for changes, and upload it to the shop.
+TT lets you add your shop, download your themes. TT will upload any changes and upload it to your shop.
+
+Building
+
+Requirements
+
+* [TideSDK](http://www.tidesdk.org)
+
+Getting started
+
+
+
 
 See in-app Help for instructions.
 
