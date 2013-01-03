@@ -1,0 +1,11 @@
+{
+  "name": "theme-auth",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.x",
+    "crypto":""
+  },
+  "engines": {
+    "node": "0.6.x"
+  }
+}
