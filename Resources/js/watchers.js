@@ -1,7 +1,5 @@
 YUI().use('event-custom', function(Y) {
-//BEGIN Y closure
-//@note potential issue: Right now, works fine for spinning up a minimal amount of watchers. 
-//      Will have to see what the limits are, and maybe refactor how we initialize them
+///////
 
 var Watcher = YUI.namespace('Themer.Watcher');
 
@@ -165,5 +163,5 @@ var killAllWatchers = function() {
 Y.Global.on('watch:killall', killAllWatchers);
 Ti.API.addEventListener(Ti.APP_EXIT, killAllWatchers);
 
-//end closure
+///////
 });
