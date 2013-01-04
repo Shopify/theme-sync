@@ -46,7 +46,7 @@ def broadcast_assets(assets, event_type, base, socket)
   
 end
 
-Listen.to(base_path, :relative_paths => true) do |modified, added, removed|
+Listen.to(base_path, :relative_paths => true, :ignore => %r[.hg]) do |modified, added, removed|
 
   broadcast_assets(modified, 'update', base_path, s)
   broadcast_assets(added, 'create', base_path, s)
