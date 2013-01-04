@@ -9,7 +9,7 @@ As a desktop app, resources are shipped with the app, so there was no reason for
 
 TideSDK apps are basically HTML running in a webkit browser, with a `Ti` js object available in the global scope with allows access to system functionality. A good analogy is phonegap for the desktop. 
 
-Files for the app generally live under `Resources`.
+Files for the app live under `Resources` - paths are relative to that.
 
 `index.html` The core of the app, this loads first, and behaves how you would expect a regular HTML page loaded in a browser to behave. This is where you would start. Contains markup for the app, as well as some templates which we pull in as needed.
 
