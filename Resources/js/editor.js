@@ -1,6 +1,6 @@
 YUI().use('node', function(Y) { 
 /////
-
+//Allows user to pick an .app to use as their editor
 var Editor = YUI.namespace('Themer.Editor');
 
 //Hold the user's editor choice.

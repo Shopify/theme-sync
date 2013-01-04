@@ -68,7 +68,7 @@ function PropertiesStorageSync(key) {
     //
     // If an id is specified, then it loads a single model. If no id is
     // specified then it loads an array of all models. This allows the same sync
-    // layer to be used for both the TodoModel and TodoList classes.
+    // layer to be used for both the Model and ModelList.
     function get(id) {
         return id ? data[id] : Y.Object.values(data);
     }

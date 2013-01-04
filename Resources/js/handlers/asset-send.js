@@ -1,6 +1,8 @@
 YUI().use('event', 'event-custom','oop', function(Y) {
 ///
 
+//Handles the event of asset:send for uploadng individual files.
+
 var IO = YUI.namespace('Themer.IO');
 
 Y.Global.on('asset:send', function(e) {
@@ -9,7 +11,6 @@ Y.Global.on('asset:send', function(e) {
     var key = e.relative,
         path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
         successHandler = function(_e) {
-            // fileUploadedAlert(key);
             growl({title: 'File Uploaded', message: key});
         },
         failureHandler = function(_e) {
