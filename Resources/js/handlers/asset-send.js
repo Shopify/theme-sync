@@ -21,6 +21,9 @@ Y.Global.on('asset:send', function(e) {
                 //output error to console
                 Ti.API.error(_e.status);
                 Ti.API.error(_e.statusText);
+
+                if(Y.Lang.trim(_e.responseText) == ''){ return; }  
+
                 var response = JSON.parse(_e.responseText);
                 var errors = response.errors || {};
                 Y.each(errors, function(message) {
