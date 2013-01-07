@@ -16,7 +16,7 @@ Building
 
 Packaging up the app. This will create a .app, which you can then zip up for distribution:
 
-`tidebuilder.py -i "dist,package" -n -t bundle -d /path/to/build/to /path/to/app/source`  
+`tidebuilder.py -i "dist,packages" -n -t bundle -d /path/to/build/to /path/to/app/source`  
 (tidebuilder.py should be in your `~/Library/Application Support/TideSDK/sdk/osx/[version]`)
 
 Building on OSX still does not recognize `.help` files, so you'll have to make the app aware of the help book. So, once you've built the .app, right click on it and `Show Package Contents`. In the `Contents` folder, open `Info.plist` in your favourite text editor. `Info.plist` is a XML file. Under `plist > dict` you will want to add:
