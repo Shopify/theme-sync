@@ -19,13 +19,6 @@ Files for the app live under `Resources` - paths are relative to that.
 
 `lib/util.php` Used to spackle over some minor shortcomings of TideSDK. 
 
-Watch Servers
--------------
-
-`lib/watch_server.rb` This is the watch server we spin up to listen for changes to the filesystem. The script is executed using `Ti.Process`, and relies on stock Ruby 1.8.7 which ships with OSX. 
-
-`js/watchers.js` This is the JS which we use to control & track watch servers.
-
 Authentication
 --------------
 
@@ -39,4 +32,15 @@ Solution: A simple script running on Node. This lets us keep our shared secret k
 
 In `app.js` you can see we check for the existence of querystring. If one exists, we can infer a new shop is being added, at which point we parse out the password & create the new shop. 
 
+Watch Servers
+-------------
 
+`lib/watch_server.rb` This is the watch server we spin up to listen for changes to the filesystem. The script is executed using `Ti.Process`, and relies on stock Ruby 1.8.7 which ships with OSX. 
+
+`js/watchers.js` This is the JS which we use to control & track watch servers.
+
+Use of Ruby
+-----------
+
+The Ruby module for TideSDK was not used for this project. Instead, went with the system Ruby for the watch server. The main reason was that unfortunately, TideSDK still can't handle running something like a server process - so, when you launch something like the watch server, the app would hang/become unresponsive.
+Given that this app was intended only to run on OSX at the moment, I decided to lean on the ruby which comes by default with every OSX. So the watch server is an executable Ruby script which uses /usr/bin/ruby. We then launch the watch server using `Ti.Process` which will run without hanging the app. 
