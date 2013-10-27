@@ -52,4 +52,6 @@ Mitchell Amihod [@meeech](https://twitter.com/meeech)
 [TideSDK](http://www.tidesdk.org)  
 [Listen](https://rubygems.org/gems/listen)  
 Beta Testers  
-Shopify
+Shopify  
+mightyoj  
+Scott Szarapka  
