@@ -39,6 +39,12 @@ input[name=id] {
 .add-shop-action{position:absolute; bottom:0; width: 100%; background: #d6d6d6; padding:20px 0; border-top: 1px solid #bbb;}
 .add-shop{width:170px; margin:0 auto;}
 
+/* SHOP Sidebar */
+div.shop-list {
+  height: 368px;
+  overflow: auto;
+}
+
 /* =============== */
 /* = Themes Area = */
 /* =============== */
