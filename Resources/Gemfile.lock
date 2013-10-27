@@ -1,20 +1,14 @@
-GIT
-  remote: git://github.com/meeech/listen.git
-  revision: 2f0aa9b283ad39d1c03980696de250eff911fb16
-  branch: fix_for_fallback_0.5.1
-  specs:
-    listen (0.5.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
-    json (1.7.5)
-    rb-fsevent (0.9.1)
+    json (1.8.1)
+    listen (0.5.3)
+    rb-fsevent (0.9.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   json
-  listen!
+  listen
   rb-fsevent

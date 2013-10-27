@@ -1,5 +1,4 @@
-gem "listen", :git => "git://github.com/meeech/listen.git", :branch => "fix_for_fallback_0.5.1"
-
 source "http://rubygems.org"
 gem "rb-fsevent"
+gem "listen"
 gem "json"
