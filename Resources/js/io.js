@@ -5,7 +5,8 @@ var IO = YUI.namespace('Themer.IO'),
     TIMEOUT = 30000;
 
 IO.authUrl = function(shopId) {
-    var u = Y.Lang.sub('http://{store}.myshopify.com/admin/api/auth?api_key={app_api_key}', {
+
+    var u = Y.Lang.sub('https://{store}.myshopify.com/admin/oauth/authorize?client_id={app_api_key}&scope=write_themes', {
         store: shopId,
         app_api_key: APP_API_KEY
     });
