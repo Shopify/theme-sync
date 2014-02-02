@@ -9,7 +9,7 @@ IO.authUrl = function(shopId) {
         store: shopId,
         app_api_key: APP_API_KEY
     });
-    
+        
     return u;
 };
 
@@ -25,8 +25,9 @@ IO.url = function(shopModel, endpoint) {
 };
 
 IO.fetchThemesList = function(shopModel, handlers) {
-    console.log('io: fetchThemesList');
+    Ti.API.error('io: fetchThemesList');
     var target = IO.url(shopModel, 'themes');
+    Ti.API.error(target);
     IO.get(target, handlers);
 };
 
