@@ -24,11 +24,11 @@ Authentication
 
 `/Resources/vendor/auth`
 
-The app uses the old Shopify Auth method for apps. 
+The app uses the Shopify oAuth2 method for apps. 
 
 Problem: We are distributing the app for desktop, and all the code is visible to anyone digging into the package contents, which would include the shared secret key. 
 
-Solution: A simple script running on Node. This lets us keep our shared secret key secret. When the user Adds a Shop, they are sent to the auth url for the app. This will then redirect to user to our Node app, which will generate the password for the shop, and redirect the user back to the application.
+Solution: We run a simple service on Node. This lets us keep our shared secret key secret. When the user Adds a Shop, they are sent to the auth url for the app. This will then redirect to user to our Node app, which will generate the password for the shop, and redirect the user back to the application.
 
 In `app.js` you can see we check for the existence of querystring. If one exists, we can infer a new shop is being added, at which point we parse out the password & create the new shop. 
 
