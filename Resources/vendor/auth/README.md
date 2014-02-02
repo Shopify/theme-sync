@@ -1,5 +1,9 @@
-Auth proxy used for Shopify Theme App. This is to protect our app shared-secret key.
+Auth proxy used for Shopify Theme App. 
 
-Based off old Shopify App Auth.
+This is to protect our app shared-secret key.
 
-Runs on node.
+Simple node app.
+
+Backwards compatible with legacy auth to cover transition period. 
+
+To use, make sure to create env.js - you have env.sample.js to use as example.

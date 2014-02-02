@@ -1,11 +1,13 @@
 {
   "name": "theme-auth",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "App to handle auth for Shopify Desktop Theme tool.",
+  "main": "auth.js",
   "dependencies": {
-    "express": "2.5.x",
-    "crypto":""
+    "express": "3.4.x",
+    "request": "2.33"
   },
   "engines": {
-    "node": "0.6.x"
+    "node": "0.10.x"
   }
 }
