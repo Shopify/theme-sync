@@ -1,3 +1,7 @@
+1.0.4
+
+* Add Shopify oAuth support.
+
 1.0.3
 
 * Add .less, .scss, .coffee to ignored extensions
