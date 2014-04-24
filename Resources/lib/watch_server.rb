@@ -8,7 +8,7 @@ root = File.dirname(__FILE__)
 gem_path = File.join(root, '../', 'vendor', 'bundle','ruby','1.8')
 Gem.use_paths(gem_path)
 
-require 'json'
+require 'json/pure'
 require 'rb-fsevent'
 require 'listen'
 
@@ -34,16 +34,16 @@ connectEvent = {:event => "connect"}
 s.puts connectEvent.to_json
 
 def broadcast_assets(assets, event_type, base, socket)
-  
+
   assets.each do |relative|
     payload = {
       :event => event_type,
       :base => base,
       :relative => relative
     }
-    socket.puts payload.to_json  
+    socket.puts payload.to_json
   end
-  
+
 end
 
 Listen.to(base_path, :relative_paths => true, :ignore => %r[.hg]) do |modified, added, removed|
