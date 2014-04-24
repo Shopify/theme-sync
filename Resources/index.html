@@ -6,7 +6,7 @@
 
   <script type="text/javascript">
   // Ti.UI.getCurrentWindow().showInspector(true);
-  </script>  
+  </script>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Shopify Theme Manager</title>
@@ -14,13 +14,14 @@
   <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 
   <script src="js/yui-min.js"></script>
+  <script src="js/yui-combo.js"></script>
   <script type="text/javascript" charset="utf-8">
     var Themer = YUI.namespace('Themer'); //Our global object
     Themer.shopFocus = false; //Custom Property
   </script>
 
-  <script type="text/php" src="/lib/util.php"/> 
-  
+  <script type="text/php" src="/lib/util.php"/>
+
   <script src="js/growl.js"></script>
   <script src="js/io.js"></script>
   <script src="js/menu.js"></script>
@@ -34,8 +35,8 @@
   <script src="js/watchers.js"></script>
 
   <link rel="stylesheet" href="css/panel-skin.css" type="text/css">
-  
-  
+
+
 </head>
 
 <body class="yui3-skin-shopify">
@@ -46,15 +47,15 @@
   <section class="content clearfix">
     <aside class="sidebar">
       <strong>Your Shops:</strong>
-      
+
       <!-- Populated with the shops -->
       <div class="shop-list" id='shops'>
       </div>
-      
-      <div class="add-shop-action">       
-        <a class="add-shop btn btn-large" href="#">Add Shop</a>        
+
+      <div class="add-shop-action">
+        <a class="add-shop btn btn-large" href="#">Add Shop</a>
       </div>
-    </aside>    
+    </aside>
     <!-- This gets populated with the themes for the shop -->
     <div id="themes-container">
       <div id="no-shops" class="nothing hide">
@@ -67,41 +68,41 @@
   <script src="js/jquery-1.7.2.min.js"></script>
   <script src="js/bootstrap-dropdown.js"></script>
   <script>
-YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() { 
+YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
   //This is already a delegate, so no need to re-init when we add new themes
   $('.dropdown-toggle').dropdown();
-  
+
   //e.container == #shops
   //e.currentTarget = clicked A
   var shopClickHandler = function(e) {
     var currentActive = e.container.one('a.active'),
         currentThemeActive = Y.one('.theme-show'),
         shopId = e.currentTarget.get('id');
-        
-    if(currentActive) { 
+
+    if(currentActive) {
       currentActive.removeClass('active');
     }
     e.currentTarget.addClass('active');
-    
+
     if(currentThemeActive) {
       Y.one('.theme-show').replaceClass('theme-show', 'theme-hide');
     }
     Y.one('#themes-'+shopId).replaceClass('theme-hide', 'theme-show');
-    
+
     if(Themer.theApp.shops.getById(shopId).themes.isEmpty()) {
       Y.one('#themes-'+shopId).append(Y.one('#no-themes'));
       Y.one('#no-themes').removeClass('hide');
     } else {
       Y.one('#no-themes').addClass('hide');
-    }    
+    }
   };
 
   Y.one('#shops').delegate('click', shopClickHandler, 'a');
   Y.Global.on('shop:switch', shopClickHandler);
-  
+
   if(Themer.shopFocus !== false) {
     Y.Global.fire('shop:switch', {
-      container: Y.one('#shops'), 
+      container: Y.one('#shops'),
       currentTarget: Y.one('#'+Themer.shopFocus)
     });
   }
@@ -113,17 +114,17 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
 <!-- Some templates -->
 
   <!-- Get Contents of these in scripts -->
-  
+
   <!-- This it the wrapper around the Shop Links in the sidebar -->
   <script type="text/x-template" id="shop-template">
     <a href="#" class="{class}" id="{store}"></a>
   </script>
-  
+
   <script type="text/x-template" id="shop-themes-wrapper">
     <div id="themes-{store}" class="themes {class}">
       <div class="theme-header clearfix">
         <h3>Themes for "{store}"</h3>
-        <a href="#" class="btn btn-danger remove-shop">Remove Shop</a>                
+        <a href="#" class="btn btn-danger remove-shop">Remove Shop</a>
         <a href="#" class="btn add-theme">Add Theme</a>
       </div>
       <div class="theme-list">
@@ -151,11 +152,11 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
           <ul class="dropdown-menu">
             <li><a class="external" href="{viewLink}">View Theme</a></li>
             <li><a class="path" href="#">Show in Finder</a></li>
-            <li class="divider"></li>                    
+            <li class="divider"></li>
             <li><a class="open-in" href="#">Open In <span class="editor-name">{editor}</span></a></li>
-            <li class="divider"></li>                    
+            <li class="divider"></li>
             <li><a class="force-deploy" href="#">Force Deploy</a></li>
-            <li class="divider"></li>                    
+            <li class="divider"></li>
             <li><a class="remove-theme" href="#">Remove Theme</a></li>
           </ul>
         </div>
@@ -173,7 +174,7 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
                   <input type="text" name="id" value="" placeholder="ex: shop-name.myshopify.com">
               </div>
           </fieldset>
-      </form>    
+      </form>
     </div>
   </div>
 
@@ -194,7 +195,7 @@ YUI().use('node', 'event-custom', function(Y) {Y.on("domready", function() {
         <p>Thanks for downloading the Shopify Theme Developer App! To begin, please add your shop.</p>
         <p>The Shopify Theme Developer App will automatically upload your local theme changes to your shop.</p>
         <div id="splash-btn-con"><a class="add-shop btn-primary btn-large" href="#">Add Shop!</a></div>
-        
+
       </div>
   </div>
 
