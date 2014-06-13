@@ -34,7 +34,7 @@ Watcher.kill = function(themeId) {
 //If you know a better way to do this, please, let me know!
 Watcher.start = function(shop, theme) {
     var port = random(40000, 50000);
-    
+
     var portProc = Ti.Process.createProcess({
         args: ["lsof", "-i", ":"+port],
         env: {'PATH': '/usr/sbin:/usr/bin:/bin'}
@@ -48,15 +48,15 @@ Watcher.start = function(shop, theme) {
             //Port avail, start
             console.log('Port Available. Starting Watcher...');
             Watcher.watch(shop, theme, port);
-        } 
+        }
         else {
             console.log("Exit Code:" + e.getTarget().getExitCode());
             Watcher.start(shop, theme);
         }
     });
-    
+
     portProc.launch();
-    
+
 };
 
 Watcher.watch = function(shop, theme, port) {
@@ -81,11 +81,11 @@ Watcher.watch = function(shop, theme, port) {
 
     console.log('Watch process launched: '+ process.getPID());
     console.log('Watch process running: '+ process.isRunning());
-    
+
     Y.Global.fire('watch:loading', {
         themeId: theme.get('id')
     });
-    
+
     //Give server a second to spinup
     setTimeout(function() {
         Watcher.connect(shop, theme, port);
@@ -116,14 +116,14 @@ Watcher.connect = function(shop, theme, port, attempt) {
             Y.Global.fire('watch:stop', {
                 themeId: theme.get('id')
             });
-            
+
         }
     });
     socket.onTimeout(function(e) {
         console.log('Timeout with socket');
         // console.log(e);
     });
-    
+
     socket.onRead(function(e) {
         // console.log('Read');
         var resp = e.toString();
@@ -131,10 +131,21 @@ Watcher.connect = function(shop, theme, port, attempt) {
         //Bad data comes down socket for some reason from time to time
         if(resp.length <= 1) { return; }
 
+        /**
+         * resp for connect event:
+         * { event: "connect" }
+         * resp for create/update event:
+         * { "base": "/Base/directory", "event":"create", "relative": "filename" }
+         * @type {[type]}
+         */
         resp = JSON.parse(resp);
+
+        // Listen gem fires this off for its own testing purposes, so throw away
+        if(resp.relative === ".listen_test") { return; }
 
         //update & create should have the same action.
         if((resp.event == 'update') || (resp.event == 'create')) {
+
             resp.theme = theme;
             resp.shop = shop;
             Y.Global.fire('asset:send', resp);
@@ -142,7 +153,7 @@ Watcher.connect = function(shop, theme, port, attempt) {
         else if(resp.event == 'connect') {
             Y.Global.fire('watch:start', {
                 themeId: theme.get('id')
-            });            
+            });
         }
 
     });
