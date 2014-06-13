@@ -311,52 +311,47 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
     IO.put(assetTarget, payload, handlers);
 };
 
-
-IO.put = function(target, data, handlers) {
+var buildxhr = function(type, handlers) {
 
     handlers = handlers || {};
-    handlers.failure = handlers.failure || function(e) {console.log('PUT: Fail/Default Handler');console.log(e);};
-    handlers.success = handlers.success || function(e) {console.log('PUT: Success/Default Handler');};
+    handlers.failure = handlers.failure || function(e) { console.log( type + ': Fail/Default Handler'); console.log(e); };
+    handlers.success = handlers.success || function(e) { console.log( type + ': Success/Default Handler'); };
 
     var xhr = Ti.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
-    xhr.setRequestHeader('Content-Type','application/json');
-
     xhr.onload = function(event) {
+
         var status = this.status || 999, //Fallback on my own code if status is null
             timedOut = event.timedOut;
-
+console.log(xhr.getResponseHeader("HTTP_X_SHOPIFY_SHOP_API_CALL_LIMIT"));
         if(timedOut || (status > 399)) {
-            Ti.API.info('PUT: Failure');
+            Ti.API.info( type + ': Failure');
             handlers.failure.call({}, event);
         } else {
-            Ti.API.info('PUT: Success');
+            Ti.API.info( type + ': Success');
             handlers.success.call({}, event);
         }
     };
 
-    xhr.open("PUT",target);
-    xhr.send(JSON.stringify(data));
+    return xhr;
    
 };
 
+IO.put = function(target, data, handlers) {
+
+    var type = 'PUT';
+    var xhr = buildxhr(type, handlers);
+
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.open(type, target);
+    xhr.send(JSON.stringify(data));
+
+    };
+
 IO.get = function(target, handlers) {
 
-    var xhr = Ti.Network.createHTTPClient();
-    xhr.setTimeout(TIMEOUT);
-
-    xhr.onload = function(event) {
-        var status = this.status || 999, //Fallback on my own code if status is null
-            timedOut = event.timedOut;
-
-        if(timedOut || (status > 399)) {
-            Ti.API.info('GET: Failure');
-            handlers.failure.call({}, event);
-        } else {
-            Ti.API.info('GET: Success');
-            handlers.success.call({}, event);
-        }
-    };
+    var type = 'GET';
+    var xhr = buildxhr(type, handlers);
 
     xhr.open("GET",target);
     xhr.send();
