@@ -5,9 +5,9 @@ This document goes over some of the details of the app. Please contact [meeech](
 
 The core of the app is built using the App Framework from YUI 3.4.1, and the front is some customized Bootstrap.
 
-As a desktop app, resources are shipped with the app, so there was no reason for minification & concatination. 
+As a desktop app, resources are shipped with the app, so there was no reason for minification & concatination.
 
-TideSDK apps are basically HTML running in a webkit browser, with a `Ti` js object available in the global scope with allows access to system functionality. A good analogy is phonegap for the desktop. 
+TideSDK apps are basically HTML running in a webkit browser, with a `Ti` js object available in the global scope with allows access to system functionality. A good analogy is phonegap for the desktop.
 
 Files for the app live under `Resources` - paths are relative to that.
 
@@ -15,27 +15,29 @@ Files for the app live under `Resources` - paths are relative to that.
 
 `js/permfix.js` Intended to work around a bug where when packaging the app Resources aren't being copied with proper permissions. On startup, this will fix the permissions on `lib/watch_server.rb` so that it is executable.
 
-`js/config.js` Where the App API Key lives. 
+`js/config.js` Where the App API Key lives.
 
-`lib/util.php` Used to spackle over some minor shortcomings of TideSDK. 
+`lib/util.php` Used to spackle over some minor shortcomings of TideSDK.
+
+`~/Library/Application Support/TideSDK/Shopify Theme/tiapp.log`
 
 Authentication
 --------------
 
 `/Resources/vendor/auth`
 
-The app uses the Shopify oAuth2 method for apps. 
+The app uses the Shopify oAuth2 method for apps.
 
-Problem: We are distributing the app for desktop, and all the code is visible to anyone digging into the package contents, which would include the shared secret key. 
+Problem: We are distributing the app for desktop, and all the code is visible to anyone digging into the package contents, which would include the shared secret key.
 
 Solution: We run a simple service on Node. This lets us keep our shared secret key secret. When the user Adds a Shop, they are sent to the auth url for the app. This will then redirect to user to our Node app, which will generate the password for the shop, and redirect the user back to the application.
 
-In `app.js` you can see we check for the existence of querystring. If one exists, we can infer a new shop is being added, at which point we parse out the password & create the new shop. 
+In `app.js` you can see we check for the existence of querystring. If one exists, we can infer a new shop is being added, at which point we parse out the password & create the new shop.
 
 Watch Servers
 -------------
 
-`lib/watch_server.rb` This is the watch server we spin up to listen for changes to the filesystem. The script is executed using `Ti.Process`, and relies on stock Ruby 1.8.7 which ships with OSX. 
+`lib/watch_server.rb` This is the watch server we spin up to listen for changes to the filesystem. The script is executed using `Ti.Process`, and relies on stock Ruby 1.8.7 which ships with OSX.
 
 `js/watchers.js` This is the JS which we use to control & track watch servers.
 
@@ -43,4 +45,4 @@ Use of Ruby
 -----------
 
 The Ruby module for TideSDK was not used for this project. Instead, went with the system Ruby for the watch server. The main reason was that unfortunately, TideSDK still can't handle running something like a server process - so, when you launch something like the watch server, the app would hang/become unresponsive.
-Given that this app was intended only to run on OSX at the moment, I decided to lean on the ruby which comes by default with every OSX. So the watch server is an executable Ruby script which uses /usr/bin/ruby. We then launch the watch server using `Ti.Process` which will run without hanging the app. 
+Given that this app was intended only to run on OSX at the moment, I decided to lean on the ruby which comes by default with every OSX. So the watch server is an executable Ruby script which uses /usr/bin/ruby. We then launch the watch server using `Ti.Process` which will run without hanging the app.

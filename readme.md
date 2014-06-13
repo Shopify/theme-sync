@@ -8,7 +8,7 @@ Building
 
 **Requirements**
 
-* OSX (10.8)
+* OSX (10.8 - your mileage may vary with older versions)
 * [TideSDK](http://www.tidesdk.org)
 * Default Ruby 1.8.7 which ships with OSX (/usr/bin/ruby) [note: things seem to be working fine with 2.0.X that now ships with 10.9]
 
@@ -42,6 +42,14 @@ See `anatomy.md` included in this repo which outlines the code.
 
 See in-app Help menu for instructions.
 
+**Help & Support**
+
+* Shopify forums
+* Shopify support
+* Open a ticket
+
+If you need to send along a log file, it can be found here: ~/Library/Application Support/TideSDK/Shopify Theme/tiapp.log. **DO NOT POST THIS FILE**
+
 **Contributors**
 
 Tetsuro Takara [@t3tchi](https://twitter.com/t3tchi)
@@ -55,3 +63,4 @@ Beta Testers
 Shopify
 mightyoj
 Scott Szarapka
+and all you who use the app!
