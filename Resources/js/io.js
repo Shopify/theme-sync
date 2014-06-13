@@ -323,7 +323,9 @@ var buildxhr = function(type, handlers) {
 
         var status = this.status || 999, //Fallback on my own code if status is null
             timedOut = event.timedOut;
-console.log(xhr.getResponseHeader("HTTP_X_SHOPIFY_SHOP_API_CALL_LIMIT"));
+
+        event.API_CALL_LIMIT = xhr.getResponseHeader("HTTP_X_SHOPIFY_SHOP_API_CALL_LIMIT");
+
         if(timedOut || (status > 399)) {
             Ti.API.info( type + ': Failure');
             handlers.failure.call({}, event);
