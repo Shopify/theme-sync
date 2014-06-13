@@ -26,9 +26,9 @@ IO.url = function(shopModel, endpoint) {
 };
 
 IO.fetchThemesList = function(shopModel, handlers) {
-    Ti.API.error('io: fetchThemesList');
+    Ti.API.info('io: fetchThemesList');
     var target = IO.url(shopModel, 'themes');
-    Ti.API.error(target);
+    Ti.API.info(target);
     IO.get(target, handlers);
 };
 
