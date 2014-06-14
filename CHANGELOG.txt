@@ -1,3 +1,9 @@
+1.0.6
+
+* Add throttling behaviour to stay within limits.
+	http://docs.shopify.com/api/tutorials/learning-to-respect-the-api-call-limit
+* Some minor cleanup
+
 1.0.5
 
 * Switch to json/pure
