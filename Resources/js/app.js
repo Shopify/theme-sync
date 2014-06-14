@@ -1,8 +1,8 @@
-YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', function(Y) {Y.on("domready", function() { 
+YUI().use('event', 'event-focus','event-custom', 'querystring-parse','oop', function(Y) {Y.on("domready", function() {
 
     //app instance accessible all over.
     var theApp = Themer.theApp = new Themer.appView();
-    
+
     //Spin up theme watchers...
     Themer.Watcher.init(theApp);
 

@@ -1,4 +1,4 @@
-YUI().use('node', function(Y) { 
+YUI().use('node', function(Y) {
 /////
 //Allows user to pick an .app to use as their editor
 var Editor = YUI.namespace('Themer.Editor');
@@ -9,12 +9,12 @@ Editor.app = Ti.App.Properties.getString('editor', '');
 
 //string path (opt) if provided, we open in the editor after its picked.
 Editor.pickEditor = function(path) {
-    
+
     path = path || false;
-    
+
     Ti.UI.currentWindow.openFileChooserDialog(function(file) {
             if(file.length == 0) { return false; }
-            
+
             var selectedApp = file[0].split('/').pop().replace('.app', '');
             Editor.app = selectedApp;
             Ti.App.Properties.setString('editor', selectedApp);

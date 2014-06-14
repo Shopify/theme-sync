@@ -1,4 +1,4 @@
-YUI().use(function(Y) { 
+YUI().use(function(Y) {
 /////
 //Adds a top level Utility menu item with a Choose Your Editor menu item
 

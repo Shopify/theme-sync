@@ -40,7 +40,7 @@ var filterAssetList = function(assets) {
         rx = /(\.css|\.js)$/;
 
     assets.forEach(function(item) {
-        if(true == rx.test(item.key)) {
+        if(true === rx.test(item.key)) {
             toCheck.push(item.key);
         } else {
             newList.push(item.key);
@@ -48,7 +48,7 @@ var filterAssetList = function(assets) {
     });
     
     toCheck.forEach(function(item) {
-        if(newList.indexOf(item.concat('.liquid')) == -1) { 
+        if(newList.indexOf(item.concat('.liquid')) === -1) {
             newList.push(item);
         }
     });
@@ -248,7 +248,7 @@ IO.deployTheme = function(shopModel, themeModel) {
                 var doneMessage = themeModel.get('name').concat(' has been uploaded.');
                 if(errorCount > 0) {
                     Ti.API.warn('adding to message');                    
-                    doneMessage += ("\n" + errorCount + ' ' + ((errorCount == 1)?'file':'files') +' not uploaded');
+                    doneMessage += ("\n" + errorCount + ' ' + ((errorCount === 1)?'file':'files') +' not uploaded');
                 }
                 growl({
                     title: 'Deploy done!',

@@ -14,9 +14,9 @@
     var alreadyUpgraded = Ti.App.Properties.hasProperty('upgradeTideSDK1_2_to_1_3');
 
     //Nothing to do
-    if(!oldAppData.exists() || alreadyUpgraded) { 
-        console.log('No upgrade required'); 
-        return false; 
+    if(!oldAppData.exists() || alreadyUpgraded) {
+        console.log('No upgrade required');
+        return false;
     }
 
     var oldProperties =  Ti.App.loadProperties(oldAppData.toString())

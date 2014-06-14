@@ -1,11 +1,11 @@
 
-YUI().use('view','panel', 'event-custom','event-focus','array-extras', function(Y) { 
+YUI().use('view','panel', 'event-custom','event-focus','array-extras', function(Y) {
 ///start
 
 var IO = YUI.namespace('Themer.IO');
 
 Themer.appView = Y.Base.create('appView', Y.View, [], {
-   
+
     container: Y.one('body'),
 
     //These events are app wide - hooked off body
@@ -15,7 +15,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             e.halt(true);
             Ti.Platform.openURL(e.currentTarget.get('href'));
 
-            //from bootstrap :/ because we halt the event, 
+            //from bootstrap :/ because we halt the event,
             //we need to manually close the dropdown. grrr...
             $('[data-toggle="dropdown"]').parent().removeClass('open');
         }},
@@ -23,18 +23,18 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             e.halt(true);
             window.location.reload(true);
         }},
-        
+
         '.add-shop' : { click: 'addShop'}
     },
-   
+
     initializer: function() {
         console.log('appView: Initializer');
 
         var shops = this.shops = new Themer.shopList();
         shops.after('add', this.add, this);
-        shops.after('remove', this.remove, this);        
+        shops.after('remove', this.remove, this);
 
-        //Reset also fires on initial model list load. 
+        //Reset also fires on initial model list load.
         shops.after('reset', this.render, this);
 
         shops.load();
@@ -76,7 +76,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
                     'class': (index == 0) ? 'active':''
                 })
             });
-            
+
             fragment.append(view.render().container);
         });
 
@@ -89,18 +89,18 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         this.splashPanel = splashPanel();
         this.splashPanel.show();
     },
-   
+
     // Click handler for the add shop button
     addShop: function(e) {
         //Setup the Add Shop form overlay
-        this.addShopForm = this.addShopForm || this.createAddShopPanel();        
+        this.addShopForm = this.addShopForm || this.createAddShopPanel();
         this.addShopForm.show();
-        
+
         if(this.splashPanel) {
             this.splashPanel.hide();
         }
-        
-    }, 
+
+    },
 
     //Called when shop added to the shops list
     add: function(e) {
@@ -116,11 +116,11 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
                 Y.one('#shop-template').getContent(), {store: e.model.get('id'), 'class': ''}
             )
         });
-        
+
         this.container.one('#shops').append(view.render().container);
-        
+
         view.chooseTheme();
-        
+
     },
 
     remove: function(e) {
@@ -129,19 +129,19 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
             Y.one('#no-shops').removeClass('hide');
         } else {
             Y.Global.fire('shop:switch', {
-              container: Y.one('#shops'), 
+              container: Y.one('#shops'),
               currentTarget: Y.one('#'+this.shops.item(0).get('id'))
             });
         }
     },
-    
+
     createAddShopPanel: function() {
 
-        var currentShops = this.shops; 
+        var currentShops = this.shops;
 
         var panel = new Y.Panel({
             srcNode: '#add-shop-panel',
-            width: 500, 
+            width: 500,
             centered: true,
             visible: false,
             modal: true,
@@ -150,11 +150,11 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         });
 
         var submitHandler = function(e) {
-             e.preventDefault(); 
+             e.preventDefault();
 
              //Step through and remove all unwanted crap that may be submitted
              var sanitizeShopId = function(str) {
-                 var sid = str.replace('http://', '', 'i') 
+                 var sid = str.replace('http://', '', 'i')
                            .replace('https://', '', 'i') //In case someone uses https://
                            .replace('.myshopify.com', '', 'i')
                            .replace('/',''); //#fixes public issue #10 - trailing slash
@@ -172,7 +172,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
              }
              else {
                  //Does this already exist?
-                 Y.fire('addShopOk', data);                 
+                 Y.fire('addShopOk', data);
              }
         };
 
@@ -180,7 +180,7 @@ Themer.appView = Y.Base.create('appView', Y.View, [], {
         panel.addButton({
             value: 'Cancel',
             action: function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
                 panel.hide();
             },
             classNames: 'btn',
@@ -216,7 +216,7 @@ var createPanel = function(args) {
 
 var splashPanel = function() {
     return createPanel({
-        width: 700, 
+        width: 700,
         height: 450,
         centered: true,
         visible: true,
@@ -229,7 +229,7 @@ var splashPanel = function() {
 
 var connectingPanel = function() {
     return createPanel({
-        width: 300, 
+        width: 300,
         centered: true,
         visible: true,
         modal: true,

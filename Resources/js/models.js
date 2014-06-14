@@ -1,9 +1,9 @@
-YUI().use('model', 'model-list', function(Y) { 
+YUI().use('model', 'model-list', function(Y) {
 ///start
 
 //Shop Models
 Themer.shopModel = Y.Base.create('shopModel', Y.Model, [], {
-    sync: PropertiesStorageSync('shop')    
+    sync: PropertiesStorageSync('shop')
 }, {
     ATTRS: {
         id: { value: '' },
@@ -48,9 +48,9 @@ Themer.themeList = Y.Base.create('themeList', Y.ModelList, [], {
 //Uses Titanium Properties
 //Based off LocalStorageSync from YUI example
 function PropertiesStorageSync(key) {
-    
+
     var data = JSON.parse(Ti.App.Properties.getString(key, '{}'));
-    
+
     function destroy(id) {
         var modelHash;
 
@@ -61,7 +61,7 @@ function PropertiesStorageSync(key) {
 
         return modelHash;
     }
-    
+
     // Loads a model with the specified id. This method is a little tricky,
     // since it handles loading for both individual models and for an entire
     // model list.
@@ -73,7 +73,7 @@ function PropertiesStorageSync(key) {
         return id ? data[id] : Y.Object.values(data);
     }
 
-    function save() {        
+    function save() {
         Ti.App.Properties.setString(key, JSON.stringify(data));
     }
 
@@ -110,7 +110,7 @@ function PropertiesStorageSync(key) {
         }
     };
 
-};
+}
 Themer.sync = PropertiesStorageSync;
 
 ///end

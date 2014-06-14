@@ -10,19 +10,19 @@ Y.Global.on('asset:send', function(e) {
 
     var key = e.relative,
         path = e.base.concat(Ti.Filesystem.getSeparator(), e.relative),
-        successHandler = function(_e) {
+        successHandler = function() {
             growl({title: 'File Uploaded', message: key});
         },
         failureHandler = function(_e) {
             if(_e.timedOut) {
                 growlTimedOut();
-            } 
+            }
             else {
                 //output error to console
                 Ti.API.error(_e.status);
                 Ti.API.error(_e.statusText);
 
-                if(Y.Lang.trim(_e.responseText) == ''){ return; }  
+                if(Y.Lang.trim(_e.responseText) == ''){ return; }
 
                 var response = JSON.parse(_e.responseText);
                 var errors = response.errors || {};
