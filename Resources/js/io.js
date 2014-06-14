@@ -3,6 +3,12 @@ YUI().use('event-custom', function(Y) {
 
 var IO = YUI.namespace('Themer.IO'),
     TIMEOUT = 30000;
+var logReqError = function(msg, resp) {
+    Ti.API.error(msg);
+    Ti.API.error("status: " + resp.status);
+    Ti.API.error("statusText: " + resp.statusText);
+    Ti.API.error("responseText: " + resp.responseText);
+};
 
 IO.authUrl = function(shopId) {
 
@@ -75,6 +81,9 @@ IO.downloadTheme = function(shopModel, themeModel) {
             var toGet = assetQ.next();
 
             var failureGetAsset =  function(e) {
+
+                logReqError("Failed to get asset", e);
+
                 if(e.timedOut) {
                     growlTimedOut();
                     Y.Global.fire('download:done');
@@ -142,10 +151,8 @@ IO.downloadTheme = function(shopModel, themeModel) {
             } 
             else {
                 //output error to console
-                console.log('Error: assetsList fetch');
-                Ti.API.error(e.status);
-                Ti.API.error(e.statusText);
-                Ti.API.error(e.responseText);
+                logReqError("Error: assetsList fetch", e);
+
                 growl({
                     title: 'Error',
                     message: 'There was a problem fetching the Assets List for this theme.'
@@ -207,15 +214,20 @@ IO.deployTheme = function(shopModel, themeModel) {
 
     //And, now chew through the q, much like we do for download theme.
     var toUpload = uploadQ.next(),
+
         key = toUpload.replace(path+Ti.Filesystem.getSeparator(), ''),
+
         errorCount = 0,
+
         failureSendAsset = function(e) {
             if(e.timedOut) {
                 //On a timeout we dont want to continue.
                 growlTimedOut();
                 Y.Global.fire('deploy:done');
             } else {
-                Ti.API.error('Error deployTheme: '+e.status + ' - ' + e.statusText);
+
+                logReqError("Error deployTheme", e);
+
                 var response = JSON.parse(e.responseText);
                 var errors = response.errors || {};
                 Y.each(errors, function(message) {
