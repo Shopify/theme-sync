@@ -1,8 +1,17 @@
-YUI().use('event-custom', function(Y) { 
+YUI().use('event-custom', function(Y) {
 /////
 
-var IO = YUI.namespace('Themer.IO'),
-    TIMEOUT = 30000;
+var IO = YUI.namespace('Themer.IO')
+
+    , TIMEOUT = 30000
+
+    //At what point throttling kicks in
+    , THROTTLE_THRESHOLD = 0.5
+
+    , THROTTLE_REQUEST_MS = 500
+
+    ;
+
 var logReqError = function(msg, resp) {
     Ti.API.error(msg);
     Ti.API.error("status: " + resp.status);
@@ -16,7 +25,7 @@ IO.authUrl = function(shopId) {
         store: shopId,
         app_api_key: APP_API_KEY
     });
-        
+
     return u;
 };
 
@@ -24,7 +33,7 @@ IO.authUrl = function(shopId) {
 //@param endpoint our target, like themes
 IO.url = function(shopModel, endpoint) {
     return Y.Lang.sub('https://{api_key}:{password}@{store}.myshopify.com/admin/{endpoint}.json', {
-        store: shopModel.get('id'), 
+        store: shopModel.get('id'),
         api_key: shopModel.get('api_key'),
         password: shopModel.get('password'),
         'endpoint': endpoint
@@ -52,15 +61,15 @@ var filterAssetList = function(assets) {
             newList.push(item.key);
         }
     });
-    
+
     toCheck.forEach(function(item) {
         if(newList.indexOf(item.concat('.liquid')) === -1) {
             newList.push(item);
         }
     });
-    
+
     return newList;
-}; 
+};
 
 IO.downloadTheme = function(shopModel, themeModel) {
     console.log('IO.downloadTheme');
@@ -87,13 +96,13 @@ IO.downloadTheme = function(shopModel, themeModel) {
                 if(e.timedOut) {
                     growlTimedOut();
                     Y.Global.fire('download:done');
-                } 
+                }
                 else {
                     growl({
                         title: 'Error',
                         message: "Couldn't get asset "+toGet
                     });
-                    
+
                     if(assetQ.size() > 0) {
                         toGet = assetQ.next();
                         if(!ABORT){
@@ -108,7 +117,7 @@ IO.downloadTheme = function(shopModel, themeModel) {
             };
 
             var successGetAsset = function(e) {
-                
+
                 var assetRes = JSON.parse(e.responseText),
                     fileHandle = Ti.Filesystem.getFile(themeModel.get('path'), assetRes.asset.key);
 
@@ -120,7 +129,7 @@ IO.downloadTheme = function(shopModel, themeModel) {
                     Y.Global.fire('download:error');
                     return;
                 }
-                
+
                 if(assetRes.asset.value) {
                     fileHandle.write(assetRes.asset.value);
                 } else {
@@ -139,16 +148,16 @@ IO.downloadTheme = function(shopModel, themeModel) {
                     Y.Global.fire('download:done');
                 }
             };
-            
-            
+
+
             //Start the download queue...
             IO.getAsset(shopModel, themeModel, toGet, { success: successGetAsset, failure: failureGetAsset });
 
-        }, 
+        },
         failure: function(e) {
             if(e.timedOut) {
                 growlTimedOut();
-            } 
+            }
             else {
                 //output error to console
                 logReqError("Error: assetsList fetch", e);
@@ -161,11 +170,11 @@ IO.downloadTheme = function(shopModel, themeModel) {
             Y.Global.fire('download:error');
         }
     });
-    
+
 };
 
 IO.getAsset = function(shopModel, themeModel, asset, handlers) {
-    
+
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
     assetTarget = assetTarget.concat('?', 'asset[key]=', Ti.Network.encodeURIComponent(asset));
 
@@ -187,7 +196,7 @@ IO.deployTheme = function(shopModel, themeModel) {
 
     var files = []
         , path = themeModel.get('path')
-        , foldersOfInterest = 
+        , foldersOfInterest =
             [ 'assets'
             , 'config'
             , 'layout'
@@ -245,7 +254,7 @@ IO.deployTheme = function(shopModel, themeModel) {
             if(uploadQ.size() > 0) {
                 toUpload =  uploadQ.next();
                 key = toUpload.replace(path+Ti.Filesystem.getSeparator(), '');
-                
+
                 if(!ABORT){
                     IO.sendAsset(shopModel, themeModel, key, toUpload, {success: successSendAsset, failure: failureSendAsset});
                 }
@@ -259,7 +268,7 @@ IO.deployTheme = function(shopModel, themeModel) {
             } else {
                 var doneMessage = themeModel.get('name').concat(' has been uploaded.');
                 if(errorCount > 0) {
-                    Ti.API.warn('adding to message');                    
+                    Ti.API.warn('adding to message');
                     doneMessage += ("\n" + errorCount + ' ' + ((errorCount === 1)?'file':'files') +' not uploaded');
                 }
                 growl({
@@ -270,14 +279,14 @@ IO.deployTheme = function(shopModel, themeModel) {
             }
         };
 
-    IO.sendAsset( 
-        shopModel, 
-        themeModel, 
-        key, 
-        toUpload, 
-        { 
+    IO.sendAsset(
+        shopModel,
+        themeModel,
+        key,
+        toUpload,
+        {
             success: successSendAsset,
-            failure: failureSendAsset 
+            failure: failureSendAsset
         }
     );
 };
@@ -288,7 +297,7 @@ IO.deployTheme = function(shopModel, themeModel) {
 //@param filePath
 IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
     console.log('IO:sendAsset: '+assetKey);
-    
+
     var assetTarget = IO.url(shopModel, 'themes/'+themeModel.get('id')+'/assets');
 
     //Ti throws exception when trying to read empty file,
@@ -323,20 +332,52 @@ IO.sendAsset = function(shopModel, themeModel, assetKey, filePath, handlers) {
     IO.put(assetTarget, payload, handlers);
 };
 
+// Doing some simple throttle
+// Rather than  skate the edge (ie: once we get to 40/40 burst wise)
+// just use more simple calc CURRENT/LIMIT > .5
+// When that happens, throttle turns on, and we will limit 1req/.5s
+// and allow latency to push beyond that so it slowly climbs back down.
+var throttle = false;
+
+/**
+ * @param {float} value 0 to 1.
+ */
+var setThrottle = function(value) {
+    throttle = (value > THROTTLE_THRESHOLD);
+};
+
+var getThrottle = function() {
+    return throttle;
+};
+
+/**
+ * @param {string} callLimit from shopify response. format: X/LIMIT
+ */
+var extractLimitValue = function(callLimit) {
+    var regex = /^\d+\/\d+$/;
+    if(!regex.test(callLimit)) {
+        return 0;
+    }
+
+    var parts = callLimit.split("/");
+    return parseFloat(parts[0]/parts[1]);
+};
+
 var buildxhr = function(type, handlers) {
 
     handlers = handlers || {};
     handlers.failure = handlers.failure || function(e) { console.log( type + ': Fail/Default Handler'); console.log(e); };
-    handlers.success = handlers.success || function(e) { console.log( type + ': Success/Default Handler'); };
+    handlers.success = handlers.success || function() { console.log( type + ': Success/Default Handler'); };
 
     var xhr = Ti.Network.createHTTPClient();
     xhr.setTimeout(TIMEOUT);
     xhr.onload = function(event) {
 
         var status = this.status || 999, //Fallback on my own code if status is null
-            timedOut = event.timedOut;
+        timedOut = event.timedOut;
 
-        event.API_CALL_LIMIT = xhr.getResponseHeader("HTTP_X_SHOPIFY_SHOP_API_CALL_LIMIT");
+        var limit = xhr.getResponseHeader("HTTP_X_SHOPIFY_SHOP_API_CALL_LIMIT");
+        setThrottle(extractLimitValue(limit));
 
         if(timedOut || (status > 399)) {
             Ti.API.info( type + ': Failure');
@@ -348,30 +389,44 @@ var buildxhr = function(type, handlers) {
     };
 
     return xhr;
-   
+
 };
+
 
 IO.put = function(target, data, handlers) {
 
     var type = 'PUT';
     var xhr = buildxhr(type, handlers);
 
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.open(type, target);
-    xhr.send(JSON.stringify(data));
+    var requestin = (getThrottle()) ? THROTTLE_REQUEST_MS : 0;
 
-    };
+    setTimeout(function(){
+
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.open(type, target);
+        xhr.send(JSON.stringify(data));
+
+    }, requestin);
+
+
+};
 
 IO.get = function(target, handlers) {
 
     var type = 'GET';
     var xhr = buildxhr(type, handlers);
 
-    xhr.open("GET",target);
-    xhr.send();
+    var requestin = (getThrottle()) ? THROTTLE_REQUEST_MS : 0;
+
+    setTimeout(function(){
+
+        xhr.open("GET",target);
+        xhr.send();
+
+    }, requestin);
+
 
 };
-
 
 /////
 });
