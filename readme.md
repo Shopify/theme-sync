@@ -42,6 +42,10 @@ See `anatomy.md` included in this repo which outlines the code.
 
 See in-app Help menu for instructions.
 
+**App Nap**
+
+Make sure to turn OFF App Nap for this app under OSX 10.10, since this app is meant to run in the background. 
+
 **Help & Support**
 
 * Shopify forums
